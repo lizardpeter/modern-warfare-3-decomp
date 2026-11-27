@@ -13,6 +13,7 @@ absolute start address and a packed word (prolog length, function length in inst
 flags); Xenon code lists nearly every function there, leaves included. Entries whose unwind info
 is chained (UNW_FLAG_CHAININFO) are separated-out parts of another function and are listed with `part_of`, not counted
 as functions. Leaf functions that never touch the stack have no entry; Ghidra's inventory supersedes this table.
+Xbox 360 builds also get xenon_helpers.tsv: the compiler's register save/restore helpers, found by their code.
 """
 import argparse
 import hashlib
@@ -73,6 +74,7 @@ def main():
         write_pdata(pe, out.parent / "pdata.tsv")
     elif machine == 0x1F2:
         write_pdata_xenon(pe, out.parent / "pdata.tsv")
+        write_xenon_helpers(pe, out.parent / "xenon_helpers.tsv")
 
 
 def write_pdata(pe, path):
@@ -101,26 +103,113 @@ def write_pdata(pe, path):
     print(f"{path}: {len(rows) - parts:,} functions, {parts:,} chained parts")
 
 
+def xenon_read(pe, rva, size):
+    """Bytes at an RVA of an Xbox 360 image, mapped through the section headers as written. pefile's own mapping
+    (get_offset_from_rva, get_data) first rounds each section's address down to SectionAlignment, which Xenon
+    sections don't follow (.pdata at RVA 0x7B600 with 64 KB alignment), and so reads from the wrong offset."""
+    for s in pe.sections:
+        if s.VirtualAddress <= rva and rva + size <= s.VirtualAddress + max(s.Misc_VirtualSize, s.SizeOfRawData):
+            off = s.PointerToRawData + rva - s.VirtualAddress
+            raw = pe.__data__[off:off + size]
+            if len(raw) != size:
+                raise ValueError(f"RVA {rva:X}: {len(raw)} of {size} bytes in the file")
+            return raw
+    raise ValueError(f"RVA {rva:X} (+{size:X}) is not inside one section")
+
+
 def write_pdata_xenon(pe, path):
     """Function bounds from an Xbox 360 .pdata: (start VA, packed) big-endian; length is bits 8..29, in instructions."""
     d = pe.OPTIONAL_HEADER.DATA_DIRECTORY[3]
-    # read the file bytes directly: pefile's get_data stops short on these images (119,808 of 176,728 bytes on
-    # iw5mp_xenon), silently dropping a third of the table
-    off = pe.get_offset_from_rva(d.VirtualAddress)
-    raw = pe.__data__[off:off + d.Size]
-    if len(raw) != d.Size:
-        raise ValueError(f"{path}: .pdata is {len(raw)} bytes in the file, directory says {d.Size}")
+    raw = xenon_read(pe, d.VirtualAddress, d.Size)
+    base = pe.OPTIONAL_HEADER.ImageBase
+    code = [(base + s.VirtualAddress, base + s.VirtualAddress + s.Misc_VirtualSize) for s in pe.sections
+            if s.Characteristics & 0x20000000]
     rows = set()
     for i in range(0, len(raw) - 7, 8):
         begin, packed = struct.unpack_from(">II", raw, i)
         length = (packed >> 8) & 0x3FFFFF
-        if begin and length:
-            rows.add((begin, 4 * length))
+        if not (begin and length):
+            continue
+        if not any(lo <= begin and begin + 4 * length <= hi for lo, hi in code):
+            raise ValueError(f"{path}: entry {i // 8} ({begin:08X}, {4 * length} bytes) is outside the code sections")
+        rows.add((begin, 4 * length))
+    starts = [va for va, _ in rows]
+    if len(set(starts)) != len(starts):
+        raise ValueError(f"{path}: a function start is listed with two lengths")
     with open(path, "w", newline="\n") as f:
         f.write("va\tsize\tpart_of\n")
         for va, size in sorted(rows):
             f.write(f"{va:08X}\t{size}\t\n")
     print(f"{path}: {len(rows):,} functions")
+
+
+
+BLR = 0x4E800020
+
+
+def xenon_helper_chains():
+    """The Xenon compiler's register save/restore helpers as instruction-word chains: (family, first register,
+    words per entry, words). Each is one chain of entries, one per register, falling through to a shared tail, so
+    __savegprlr_NN is the entry that saves rNN..r31 and LR. Encoded from the instruction formats, not copied from
+    a build, so the same scan finds them in any Xenon exe, symbols or not:
+      __savegprlr_14..31   std rN, -0x98+8*(N-14)(r1) ... ; stw r12, -8(r1) ; blr
+      __restgprlr_14..31   ld  rN, ...(r1) ... ; lwz r12, -8(r1) ; mtlr r12 ; blr
+      __savefpr_14..31     stfd fN, -0x90+8*(N-14)(r12) ... ; blr        (__restfpr: lfd)
+      __savevmx_14..31     li r11, -0x120+16*(N-14) ; stvx vN, r11, r12 ... ; blr     (__restvmx: lvx)
+      __savevmx_64..127    li r11, -0x400+16*(N-64) ; stvx128 vN, r11, r12 ... ; blr  (__restvmx: lvx128)"""
+    def d(x):
+        return x & 0xFFFF
+    gpr = lambda op: [(op << 26) | (n << 21) | (1 << 16) | d(-0x98 + 8 * (n - 14)) for n in range(14, 32)]
+    fpr = lambda op: [(op << 26) | (n << 21) | (12 << 16) | d(-0x90 + 8 * (n - 14)) for n in range(14, 32)]
+    li = lambda off: 0x39600000 | d(off)  # addi r11, r0, off
+    vmx = lambda xo: [w for n in range(14, 32) for w in (li(-0x120 + 16 * (n - 14)),
+                                                         0x7C000000 | (n << 21) | (11 << 16) | (12 << 11) | (xo << 1))]
+    # VMX128 VX128_1 form: register bits 0-4 at 21, bits 5-6 at 2 (tools/ghidra/xenon/vmx128.sinc)
+    vmx128 = lambda xo: [w for n in range(64, 128) for w in (li(-0x400 + 16 * (n - 64)),
+                                                             0x10000000 | ((n & 31) << 21) | (11 << 16) | (12 << 11)
+                                                             | xo | ((n >> 5) << 2))]
+    return [
+        ("savegprlr", 14, 1, gpr(62) + [0x9181FFF8, BLR]),
+        ("restgprlr", 14, 1, gpr(58) + [0x8181FFF8, 0x7D8803A6, BLR]),
+        ("savefpr", 14, 1, fpr(54) + [BLR]),
+        ("restfpr", 14, 1, fpr(50) + [BLR]),
+        ("savevmx", 14, 2, vmx(231) + [BLR]),
+        ("restvmx", 14, 2, vmx(103) + [BLR]),
+        ("savevmx", 64, 2, vmx128(0x1C3) + [BLR]),
+        ("restvmx", 64, 2, vmx128(0x0C3) + [BLR]),
+    ]
+
+
+def write_xenon_helpers(pe, path):
+    """The register save/restore helpers, found by their code (xenon_helper_chains), one row per entry point.
+    ApplySymbols.java gives them their names, marks them returning and attaches the Xenon language's call fixup,
+    in every analysis including blind ones: they are toolchain code, identified from the instructions alone."""
+    base = pe.OPTIONAL_HEADER.ImageBase
+    rows = []
+    for s in pe.sections:
+        if not s.Characteristics & 0x20000000:  # IMAGE_SCN_MEM_EXECUTE
+            continue
+        data = pe.__data__[s.PointerToRawData:s.PointerToRawData + s.SizeOfRawData]
+        for family, first, step, words in xenon_helper_chains():
+            needle = struct.pack(f">{len(words)}I", *words)
+            start = 0
+            while (i := data.find(needle, start)) >= 0:
+                start = i + 4
+                if i % 4:
+                    continue
+                va = base + s.VirtualAddress + i
+                count = (len(words) - 1) // step - (2 if family == "restgprlr" else 1 if family == "savegprlr" else 0)
+                for k in range(count):
+                    rows.append((va + 4 * step * k, f"__{family}_{first + k}"))
+    names = [n for _, n in rows]
+    dup = {n for n in names if names.count(n) > 1}
+    if dup:
+        raise ValueError(f"{path}: helper chain found more than once: {sorted(dup)[:4]}")
+    with open(path, "w", newline="\n") as f:
+        f.write("va\tname\n")
+        for va, name in sorted(rows):
+            f.write(f"{va:08X}\t{name}\n")
+    print(f"{path}: {len(rows)} save/restore helper entry points")
 
 
 if __name__ == "__main__":

@@ -27,11 +27,24 @@ Xbox 360 exes carry no CodeView record. The PDB's signature is the exe's PE time
 
 Xenon `.pdata` entries are 8 big-endian bytes: the function's absolute start address, then a word packing the prolog
 length (bits 0-7), the function length **in instructions** (bits 8-29), a 32-bit flag and an exception flag.
-`tools/inventory.py` writes them to `pdata.tsv`: 20,424 functions in `iw5mp_xenon` (the PDB knows 28,867
-procedures, including leaves without unwind data and SDK code).
+`tools/inventory.py` writes them to `pdata.tsv`: 22,091 functions in `iw5mp_xenon` (the PDB knows 28,867
+procedures, including leaves without unwind data and SDK code; 21,210 `.pdata` starts are PDB functions and 20,880 of
+those have the PDB's size) and 16,029 in `iw5mp_xenon_ship`. Every entry must lie inside a code section and each start
+may appear once; the inventory fails otherwise.
 
-pefile's `get_data` returns only part of this table on these images (119,808 of 176,728 bytes), so the inventory
-reads the file bytes directly and checks the length.
+**Don't map Xenon addresses with pefile** (`get_offset_from_rva`, `get_data`): it first rounds each section's address
+down to `SectionAlignment` (64 KB), which Xenon sections don't follow, and so reads the wrong bytes: `.pdata` at RVA
+0x21E000 in `iw5mp_xenon` was read from 0xE000 further on. An earlier inventory did, and its `pdata.tsv` lacked the
+table's first 7,168 entries and ended in junk, 29 rows of which seeded false function starts inside real functions.
+`xenon_read` in `tools/inventory.py` maps through the section headers as written.
+
+### Register save/restore helpers, found by their code
+
+`tools/inventory.py` also writes `xenon_helpers.tsv`: every entry point of the compiler's register save/restore
+helpers, found by scanning the code sections for their instruction chains, encoded from the instruction formats
+(`xenon_helper_chains`). It finds the same 236 entries as the MAP in both `iw5mp_xenon` and `iw5mp_xenon_ship`.
+`ApplySymbols.java` reads it in every analysis, including blind ones (`ghidra_pdb = false`, which pass `blind` and use
+only `pdata.tsv` and `xenon_helpers.tsv`), so a build without symbols gets the same helper handling (below).
 
 ## Code and compiler
 

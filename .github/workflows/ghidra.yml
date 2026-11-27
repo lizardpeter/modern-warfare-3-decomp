@@ -167,8 +167,11 @@ jobs:
           if [ -n "$lang" ]; then args+=(-processor "$lang"); fi
           # a build can name an extra pre-script
           if [ -n "$extra" ]; then args+=(-preScript "$extra"); fi
-          # ghidra_pdb = false analyses a symbol build blind (as a matcher ground-truth pair): no PDB, no names
-          if [ "$usepdb" = "True" ]; then
+          # ghidra_pdb = false analyses a symbol build blind (as a matcher ground-truth pair): no PDB, no names, only
+          # what the exe itself gives (pdata.tsv; on PowerPC the save/restore helpers found by their code)
+          if [ "$usepdb" != "True" ]; then
+            args+=(-preScript ApplySymbols.java "$a" blind)
+          else
             # every function the PDB, MAP and .pdata know, created and named before analysis (architecture-neutral;
             # on the retail build, which has no symbols, it seeds the .pdata entries only)
             args+=(-preScript ApplySymbols.java "$a")

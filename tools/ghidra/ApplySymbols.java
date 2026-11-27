@@ -2,7 +2,9 @@
 // exception directory know, and give it the original name, before auto-analysis runs. Architecture-neutral, so it
 // names the Xbox 360 (PowerPC) references even where Ghidra's own PDB analyzer can't use their PDBs (an Xbox 360 exe
 // has no CodeView record to match), and it seeds disassembly at every known entry.
-// Args: <analysis/<build>> (reads pdb/functions.tsv, map/publics.tsv and pdata.tsv, whichever exist)
+// Args: <analysis/<build>> [blind] (reads pdb/functions.tsv, map/publics.tsv, pdata.tsv and xenon_helpers.tsv,
+// whichever exist). "blind" uses only what a build without symbols has: pdata.tsv and xenon_helpers.tsv, which
+// tools/inventory.py derives from the exe itself (a ground-truth build for the matcher is analysed that way).
 //
 // PowerPC (Xbox 360) only: the compiler's register save/restore helpers (__savegprlr_14 .. _31, __restgprlr_*,
 // __savefpr_*, __restfpr_*, __savevmx_*, __restvmx_*) are chains of 4-byte entry points that fall through into one
@@ -11,7 +13,10 @@
 // functions of iw5mp_xenon cut to 8 bytes in the first run). They are marked returning here, and that analyzer is
 // turned off for PowerPC builds, so it can't flip them back. Known non-returning functions are still applied.
 // With the Xenon language they also get its "xenon_save_restore" call fixup, so the decompiler doesn't show them as
-// calls returning a value (tools/ghidra/xenon/build_language.py).
+// calls returning a value (tools/ghidra/xenon/build_language.py). The helpers come from xenon_helpers.tsv (found by
+// their code, so blind analyses get them too) as well as the PDB and MAP; every entry is labelled with its name, so
+// an entry inside another entry's chain, which can't be a function of its own until a call creates one, still gets
+// the fixup by name (Ghidra's Call-Fixup Installer).
 //@category IW5
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,21 +68,28 @@ public class ApplySymbols extends GhidraScript {
 	@Override
 	public void run() throws Exception {
 		File dir = new File(getScriptArgs()[0]);
+		boolean blind = getScriptArgs().length > 1 && getScriptArgs()[1].equals("blind");
 		// address -> name; PDB names (undecorated) win over MAP names, which win over nothing
 		Map<Long, String> names = new LinkedHashMap<>();
 		Map<Long, String> fallback = new HashMap<>();
 		for (Map<String, String> r : rows(new File(dir, "pdata.tsv"))) {
 			names.putIfAbsent(Long.parseLong(r.get("va"), 16), null);
 		}
-		for (Map<String, String> r : rows(new File(dir, "map/publics.tsv"))) {
+		for (Map<String, String> r : blind ? rows(new File("-")) : rows(new File(dir, "map/publics.tsv"))) {
 			if (r.getOrDefault("flags", "").contains("f")) {
 				long va = Long.parseLong(r.get("va"), 16);
 				names.putIfAbsent(va, null);
 				fallback.putIfAbsent(va, r.get("name"));
 			}
 		}
-		for (Map<String, String> r : rows(new File(dir, "pdb/functions.tsv"))) {
+		for (Map<String, String> r : blind ? rows(new File("-")) : rows(new File(dir, "pdb/functions.tsv"))) {
 			names.put(Long.parseLong(r.get("va"), 16), r.get("name"));
+		}
+		for (Map<String, String> r : rows(new File(dir, "xenon_helpers.tsv"))) {
+			names.put(Long.parseLong(r.get("va"), 16), r.get("name"));
+		}
+		if (blind) {
+			println("ApplySymbols: blind (pdata.tsv and xenon_helpers.tsv only)");
 		}
 		boolean ppc = currentProgram.getLanguage().getProcessor().toString().equals("PowerPC");
 		// the Xenon language's compiler spec models the helpers as a no-op call fixup (build_language.py)
@@ -100,7 +112,11 @@ public class ApplySymbols extends GhidraScript {
 				continue;
 			}
 			String name = e.getValue() != null ? e.getValue() : fallback.get(e.getKey());
+			boolean helper = ppc && name != null && XENON_HELPER.matcher(name).matches();
 			try {
+				if (helper) {
+					createLabel(a, clean(name), true, SourceType.IMPORTED);
+				}
 				Function f = getFunctionAt(a);
 				if (f == null) {
 					if (getInstructionAt(a) == null) {
@@ -115,12 +131,14 @@ public class ApplySymbols extends GhidraScript {
 					f.setName(clean(name), SourceType.IMPORTED);
 					named++;
 				}
-				if (ppc && f != null && name != null && XENON_HELPER.matcher(name).matches()) {
-					f.setNoReturn(false);
-					if (fixup) {
-						f.setCallFixup(SAVE_RESTORE_FIXUP);
-					}
+				if (helper) {
 					helpers++;
+					if (f != null) {
+						f.setNoReturn(false);
+						if (fixup) {
+							f.setCallFixup(SAVE_RESTORE_FIXUP);
+						}
+					}
 				}
 			}
 			catch (Exception ex) {

@@ -1,0 +1,29 @@
+{
+  "build": "iw5mp_xenon_ship",
+  "sha256": "5a5ce4af35f1abf3ce6f65c5d82cb31048889fa35c70031866b901cb4fc163e9",
+  "size": 6305792,
+  "image_base": "82000000",
+  "entry_point": "824E1020",
+  "linker_version": "10.00",
+  "pdb": {
+    "guid": "83FF8296-766D-43B5-9BE3-F452EECB216F",
+    "age": 1
+  },
+  "sections": [
+    ".rdata",
+    ".pdata",
+    "BINKBSS",
+    ".text",
+    "BINK",
+    ".data",
+    ".tls",
+    ".XBMOVIE",
+    "BINKDATA",
+    ".XEXID",
+    ".idata",
+    ".XBLD",
+    ".reloc"
+  ],
+  "imports": [],
+  "delay_imports": []
+}
