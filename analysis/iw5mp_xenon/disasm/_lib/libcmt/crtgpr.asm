@@ -44,12 +44,6 @@
 
 ; 829166BC  __savegprlr_29  (line unknown)
   829166BC  FBA1FFE0             std r29,-0x20(r1)
-__savegprlr_30:
-  829166C0  FBC1FFE8             std r30,-0x18(r1)
-__savegprlr_31:
-  829166C4  FBE1FFF0             std r31,-0x10(r1)
-  829166C8  9181FFF8             stw r12,-0x8(r1)
-  829166CC  4E800020             blr
 
 ; 829166D4  __restgprlr_15  (line unknown)
   829166D4  E9E1FF70             ld r15,-0x90(r1)
@@ -95,10 +89,3 @@ __savegprlr_31:
 
 ; 8291670C  __restgprlr_29  (line unknown)
   8291670C  EBA1FFE0             ld r29,-0x20(r1)
-__restgprlr_30:
-  82916710  EBC1FFE8             ld r30,-0x18(r1)
-__restgprlr_31:
-  82916714  EBE1FFF0             ld r31,-0x10(r1)
-  82916718  8181FFF8             lwz r12,-0x8(r1)
-  8291671C  7D8803A6             mtspr LR,r12
-  82916720  4E800020             blr

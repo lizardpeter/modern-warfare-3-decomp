@@ -4,9 +4,9 @@
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 rectDef_s * Item_GetTextRect(LocalClientNum_t param_1,itemDef_t *param_2)
 
@@ -82,9 +82,9 @@ float Item_GetRectPlacementX(int param_1,float param_2,float param_3,float param
   double dVar2;
   double dVar3;
   
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (param_1 != 0) {
     if (param_1 == 1) {
       dVar1 = (double)(float)((double)(float)(dVar2 - dVar3) * 0.5 + dVar1);
@@ -111,8 +111,8 @@ float Item_GetTextPlacementX(int param_1,float param_2,float param_3,float param
   double dVar3;
   
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 != 0) {
     if (param_1 == 1) {
       dVar1 = (double)(float)((double)(float)(dVar2 - dVar3) * 0.5 + dVar1);
@@ -159,8 +159,8 @@ float Item_GetTextPlacementY(int param_1,float param_2,float param_3,float param
   double dVar1;
   double dVar2;
   
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 != 0) {
     if (param_1 == 4) {
       dVar1 = (double)(float)(dVar1 + (double)param_4);
@@ -582,9 +582,9 @@ void Item_ClearFocus(UiContext *param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 itemDef_t * Menu_ClearFocus(UiContext *param_1,menuDef_t *param_2)
 
@@ -812,9 +812,9 @@ void Script_SetColor(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BC390  Script_SetBackground  (ui/ui_shared.cpp:796)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetBackground(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -1254,9 +1254,9 @@ int Menus_RemoveFromOpenStack(UiContext *param_1,menuDef_t *param_2)
 
 // 825BC8D0  Menus_AddToOpenStack  (ui/ui_shared.cpp:1115)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menus_AddToOpenStack(UiContext *param_1,menuDef_t *param_2)
 
@@ -1298,9 +1298,9 @@ void Menus_AddToOpenStack(UiContext *param_1,menuDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Menus_MenuIsInStack(UiContext *param_1,menuDef_t *param_2)
 
@@ -1470,9 +1470,9 @@ void Item_NewsTicker_Init(UiContext *param_1,itemDef_t *param_2)
 
 // 825BCD18  Item_TextVScroll_Init  (ui/ui_shared.cpp:1241)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_TextVScroll_Init(UiContext *param_1,itemDef_t *param_2)
 
@@ -1489,9 +1489,9 @@ void Item_TextVScroll_Init(UiContext *param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menu_InitItems(UiContext *param_1,menuDef_t *param_2)
 
@@ -1615,9 +1615,9 @@ void Menu_LoseFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menu_CallOnFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 
@@ -1663,9 +1663,9 @@ void Menu_CallOnFocusDueToOpen(UiContext *param_1,menuDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menu_CallOnFocusDueToClose(UiContext *param_1,menuDef_t *param_2)
 
@@ -1696,9 +1696,9 @@ void Menu_CallOnFocusDueToClose(UiContext *param_1,menuDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menu_GainFocusDueToClose(UiContext *param_1,menuDef_t *param_2,int param_3)
 
@@ -1738,9 +1738,9 @@ void Menu_GainFocusDueToClose(UiContext *param_1,menuDef_t *param_2,int param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menu_RunCloseScript(UiContext *param_1,menuDef_t *param_2)
 
@@ -1921,9 +1921,9 @@ LAB_825c9c1c:
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menus_ForceClose(UiContext *param_1,menuDef_t *param_2)
 
@@ -2040,9 +2040,9 @@ LAB_825c9ee4:
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menus_CloseRequest(UiContext *param_1,menuDef_t *param_2)
 
@@ -2126,9 +2126,9 @@ void Menus_CloseByName(UiContext *param_1,char *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menus_Escape(UiContext *param_1,menuDef_t *param_2)
 
@@ -2322,9 +2322,9 @@ void Menus_CloseAllBehindMain(UiContext *param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_Show(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2378,9 +2378,9 @@ void Script_Hide(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BCF18  Script_FadeIn  (ui/ui_shared.cpp:1741)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_FadeIn(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2398,9 +2398,9 @@ void Script_FadeIn(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BCF78  Script_FadeOut  (ui/ui_shared.cpp:1752)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_FadeOut(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2458,9 +2458,9 @@ void Script_HideMenu(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CF0A0  Script_Open  (ui/ui_shared.cpp:1781)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_Open(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2501,9 +2501,9 @@ void Script_OpenForGameType(UiContext *param_1,itemDef_t *param_2,char **param_3
 
 // 825CA590  Script_CloseForGameType  (ui/ui_shared.cpp:1820)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_CloseForGameType(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2528,9 +2528,9 @@ void Script_CloseForGameType(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825CA610  Script_Close  (ui/ui_shared.cpp:1830)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_Close(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2614,9 +2614,9 @@ void Script_ForceClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA770  Script_Escape  (ui/ui_shared.cpp:1858)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_Escape(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2657,9 +2657,9 @@ void Script_Escape(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA820  Script_CloseForAllPlayers  (ui/ui_shared.cpp:1872)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_CloseForAllPlayers(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2708,9 +2708,9 @@ void Script_InGameOpen(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825CA8A0  Script_InGameClose  (ui/ui_shared.cpp:1902)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_InGameClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2732,9 +2732,9 @@ void Script_InGameClose(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 itemDef_t * Menu_FocusFirstSelectableItem(UiContext *param_1,menuDef_t *param_2)
 
@@ -2755,11 +2755,11 @@ itemDef_t * Menu_FocusFirstSelectableItem(UiContext *param_1,menuDef_t *param_2)
   if (0 < param_2->itemCount) {
     iVar3 = 0;
     do {
-      fVar5 = (float)in_f2;
-      in_f2 = (double)fVar5;
-      fVar6 = (float)in_f1;
-      in_f1 = (double)fVar6;
-      iVar1 = Item_SetFocus(param_1,*(itemDef_t **)((int)param_2->items + iVar3),fVar6,fVar5,
+      fVar5 = (float)in_f1;
+      in_f1 = (double)fVar5;
+      fVar6 = (float)in_f2;
+      in_f2 = (double)fVar6;
+      iVar1 = Item_SetFocus(param_1,*(itemDef_t **)((int)param_2->items + iVar3),fVar5,fVar6,
                             (ItemFocusReason)uVar2);
       if (iVar1 != 0) {
         return *(itemDef_t **)((int)((uVar4 & 0xffffffff) << 2) + (int)param_2->items);
@@ -2777,9 +2777,9 @@ itemDef_t * Menu_FocusFirstSelectableItem(UiContext *param_1,menuDef_t *param_2)
 
 // 825CF268  Script_FocusFirstInMenu  (ui/ui_shared.cpp:1951)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_FocusFirstInMenu(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2845,11 +2845,11 @@ void Script_SetFocusByDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
           iVar4 = I_stricmp(piVar2->dvarTest,acStack_440);
           if ((iVar4 == 0) && (iVar4 = Item_EnableShowViaDvar(piVar2,0x10), iVar4 != 0)) {
             Window_GetRect(&piVar2->window);
-            fVar7 = (float)in_f2;
-            in_f2 = (double)fVar7;
-            fVar8 = (float)in_f1;
-            in_f1 = (double)fVar8;
-            iVar4 = Item_SetFocus(param_1,piVar2,fVar8,fVar7,(ItemFocusReason)uVar5);
+            fVar7 = (float)in_f1;
+            in_f1 = (double)fVar7;
+            fVar8 = (float)in_f2;
+            in_f2 = (double)fVar8;
+            iVar4 = Item_SetFocus(param_1,piVar2,fVar7,fVar8,(ItemFocusReason)uVar5);
             if (iVar4 != 0) {
               return;
             }
@@ -2866,9 +2866,9 @@ void Script_SetFocusByDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BD078  Script_SetGameMode  (ui/ui_shared.cpp:2001)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetGameMode(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2930,9 +2930,9 @@ void Script_AddTextWrapper(LocalClientNum_t param_1,int param_2,char *param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_Exec(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -2976,9 +2976,9 @@ void Script_ExecFirstActiveClient(UiContext *param_1,itemDef_t *param_2,char **p
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ExecNow(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3003,9 +3003,9 @@ void Script_ExecNow(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825D0FC8  Script_ExecKeyPress  (ui/ui_shared.cpp:2067)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ExecKeyPress(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3028,9 +3028,9 @@ void Script_ExecKeyPress(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ConditionalExecHandler
                (LocalClientNum_t param_1,itemDef_t *param_2,char **param_3,
@@ -3148,9 +3148,9 @@ bool Script_ExecIfFloatsEqual(char *param_1,char *param_2)
 
 // 825BD560  Script_ExecOnDvarStringValue  (ui/ui_shared.cpp:2157)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ExecOnDvarStringValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3202,9 +3202,9 @@ void Script_ExecOnDvarFloatValue(UiContext *param_1,itemDef_t *param_2,char **pa
 
 // 825BD5C0  Script_ExecNowOnDvarStringValue  (ui/ui_shared.cpp:2175)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ExecNowOnDvarStringValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3220,9 +3220,9 @@ void Script_ExecNowOnDvarStringValue(UiContext *param_1,itemDef_t *param_2,char 
 
 // 825BD5E0  Script_ExecNowOnDvarIntValue  (ui/ui_shared.cpp:2181)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ExecNowOnDvarIntValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3238,9 +3238,9 @@ void Script_ExecNowOnDvarIntValue(UiContext *param_1,itemDef_t *param_2,char **p
 
 // 825BD600  Script_ExecNowOnDvarFloatValue  (ui/ui_shared.cpp:2187)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ExecNowOnDvarFloatValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3271,9 +3271,9 @@ void Script_RespondOnDvarStringValue(UiContext *param_1,itemDef_t *param_2,char 
 
 // 825BD630  Script_RespondOnDvarIntValue  (ui/ui_shared.cpp:2199)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_RespondOnDvarIntValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3285,9 +3285,9 @@ void Script_RespondOnDvarIntValue(UiContext *param_1,itemDef_t *param_2,char **p
 
 // 825BD640  Script_RespondOnDvarFloatValue  (ui/ui_shared.cpp:2205)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_RespondOnDvarFloatValue(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -3621,9 +3621,9 @@ bool Script_ParseLocalVarBool
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetFocus(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4309,9 +4309,9 @@ void Script_SetPlayerData_Internal
 
 // 825CB5A0  Script_SetPlayerData  (ui/ui_shared.cpp:2823)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetPlayerData(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4345,9 +4345,9 @@ void Script_SetPlayerData(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetPlayerDataSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4411,9 +4411,9 @@ void Script_SetPlayerDataSplitScreen(UiContext *param_1,itemDef_t *param_2,char 
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetMatchRulesData(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4457,9 +4457,9 @@ void Script_SetMatchRulesData(UiContext *param_1,itemDef_t *param_2,char **param
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_LoadOrSaveMatchRulesXX_GetRequired
                (UiContext *param_1,itemDef_t *param_2,char **param_3,int *param_4,int *param_5,
@@ -4584,9 +4584,9 @@ void Script_LoadMatchRulesDataFromHistory(UiContext *param_1,itemDef_t *param_2,
 
 // 825BE410  Script_SaveMatchDataRulesToPlayer  (ui/ui_shared.cpp:2962)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SaveMatchDataRulesToPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4606,9 +4606,9 @@ void Script_SaveMatchDataRulesToPlayer(UiContext *param_1,itemDef_t *param_2,cha
 
 // 825BE460  Script_SaveMatchRulesDataToHistory  (ui/ui_shared.cpp:2974)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SaveMatchRulesDataToHistory(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4628,9 +4628,9 @@ void Script_SaveMatchRulesDataToHistory(UiContext *param_1,itemDef_t *param_2,ch
 
 // 825BE4B0  Script_SetUsingMatchRulesData  (ui/ui_shared.cpp:2986)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetUsingMatchRulesData(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4758,9 +4758,9 @@ void Script_LoadMatchRulesDataDefaults(UiContext *param_1,itemDef_t *param_2,cha
 
 // 825BE730  Script_SaveMatchRulesDataDefaults  (ui/ui_shared.cpp:3024)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SaveMatchRulesDataDefaults(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4777,9 +4777,9 @@ void Script_SaveMatchRulesDataDefaults(UiContext *param_1,itemDef_t *param_2,cha
 
 // 825BE770  Script_OnlineVaultEditMetaData  (ui/ui_shared.cpp:3035)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_OnlineVaultEditMetaData(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -4982,9 +4982,9 @@ LAB_825beb20:
 
 // 825BEC88  Script_UseCustomMapRotation  (ui/ui_shared.cpp:3136)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_UseCustomMapRotation(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -5091,9 +5091,9 @@ LAB_825bee2c:
 
 // 825BEEB8  Script_UseIntermissionTimer  (ui/ui_shared.cpp:3164)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Script_UseIntermissionTimer(UiContext *param_1,itemDef_t *param_2,char **param_3)
@@ -5215,9 +5215,9 @@ LAB_825bf05c:
 
 // 825BF160  Script_StopIntermissionTimer  (ui/ui_shared.cpp:3204)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Script_StopIntermissionTimer(UiContext *param_1,itemDef_t *param_2,char **param_3)
@@ -5420,9 +5420,9 @@ void Script_SetCardItemNew_Internal(int param_1,char *param_2,int param_3,bool p
 
 // 825BF2D0  Script_DeleteEliteCacFile  (ui/ui_shared.cpp:3262)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_DeleteEliteCacFile(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -5621,9 +5621,9 @@ void Script_SetCardIcon_Internal
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetCardTitle_Internal
                (LocalClientNum_t param_1,UiContext *param_2,itemDef_t *param_3,char **param_4)
@@ -5908,9 +5908,9 @@ void Script_SetProfileItemNew_Internal
 
 // 825BF9F0  Script_SetCardIcon  (ui/ui_shared.cpp:3442)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetCardIcon(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -5942,9 +5942,9 @@ void Script_SetCardIcon(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BFA90  Script_SetCardTitle  (ui/ui_shared.cpp:3454)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetCardTitle(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -5978,9 +5978,9 @@ void Script_SetCardTitle(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825BFB28  Script_SetCardIconNew  (ui/ui_shared.cpp:3466)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetCardIconNew(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6082,9 +6082,9 @@ void Script_SetProfileItemNew(UiContext *param_1,itemDef_t *param_2,char **param
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetCardIconSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6148,9 +6148,9 @@ void Script_SetCardIconSplitScreen(UiContext *param_1,itemDef_t *param_2,char **
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetCardTitleSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6352,9 +6352,9 @@ void Script_SetCardTitleNewSplitScreen(UiContext *param_1,itemDef_t *param_2,cha
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_PurchasePrestigeTitle(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6424,9 +6424,9 @@ void Script_PurchasePrestigeTitle(UiContext *param_1,itemDef_t *param_2,char **p
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetProfileItemNewSplitScreen(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6511,9 +6511,9 @@ UILocalVar * Script_ParseLocalVar(UiContext *param_1,char **param_2)
 
 // 825C05F0  Script_SetLocalVarBool  (ui/ui_shared.cpp:3701)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetLocalVarBool(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6541,9 +6541,9 @@ void Script_SetLocalVarBool(UiContext *param_1,itemDef_t *param_2,char **param_3
 
 // 825C0690  Script_SetLocalVarInt  (ui/ui_shared.cpp:3714)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetLocalVarInt(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6631,9 +6631,9 @@ void Script_SetLocalVarString(UiContext *param_1,itemDef_t *param_2,char **param
 
 // 825C0850  Script_FeederTop  (ui/ui_shared.cpp:3753)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_FeederTop(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6661,9 +6661,9 @@ void Script_FeederTop(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_FeederBottom(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6778,9 +6778,9 @@ ulong64 Script_PartyMember_GetXUID(LocalClientNum_t param_1)
 
 // 825C0968  Script_ShowGamerCard  (ui/ui_shared.cpp:3861)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ShowGamerCard(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6835,9 +6835,9 @@ void Script_ShowSplitscreenGamerCard(UiContext *param_1,itemDef_t *param_2,char 
 
 // 825C0A50  Script_ReportPlayerOffensive  (ui/ui_shared.cpp:4016)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ReportPlayerOffensive(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6858,9 +6858,9 @@ void Script_ReportPlayerOffensive(UiContext *param_1,itemDef_t *param_2,char **p
 
 // 825C0AD0  Script_ReportPlayerExploiting  (ui/ui_shared.cpp:4041)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ReportPlayerExploiting(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6927,9 +6927,9 @@ void Script_ReportPlayerBoosting(UiContext *param_1,itemDef_t *param_2,char **pa
 
 // 825C0C50  Script_StorePopupXuid  (ui/ui_shared.cpp:4118)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_StorePopupXuid(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -6942,9 +6942,9 @@ void Script_StorePopupXuid(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C0C80  Script_KickPlayer  (ui/ui_shared.cpp:4125)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Script_KickPlayer(UiContext *param_1,itemDef_t *param_2,char **param_3)
@@ -7048,9 +7048,9 @@ void Script_GetKickPlayerQuestionString(UiContext *param_1,itemDef_t *param_2,ch
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Script_MakeHost(UiContext *param_1,itemDef_t *param_2,char **param_3)
@@ -7102,9 +7102,9 @@ void Script_MakeHost(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Script_GetHostMigrateQuestionString(UiContext *param_1,itemDef_t *param_2,char **param_3)
@@ -7152,9 +7152,9 @@ void Script_GetHostMigrateQuestionString(UiContext *param_1,itemDef_t *param_2,c
 
 // 825C0F40  Script_PartyUpdateMissingMapPackDvar  (ui/ui_shared.cpp:4317)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Script_PartyUpdateMissingMapPackDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
@@ -7233,9 +7233,9 @@ void Script_TogglePlayerMute(UiContext *param_1,itemDef_t *param_2,char **param_
 
 // 825C0F48  Script_ResolveError  (ui/ui_shared.cpp:4432)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ResolveError(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7254,9 +7254,9 @@ void Script_ResolveError(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C0FC0  Script_RunCompletionResolve  (ui/ui_shared.cpp:4443)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_RunCompletionResolve(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7275,9 +7275,9 @@ void Script_RunCompletionResolve(UiContext *param_1,itemDef_t *param_2,char **pa
 
 // 825C1038  Script_ClearCompletionResolve  (ui/ui_shared.cpp:4456)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_ClearCompletionResolve(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7289,9 +7289,9 @@ void Script_ClearCompletionResolve(UiContext *param_1,itemDef_t *param_2,char **
 
 // 825C1050  Script_HandleTransition  (ui/ui_shared.cpp:4464)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_HandleTransition(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7305,9 +7305,9 @@ void Script_HandleTransition(UiContext *param_1,itemDef_t *param_2,char **param_
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_PlayMenuVideo(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7482,9 +7482,9 @@ void Script_SetBackgroundVideo(UiContext *param_1,itemDef_t *param_2,char **para
 
 // 825C1468  Script_PartyAbortWaiting  (ui/ui_shared.cpp:4545)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_PartyAbortWaiting(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7655,9 +7655,9 @@ void Script_ClearEntitlementNew(UiContext *param_1,itemDef_t *param_2,char **par
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetPastTitleRank(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7727,9 +7727,9 @@ void Script_SetPastTitleRank(UiContext *param_1,itemDef_t *param_2,char **param_
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetPastTitlePrestige(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7902,9 +7902,9 @@ void Script_SetInitialGameMode(UiContext *param_1,itemDef_t *param_2,char **para
 
 // 825C1E88  Script_SetDvar  (ui/ui_shared.cpp:4922)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_SetDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7930,9 +7930,9 @@ void Script_SetDvar(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
 // 825C1F28  Script_AntiCheatBanCheck  (ui/ui_shared.cpp:4939)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Script_AntiCheatBanCheck(UiContext *param_1,itemDef_t *param_2,char **param_3)
 
@@ -7961,9 +7961,9 @@ void Script_AntiCheatBanCheck(UiContext *param_1,itemDef_t *param_2,char **param
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_RunScript(UiContext *param_1,itemDef_t *param_2,char *param_3)
 
@@ -8178,9 +8178,9 @@ void Item_HandleEvent(UiContext *param_1,itemDef_t *param_2,MenuEventHandlerSet 
 
 // 825C2548  Item_IsDisabled  (ui/ui_shared.cpp:5280)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Item_IsDisabled(LocalClientNum_t param_1,itemDef_t *param_2)
 
@@ -8203,9 +8203,9 @@ bool Item_IsDisabled(LocalClientNum_t param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_SetFocus(UiContext *param_1,itemDef_t *param_2,float param_3,float param_4,
                  ItemFocusReason param_5)
@@ -8362,9 +8362,9 @@ int Item_ListBox_Viewmax(LocalClientNum_t param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float GetListBoxThumbPositionForIndex(LocalClientNum_t param_1,itemDef_t *param_2,int param_3)
 
@@ -8407,9 +8407,9 @@ float GetListBoxThumbPositionForIndex(LocalClientNum_t param_1,itemDef_t *param_
 
 // 825CBD30  Item_ListBox_ThumbPosition  (ui/ui_shared.cpp:5510)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float Item_ListBox_ThumbPosition(LocalClientNum_t param_1,itemDef_t *param_2)
 
@@ -8522,9 +8522,9 @@ int Item_OwnerDraw_HandleKey(itemDef_t *param_1,int param_2)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_ListBox_SetCursorPos(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4)
 
@@ -8555,9 +8555,9 @@ void Item_ListBox_SetCursorPos(LocalClientNum_t param_1,itemDef_t *param_2,int p
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_ListBox_Page(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4,
                       int param_5,int param_6)
@@ -8593,9 +8593,9 @@ void Item_ListBox_Page(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,i
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_ListBox_Scroll(LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4,
                         int param_5,int param_6)
@@ -8843,9 +8843,9 @@ switchD_825cfcb8_caseD_1d:
 
 // 825C2898  Item_ShouldHandleKey  (ui/ui_shared.cpp:6315)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Item_ShouldHandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
@@ -9231,9 +9231,9 @@ LAB_825c2f78:
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_Multi_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
@@ -9285,9 +9285,9 @@ int Item_Multi_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_DvarEnum_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
@@ -9351,9 +9351,9 @@ bool Item_IsTextField(itemDef_t *param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_TextField_BeginEdit(UiContext *param_1,itemDef_t *param_2)
 
@@ -9457,9 +9457,9 @@ void Item_TextField_EnsureCursorVisible(LocalClientNum_t param_1,itemDef_t *para
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_TextField_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
@@ -9761,9 +9761,9 @@ bool Item_Slider_IsRightKey(int param_1)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_Slider_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
 
@@ -9818,9 +9818,9 @@ int Item_Slider_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int 
 
 // 825D08D8  Item_HandleKey  (ui/ui_shared.cpp:7280)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
 
@@ -9882,9 +9882,9 @@ void Item_Action(UiContext *param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_RunHasFocus(UiContext *param_1,itemDef_t *param_2)
 
@@ -9911,9 +9911,9 @@ void Item_RunHasFocus(UiContext *param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 itemDef_t * Menu_SetPrevCursorItem(UiContext *param_1,menuDef_t *param_2,ItemFocusReason param_3)
 
@@ -10119,9 +10119,9 @@ void Menus_ResetFxBirthTimeOnItems(UiContext *param_1,menuDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_17 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menus_Open(UiContext *param_1,menuDef_t *param_2)
 
@@ -10287,9 +10287,9 @@ void Menus_PrintAllLoadedMenus(UiContext *param_1)
 
 // 825C3A58  Item_CorrectedTextRect  (ui/ui_shared.cpp:7659)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 rectDef_s * Item_CorrectedTextRect(LocalClientNum_t param_1,itemDef_t *param_2)
 
@@ -10330,9 +10330,9 @@ rectDef_s * Item_CorrectedTextRect(LocalClientNum_t param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Menu_CheckOnKey(UiContext *param_1,menuDef_t *param_2,int param_3)
 
@@ -10687,9 +10687,9 @@ void ToWindowCoords(float *param_1,float *param_2,windowDef_t *param_3)
 
 // 825C3D48  Item_GetFont  (ui/ui_shared.cpp:8073)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 Font_s * Item_GetFont(LocalClientNum_t param_1,itemDef_t *param_2)
 
@@ -10865,9 +10865,9 @@ void GetBlinkColor(UiContext *param_1,float *param_2,float *param_3)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_TextColor(UiContext *param_1,itemDef_t *param_2,float (*param_3) [4])
 
@@ -11126,8 +11126,8 @@ void _DrawWrappedText(ScreenPlacement *param_1,char *param_2,rectDef_s *param_3,
   uint local_51c;
   char local_4f0 [1264];
   
-  dVar18 = (double)param_7;
   dVar22 = (double)param_6;
+  dVar18 = (double)param_7;
   dVar15 = (double)param_5;
   lVar14 = (longlong)(int)param_2;
   local_520 = '7';
@@ -11941,9 +11941,9 @@ LAB_825c5b08:
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_Text_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -12108,9 +12108,9 @@ LAB_825ccd04:
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_TextField_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -12313,9 +12313,9 @@ LAB_825cd4f4:
 
 // 825CD520  Item_Multi_Paint  (ui/ui_shared.cpp:9219)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_Multi_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -12614,9 +12614,9 @@ int UI_GetKeyBindingLocalizedStringSingle
 /* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_Slider_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -12678,9 +12678,9 @@ void Item_Slider_Paint(UiContext *param_1,itemDef_t *param_2)
 
 // 825CD5C0  Item_Bind_Paint  (ui/ui_shared.cpp:9386)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_Bind_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -12728,9 +12728,9 @@ bool Item_Bind_IsActionKey(UiContext *param_1,itemDef_t *param_2,int param_3)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_Bind_HandleKey(UiContext *param_1,itemDef_t *param_2,int param_3,int param_4)
 
@@ -12851,8 +12851,8 @@ void Item_ListBox_PaintTextElem
   
   dVar14 = (double)param_10;
   dVar12 = (double)param_7;
-  dVar13 = (double)param_8;
   dVar15 = (double)param_9;
+  dVar13 = (double)param_8;
   if (param_2->textStyle == 9) {
     uVar11 = 1;
   }
@@ -12958,9 +12958,9 @@ void Item_ListBox_PaintTextElem
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_ListBox_PaintBackground
                (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,float param_4,int param_5)
@@ -13032,8 +13032,8 @@ void Item_ListBox_PaintHighlight
   double dVar14;
   float fVar15;
   
-  dVar10 = (double)param_3;
   dVar11 = (double)param_4;
+  dVar10 = (double)param_3;
   plVar1 = Item_GetListBoxDef(param_2);
   if (plVar1 == (listBoxDef_s *)0x0) {
     in_r5 = 0;
@@ -13122,9 +13122,9 @@ int Item_ListBox_GetVisibleElementCount(LocalClientNum_t param_1,itemDef_t *para
 /* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_ListBox_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -13385,9 +13385,9 @@ void Item_ListBox_Paint(UiContext *param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_OwnerDraw_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -13526,9 +13526,9 @@ LAB_825ce0a4:
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_GameMsgWindow_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -13624,9 +13624,9 @@ void Item_NewsTicker_Reset(UiContext *param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_NewsTicker_Paint(UiContext *param_1,itemDef_t *param_2)
 
@@ -14128,9 +14128,9 @@ menuDef_t * Menu_GetTopOfStack(UiContext *param_1,int param_2)
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Menu_SetFeederSelection
                (UiContext *param_1,menuDef_t *param_2,int param_3,int param_4,char *param_5)
@@ -14252,9 +14252,9 @@ int Menus_AnyFullScreenVisible(UiContext *param_1)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Menu_IsVisible(UiContext *param_1,menuDef_t *param_2)
 
@@ -14342,9 +14342,9 @@ bool Menus_ActiveMenuAllowSignin(UiContext *param_1)
 
 // 825C7538  SetCurrentMenuDef  (ui/ui_shared.cpp:10640)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SetCurrentMenuDef(UiContext *param_1,menuDef_t *param_2)
 
@@ -14380,9 +14380,9 @@ void SetCurrentItemDef(UiContext *param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Menu_Paint(UiContext *param_1,menuDef_t *param_2)
 
@@ -14902,9 +14902,9 @@ void TRACK_ui_shared(void)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -15875,9 +15875,9 @@ int UI_GetIndexForMapLoadName(char *param_1)
 
 // 825C8E50  UI_FeederItemText_Maps  (ui/ui_shared.cpp:12079)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * UI_FeederItemText_Maps
                  (LocalClientNum_t param_1,itemDef_t *param_2,int param_3,int param_4,

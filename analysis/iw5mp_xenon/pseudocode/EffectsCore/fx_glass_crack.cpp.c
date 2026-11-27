@@ -2013,8 +2013,8 @@ void Glass_PushCrackBranch
   double dVar4;
   
   dVar4 = (double)param_7;
-  dVar3 = (double)param_6;
   dVar2 = (double)param_4;
+  dVar3 = (double)param_6;
   if (0x1f < param_1->branchStackLevel) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"
                     ,0x52f,0,
@@ -2103,8 +2103,8 @@ void Glass_DeflectVectorWithSign
   double dVar6;
   double dVar7;
   
-  dVar7 = (double)param_3;
   dVar6 = (double)param_2;
+  dVar7 = (double)param_3;
   dVar5 = (double)param_1;
   if (dVar6 <= dVar5) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_glass_crack.cpp"

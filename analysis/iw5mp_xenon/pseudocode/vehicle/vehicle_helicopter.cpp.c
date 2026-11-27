@@ -113,8 +113,8 @@ void VEH_UpdateAngleAndAngularVel
   float fVar17;
   
   dVar6 = (double)param_5;
-  dVar15 = (double)param_4;
   dVar5 = (double)param_3;
+  dVar15 = (double)param_4;
   dVar16 = (double)param_2;
   iVar2 = (param_1 + 5) * 4;
   dVar8 = 0.0027777778450399637;
@@ -287,8 +287,8 @@ float VEH_CalcAccelFraction(float param_1,float param_2)
   double dVar3;
   double dVar4;
   
-  dVar1 = (double)param_1;
   dVar2 = (double)param_2;
+  dVar1 = (double)param_1;
   dVar4 = 0.0;
   if (dVar2 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter.cpp"
@@ -1362,8 +1362,8 @@ void HeliPath_SetYawSpeed
   double dVar5;
   
   dVar4 = (double)param_5;
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (HeliPathPos *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_helicopter.cpp"

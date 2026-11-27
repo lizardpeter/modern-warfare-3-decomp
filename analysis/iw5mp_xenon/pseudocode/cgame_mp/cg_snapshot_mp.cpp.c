@@ -428,9 +428,9 @@ void CG_ResetEntityForKillcamEnding(LocalClientNum_t param_1,centity_s *param_2,
 
 /* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_SetInitialSnapshot(LocalClientNum_t param_1,snapshot_s *param_2)
 

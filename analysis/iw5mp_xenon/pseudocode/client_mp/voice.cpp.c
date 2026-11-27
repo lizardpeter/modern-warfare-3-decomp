@@ -988,8 +988,8 @@ int Voice_IncomingVoiceData(SessionData *param_1,int param_2,uchar *param_3,int 
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Voice_GetLocalVoiceData
               (SessionData *param_1,LocalClientNum_t param_2,ClientVoicePacket_t *param_3)
@@ -1073,8 +1073,8 @@ bool Voice_IsXuidTalking(SessionData *param_1,ulong64 param_2)
 
 // 8239FD48  Voice_IsLocalClientTalking  (client_mp/voice.cpp:995)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool Voice_IsLocalClientTalking(SessionData *param_1,LocalClientNum_t param_2)
 

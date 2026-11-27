@@ -105,9 +105,9 @@ void IWNet_WriteStorageUtil_FileId(IWNetCommandData *param_1,msg_t *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_WriteStorageUtil_FileName(IWNetCommandData *param_1,msg_t *param_2)
 
@@ -131,9 +131,9 @@ void IWNet_WriteStorageUtil_FileName(IWNetCommandData *param_1,msg_t *param_2)
 
 // 826E3000  IWNet_WriteStorage_BeginWrite  (iwnet/iwnet_storage.cpp:94)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_WriteStorage_BeginWrite(int param_1,IWNetCommandData *param_2,msg_t *param_3)
 
@@ -210,9 +210,9 @@ void IWNet_WriteStorage_EndWrite(int param_1,IWNetCommandData *param_2,msg_t *pa
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_WriteStorage_BeginRead(int param_1,IWNetCommandData *param_2,msg_t *param_3)
 
@@ -239,9 +239,9 @@ void IWNet_WriteStorage_BeginRead(int param_1,IWNetCommandData *param_2,msg_t *p
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_WriteStorage_Read(int param_1,IWNetCommandData *param_2,msg_t *param_3)
 
@@ -269,9 +269,9 @@ void IWNet_WriteStorage_Read(int param_1,IWNetCommandData *param_2,msg_t *param_
 
 // 826E3250  IWNet_WriteStorage_EndRead  (iwnet/iwnet_storage.cpp:186)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_WriteStorage_EndRead(int param_1,IWNetCommandData *param_2,msg_t *param_3)
 
@@ -318,9 +318,9 @@ void IWNet_Storage_WriteCommand(int param_1,IWNetCommandData *param_2,msg_t *par
 
 // 826E3378  IWNet_Storage_UtilNextWrite  (iwnet/iwnet_storage.cpp:238)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_Storage_UtilNextWrite(IWNetCommandData *param_1,msg_t *param_2)
 
@@ -354,9 +354,9 @@ void IWNet_Storage_UtilNextRead(IWNetCommandData *param_1,msg_t *param_2)
 
 // 826E3408  IWNet_Storage_HandleReplyFileBeginWrite  (iwnet/iwnet_storage.cpp:254)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_Storage_HandleReplyFileBeginWrite(IWNetCommandData *param_1,msg_t *param_2)
 
@@ -408,9 +408,9 @@ void IWNet_Storage_HandleReplyFileWrite(IWNetCommandData *param_1,msg_t *param_2
 
 // 826E3530  IWNet_Storage_HandleReplyFileEndWrite  (iwnet/iwnet_storage.cpp:291)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_Storage_HandleReplyFileEndWrite(IWNetCommandData *param_1,msg_t *param_2)
 
@@ -430,9 +430,9 @@ void IWNet_Storage_HandleReplyFileEndWrite(IWNetCommandData *param_1,msg_t *para
 
 // 826E3598  IWNet_Storage_HandleReplyFileBeginRead  (iwnet/iwnet_storage.cpp:298)
 
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_Storage_HandleReplyFileBeginRead(IWNetCommandData *param_1,msg_t *param_2)
 
@@ -459,9 +459,9 @@ void IWNet_Storage_HandleReplyFileBeginRead(IWNetCommandData *param_1,msg_t *par
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_Storage_HandleReplyFileRead(IWNetCommandData *param_1,msg_t *param_2)
 
@@ -532,9 +532,9 @@ void IWNet_Storage_HandleReplyFileEndRead(IWNetCommandData *param_1,msg_t *param
 
 // 826E3C60  IWNet_Storage_HandleError<3>  (iwnet/iwnet_storage.cpp:431)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_Storage_HandleError<3>(IWNetCommandData *param_1,msg_t *param_2)
 
@@ -554,9 +554,9 @@ void IWNet_Storage_HandleError<3>(IWNetCommandData *param_1,msg_t *param_2)
 
 // 826E3CC8  IWNet_Storage_HandleError<1>  (iwnet/iwnet_storage.cpp:431)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
 /* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_Storage_HandleError<1>(IWNetCommandData *param_1,msg_t *param_2)
 

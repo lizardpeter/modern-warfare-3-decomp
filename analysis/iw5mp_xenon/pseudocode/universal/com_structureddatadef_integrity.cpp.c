@@ -517,8 +517,8 @@ int StructuredData_ValidateFloat(char *param_1,float param_2,float param_3,Compa
   double dVar6;
   float local_50 [20];
   
-  dVar4 = (double)param_2;
   dVar6 = (double)param_3;
+  dVar4 = (double)param_2;
   if (in_r6 == (StructuredDataLookup *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_structureddatadef_integrity.cpp"
                     ,0x19f,0,"%s");

@@ -706,8 +706,8 @@ void NotifyWeaponSwitchStarted(gentity_s *param_1,Weapon param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void HandleClientEvent(gclient_s *param_1,gentity_s *param_2,int param_3,int param_4)
@@ -944,8 +944,8 @@ void G_SetClientContents(gentity_s *param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void G_PlayerStateToEntityStateExtrapolate
                (playerState_s *param_1,entityState_s *param_2,int param_3,int param_4)

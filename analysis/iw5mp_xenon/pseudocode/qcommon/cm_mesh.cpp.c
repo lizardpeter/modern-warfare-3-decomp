@@ -628,84 +628,83 @@ void CM_ClosestPointOnTri
   float fVar3;
   float fVar4;
   float fVar5;
-  float fVar6;
   float *in_r10;
   
-  fVar2 = *param_1 - *param_2;
+  fVar3 = *param_1 - *param_2;
   fVar1 = param_5 * param_7 - param_6 * param_6;
-  fVar4 = (param_1[2] - param_2[2]) * param_3[2] +
-          param_3[1] * (param_1[1] - param_2[1]) + *param_3 * fVar2;
-  fVar6 = param_4[2] * (param_1[2] - param_2[2]) +
-          *param_4 * fVar2 + param_4[1] * (param_1[1] - param_2[1]);
-  fVar5 = fVar6 * param_6 - fVar4 * param_7;
-  fVar2 = fVar4 * param_6 - fVar6 * param_5;
-  if (fVar1 < fVar2 + fVar5) {
+  fVar2 = (param_1[2] - param_2[2]) * param_3[2] +
+          param_3[1] * (param_1[1] - param_2[1]) + *param_3 * fVar3;
+  fVar5 = param_4[2] * (param_1[2] - param_2[2]) +
+          *param_4 * fVar3 + param_4[1] * (param_1[1] - param_2[1]);
+  fVar4 = fVar5 * param_6 - fVar2 * param_7;
+  fVar3 = fVar2 * param_6 - fVar5 * param_5;
+  if (fVar1 < fVar3 + fVar4) {
     fVar1 = 1.0;
-    if (0.0 <= fVar5) {
-      if (fVar2 < 0.0) {
-        if (0.0 < fVar4 + param_5) goto LAB_824c5640;
+    if (0.0 <= fVar4) {
+      if (fVar3 < 0.0) {
+        if (0.0 < fVar2 + param_5) goto LAB_824c5640;
+        fVar4 = fVar1;
         fVar3 = 0.0;
-        fVar2 = fVar1;
-        if (fVar4 + param_5 <= fVar6 + param_6) goto LAB_824c56a0;
+        if (fVar2 + param_5 <= fVar5 + param_6) goto LAB_824c56a0;
       }
     }
     else {
-      if (0.0 < fVar6 + param_7) goto LAB_824c556c;
+      if (0.0 < fVar5 + param_7) goto LAB_824c556c;
+      fVar4 = 0.0;
       fVar3 = fVar1;
-      fVar2 = 0.0;
-      if (fVar6 + param_7 <= fVar4 + param_6) goto LAB_824c56a0;
+      if (fVar5 + param_7 <= fVar2 + param_6) goto LAB_824c56a0;
     }
-    fVar4 = ((param_7 - param_6) + fVar6) - fVar4;
-    if (0.0 <= fVar4) {
-      fVar2 = -(param_6 * 2.0 - param_5) + param_7;
-      if (fVar4 < fVar2) {
-        fVar2 = fVar4 / fVar2;
-        fVar3 = 1.0 - fVar2;
+    fVar2 = ((param_7 - param_6) + fVar5) - fVar2;
+    if (0.0 <= fVar2) {
+      fVar4 = -(param_6 * 2.0 - param_5) + param_7;
+      if (fVar2 < fVar4) {
+        fVar4 = fVar2 / fVar4;
+        fVar3 = 1.0 - fVar4;
         goto LAB_824c56a0;
       }
 LAB_824c5690:
+      fVar4 = fVar1;
       fVar3 = 0.0;
-      fVar2 = fVar1;
       goto LAB_824c56a0;
     }
   }
   else {
-    if (0.0 <= fVar5) {
-      if (0.0 <= fVar2) {
+    if (0.0 <= fVar4) {
+      if (0.0 <= fVar3) {
         fVar1 = 1.0 / fVar1;
-        fVar3 = fVar1 * fVar2;
-        fVar2 = fVar1 * fVar5;
+        fVar4 = fVar1 * fVar4;
+        fVar3 = fVar1 * fVar3;
         goto LAB_824c56a0;
       }
 LAB_824c5640:
       fVar3 = 0.0;
-      fVar2 = fVar3;
-      if ((fVar4 < 0.0) && (fVar2 = 1.0, -fVar4 < param_5)) {
-        fVar2 = -(fVar4 / param_5);
+      fVar4 = fVar3;
+      if ((fVar2 < 0.0) && (fVar4 = 1.0, -fVar2 < param_5)) {
+        fVar4 = -(fVar2 / param_5);
       }
       goto LAB_824c56a0;
     }
-    if (fVar2 < 0.0) {
-      if (fVar4 < 0.0) goto LAB_824c5640;
+    if (fVar3 < 0.0) {
+      if (fVar2 < 0.0) goto LAB_824c5640;
+      fVar4 = 0.0;
       fVar3 = 0.0;
-      fVar2 = 0.0;
-      if (0.0 <= fVar6) goto LAB_824c56a0;
+      if (0.0 <= fVar5) goto LAB_824c56a0;
     }
 LAB_824c556c:
     fVar1 = 0.0;
-    if (0.0 <= fVar6) goto LAB_824c5690;
-    if (-fVar6 < param_7) {
-      fVar3 = -(fVar6 / param_7);
-      fVar2 = fVar1;
+    if (0.0 <= fVar5) goto LAB_824c5690;
+    if (-fVar5 < param_7) {
+      fVar4 = fVar1;
+      fVar3 = -(fVar5 / param_7);
       goto LAB_824c56a0;
     }
   }
+  fVar4 = 0.0;
   fVar3 = 1.0;
-  fVar2 = 0.0;
 LAB_824c56a0:
-  *in_r10 = *param_4 * fVar3 + *param_3 * fVar2 + *param_2;
-  in_r10[1] = param_3[1] * fVar2 + param_4[1] * fVar3 + param_2[1];
-  in_r10[2] = param_4[2] * fVar3 + fVar2 * param_3[2] + param_2[2];
+  *in_r10 = *param_4 * fVar3 + *param_3 * fVar4 + *param_2;
+  in_r10[1] = param_3[1] * fVar4 + param_4[1] * fVar3 + param_2[1];
+  in_r10[2] = param_4[2] * fVar3 + fVar4 * param_3[2] + param_2[2];
   return;
 }
 

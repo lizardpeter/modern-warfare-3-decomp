@@ -113,8 +113,8 @@ bool UseAltLaser(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void AddCore(LocalClientNum_t param_1,centity_s *param_2,orientation_t *param_3,float *param_4,
@@ -325,9 +325,9 @@ bool CG_GetActiveWeaponBoneIndex
 
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_LaserDraw(LocalClientNum_t param_1,playerState_s *param_2,centity_s *param_3,DObj *param_4,
                  cpose_t *param_5,float *param_6,LaserOwnerEnum param_7,LaserLightEnum param_8)

@@ -435,9 +435,9 @@ float DevGui_UpdateFloatScroll
   dVar6 = (double)param_5;
   dVar7 = (double)param_7;
   dVar5 = (double)param_4;
-  dVar2 = (double)param_1;
   dVar3 = (double)param_2;
   dVar4 = (double)param_3;
+  dVar2 = (double)param_1;
   dVar9 = (double)(float)(dVar5 - dVar4);
   dVar8 = 0.0;
   if (dVar9 < 0.0) {

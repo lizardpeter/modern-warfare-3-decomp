@@ -1678,8 +1678,8 @@ int CG_PlayEntitySoundAliasCompassPing
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int CG_PlayEntitySoundAliasFootstep
@@ -2126,8 +2126,8 @@ int CG_PlaySoundAliasScaled
   double dVar7;
   double dVar8;
   
-  dVar8 = (double)param_6;
   dVar7 = (double)param_5;
+  dVar8 = (double)param_6;
   if ((((param_4 != (snd_alias_list_t *)0x0) && (param_4->aliasName != (char *)0x0)) &&
       (pfVar6 = param_3,
       bVar4 = CG_ShouldPlaySoundOnLocalClient(param_1,param_2,param_3,param_4->aliasName), bVar4))

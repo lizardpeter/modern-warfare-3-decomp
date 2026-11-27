@@ -501,8 +501,8 @@ void dBodySetPosition(dxBody *param_1,float param_2,float param_3,float param_4)
   double dVar4;
   
   dVar4 = (double)param_4;
-  dVar3 = (double)param_3;
   dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x16c,0,"%s");
@@ -737,8 +737,8 @@ void dBodySetLinearVel(dxBody *param_1,float param_2,float param_3,float param_4
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
@@ -775,9 +775,9 @@ void dBodySetAngularVel(dxBody *param_1,float param_2,float param_3,float param_
   double dVar2;
   double dVar3;
   
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x1cd,0,"%s");
@@ -933,9 +933,9 @@ void dBodyAddRelForce(dxBody *param_1,float param_2,float param_3,float param_4)
   double dVar10;
   double dVar11;
   
+  dVar10 = (double)param_3;
   dVar11 = (double)param_4;
   dVar9 = (double)param_2;
-  dVar10 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x214,0,"%s");
@@ -984,8 +984,8 @@ void dBodyAddRelTorque(dxBody *param_1,float param_2,float param_3,float param_4
   double dVar9;
   
   dVar9 = (double)param_4;
-  dVar8 = (double)param_3;
   dVar7 = (double)param_2;
+  dVar8 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x225,0,"%s");
@@ -1053,9 +1053,9 @@ void dBodyAddForceAtPos(dxBody *param_1,float param_2,float param_3,float param_
   dVar7 = (double)param_5;
   dVar8 = (double)param_6;
   dVar9 = (double)param_7;
+  dVar5 = (double)param_3;
   dVar6 = (double)param_4;
   dVar4 = (double)param_2;
-  dVar5 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x23a,0,"%s");
@@ -1147,8 +1147,8 @@ void dBodyAddForceAtRelPos
   dVar19 = (double)param_7;
   dVar20 = (double)param_5;
   dVar15 = (double)param_2;
-  dVar16 = (double)param_3;
   dVar17 = (double)param_4;
+  dVar16 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",599
                     ,0,"%s");
@@ -1249,8 +1249,8 @@ void dBodyAddRelForceAtPos
   dVar15 = (double)param_6;
   dVar16 = (double)param_7;
   dVar14 = (double)param_5;
-  dVar13 = (double)param_4;
   dVar12 = (double)param_3;
+  dVar13 = (double)param_4;
   dVar11 = (double)param_2;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
@@ -1356,9 +1356,9 @@ void dBodyAddRelForceAtRelPos
   dVar21 = (double)param_6;
   dVar22 = (double)param_7;
   dVar19 = (double)param_5;
+  dVar15 = (double)param_3;
   dVar18 = (double)param_4;
   dVar13 = (double)param_2;
-  dVar15 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x295,0,"%s");
@@ -1469,8 +1469,8 @@ void dBodySetForce(dxBody *param_1,float param_2,float param_3,float param_4)
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
@@ -1507,9 +1507,9 @@ void dBodySetTorque(dxBody *param_1,float param_2,float param_3,float param_4)
   double dVar2;
   double dVar3;
   
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2cd,0,"%s");
@@ -1550,8 +1550,8 @@ void dBodyGetRelPointPos(dxBody *param_1,float param_2,float param_3,float param
   double dVar9;
   
   dVar9 = (double)param_4;
-  dVar8 = (double)param_3;
   dVar7 = (double)param_2;
+  dVar8 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2db,0,"%s");
@@ -1600,9 +1600,9 @@ void dBodyGetRelPointVel(dxBody *param_1,float param_2,float param_3,float param
   double dVar14;
   double dVar15;
   
+  dVar14 = (double)param_3;
   dVar15 = (double)param_4;
   dVar13 = (double)param_2;
-  dVar14 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2eb,0,"%s");
@@ -1652,8 +1652,8 @@ void dBodyGetPointVel(dxBody *param_1,float param_2,float param_3,float param_4,
   double dVar9;
   
   dVar9 = (double)param_4;
-  dVar8 = (double)param_3;
   dVar7 = (double)param_2;
+  dVar8 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x2fc,0,"%s");
@@ -1689,8 +1689,8 @@ void dBodyGetPosRelPoint(dxBody *param_1,float param_2,float param_3,float param
   double dVar6;
   
   dVar6 = (double)param_4;
-  dVar5 = (double)param_3;
   dVar4 = (double)param_2;
+  dVar5 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x30c,0,"%s");
@@ -1719,8 +1719,8 @@ void dBodyVectorToWorld(dxBody *param_1,float param_2,float param_3,float param_
   double dVar3;
   
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x319,0,"%s");
@@ -1748,8 +1748,8 @@ void dBodyVectorFromWorld(dxBody *param_1,float param_2,float param_3,float para
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
@@ -1803,8 +1803,8 @@ void dBodySetFiniteRotationAxis(dxBody *param_1,float param_2,float param_3,floa
   double dVar4;
   
   dVar4 = (double)param_4;
-  dVar3 = (double)param_3;
   dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x340,0,"%s");
@@ -2971,8 +2971,8 @@ void dWorldSetGravity(dxWorld *param_1,float param_2,float param_3,float param_4
   double dVar3;
   
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x5f8,0,"%s");
@@ -3114,8 +3114,8 @@ void dWorldImpulseToForce
   
   dVar4 = (double)param_5;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
   if (param_1 == (dxWorld *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\ode.cpp",
                     0x630,0,"%s");

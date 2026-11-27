@@ -2863,9 +2863,9 @@ void R_SetRenderTarget(GfxCmdBufContext param_1,GfxRenderTargetId param_2)
 
 // 8277F500  R_SetRenderSourceSize  (gfx_d3d/r_state.cpp:1927)
 
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
-/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_SetRenderSourceSize(GfxCmdBufSourceState *param_1,GfxRenderTarget *param_2)
 

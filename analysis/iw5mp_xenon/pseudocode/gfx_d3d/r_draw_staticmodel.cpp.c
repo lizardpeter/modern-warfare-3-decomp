@@ -108,8 +108,8 @@ void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NoPrepass,GfxCmdBufPrimStat
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawStaticModelsEngine<GfxSModelArrayCallback_NonOptimized,GfxCmdBufContext>

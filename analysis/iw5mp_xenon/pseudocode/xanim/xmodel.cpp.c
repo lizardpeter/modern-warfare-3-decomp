@@ -2055,11 +2055,11 @@ void XModelWriteInfo(XAssetHeader param_1,void *param_2)
 // 82632B18  XModelDumpInfo  (xanim/xmodel.cpp:2155)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void XModelDumpInfo(void)
 

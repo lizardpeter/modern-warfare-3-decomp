@@ -10,9 +10,9 @@ dxBox::dxBox(dxBox *this,dxSpace *param_1,dxBody *param_2,float param_3,float pa
   double dVar2;
   double dVar3;
   
+  dVar2 = (double)param_4;
   dVar3 = (double)param_5;
   dVar1 = (double)param_3;
-  dVar2 = (double)param_4;
   dxGeom::dxGeom((dxGeom *)this,param_1,1,param_2);
   this->_padding_ = (int)&_vftable_;
   if (((dVar1 < 0.0) || (dVar2 < 0.0)) || (dVar3 < 0.0)) {
@@ -75,8 +75,8 @@ void ODE_BoxInit(dxGeom *param_1,dxSpace *param_2,dxBody *param_3,float param_4,
   double dVar4;
   
   dVar1 = (double)param_4;
-  dVar2 = (double)param_5;
   dVar3 = (double)param_6;
+  dVar2 = (double)param_5;
   if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x54,0,"%s");
@@ -133,8 +133,8 @@ void dGeomBoxSetLengths(dxGeom *param_1,float param_2,float param_3,float param_
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
@@ -199,8 +199,8 @@ float dGeomBoxPointDepth(dxGeom *param_1,float param_2,float param_3,float param
   double dVar10;
   
   dVar8 = (double)param_2;
-  dVar9 = (double)param_3;
   dVar10 = (double)param_4;
+  dVar9 = (double)param_3;
   if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x8b,0,"%s");
@@ -1455,8 +1455,8 @@ int ODE_CollideCapsuleBox
   float local_78;
   dContactGeom adStack_70 [3];
   
-  dVar4 = (double)param_7;
   dVar3 = (double)param_6;
+  dVar4 = (double)param_7;
   if (in_stack_0000005c < 0x20) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_std.cpp"
                     ,0x2e8,0,"skip >= (int)sizeof( dContactGeom )\n\t%i, %i");

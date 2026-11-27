@@ -2189,8 +2189,8 @@ float SND_Attenuate(SndCurve *param_1,float param_2,float param_3,float param_4)
   double dVar4;
   float fVar5;
   
-  dVar2 = (double)param_4;
   dVar1 = (double)param_3;
+  dVar2 = (double)param_4;
   dVar3 = (double)param_2;
   if (param_1 == (SndCurve *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x689,0,"%s");
@@ -2507,8 +2507,8 @@ float SND_Get3DDistanceAttenuation(float *param_1,SndCurve *param_2,float param_
   double dVar6;
   float fVar7;
   
-  dVar4 = (double)param_3;
   dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
   if (param_2 == (SndCurve *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x741,0,"%s");
   }
@@ -3381,9 +3381,9 @@ void SND_ContinueLoopingSound_Internal(int param_1,float param_2,float param_3,f
   double dVar11;
   double dVar12;
   
+  dVar7 = (double)param_3;
   dVar8 = (double)param_4;
   dVar6 = (double)param_2;
-  dVar7 = (double)param_3;
   if ((param_1 < 0) || (0x35 < param_1)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x923,0,
                     "%s\n\t(chanIndex) = %i");
@@ -3464,8 +3464,8 @@ bool SND_ContinueLoopingSound
   double dVar6;
   double dVar7;
   
-  dVar7 = (double)param_5;
   dVar6 = (double)param_4;
+  dVar7 = (double)param_5;
   dVar5 = (double)param_3;
   iVar3 = 8;
   if (8 < g_snd.max_3D_channels + 8) {
@@ -3664,9 +3664,9 @@ void SND_PlaySecondaryAlias
   int in_stack_ffffff38;
   
   dVar6 = (double)param_9;
+  dVar5 = (double)param_4;
   dVar3 = (double)param_2;
   dVar4 = (double)param_3;
-  dVar5 = (double)param_4;
   if (param_1->secondaryAliasName != (char *)0x0) {
     psVar1 = Com_PickSoundAlias(param_1->secondaryAliasName);
     if (psVar1 == (snd_alias_t *)0x0) {
@@ -3735,9 +3735,9 @@ int SND_PlaySoundAlias_Internal
   SndStartAliasInfo local_e0 [2];
   
   dVar11 = (double)param_11;
+  dVar8 = (double)param_3;
   dVar10 = (double)param_5;
   dVar9 = (double)param_4;
-  dVar8 = (double)param_3;
   pfVar6 = (float *)(int)param_10;
   pcVar3 = (char *)param_8;
   if (param_1 == (snd_alias_t *)0x0) {
@@ -3861,9 +3861,9 @@ void SND_SetParamValue(snd_param_info_t *param_1,float param_2,float param_3,flo
   double dVar2;
   double dVar3;
   
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (dVar1 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xafe,0,"%s");
   }
@@ -3903,8 +3903,8 @@ void SND_ScaleParamValue(snd_param_info_t *param_1,float param_2,float param_3,f
   double dVar4;
   
   dVar4 = (double)param_6;
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (dVar1 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xb2d,0,"%s");
@@ -4636,8 +4636,8 @@ int SND_PlayBlendedSoundAliases
   double dVar4;
   int in_stack_ffffff48;
   
-  dVar3 = (double)param_3;
   dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
   if (param_8 == SASYS_UI) {
     param_6 = (float *)"%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xcec,0,"%s");
@@ -4674,8 +4674,8 @@ int SND_PlayBlendedSoundAliasesWithPitch
   float *in_stack_00000054;
   int in_stack_ffffff48;
   
-  dVar5 = (double)param_5;
   dVar4 = (double)param_4;
+  dVar5 = (double)param_5;
   dVar3 = (double)param_3;
   if (in_r9 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xcf7,0,"%s");
@@ -5024,8 +5024,8 @@ void SND_StartBackground(LocalClientNum_t param_1,int param_2,snd_alias_t *param
   SndStartAliasInfo local_160;
   char acStack_110 [272];
   
-  dVar6 = (double)param_4;
   dVar7 = (double)param_6;
+  dVar6 = (double)param_4;
   if ((param_2 < 0) || (5 < param_2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0xdd3,0,
                     "%s\n\t(track) = %i");
@@ -6774,9 +6774,9 @@ void SND_SetEqForChannel(int param_1,int param_2,int param_3,SND_EQTYPE param_4,
   double dVar2;
   double dVar3;
   
+  dVar1 = (double)param_5;
   dVar3 = (double)param_7;
   dVar2 = (double)param_6;
-  dVar1 = (double)param_5;
   if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x12d8,0,
                     "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
@@ -6999,9 +6999,9 @@ void SND_SetOcclusionFilter
   double dVar6;
   double dVar7;
   
+  dVar6 = (double)param_5;
   dVar4 = (double)param_2;
   dVar5 = (double)param_4;
-  dVar6 = (double)param_5;
   if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\snd.cpp",0x1347,0,
                     "entchannel doesn\'t index SND_MAX_ENTCHANNELS\n\t%i not in [0, %i)");
@@ -7060,9 +7060,9 @@ void SND_SetEqEntChannel(int param_1,int param_2,int param_3,SND_EQTYPE param_4,
   double dVar3;
   double dVar4;
   
+  dVar2 = (double)param_5;
   dVar4 = (double)param_7;
   dVar3 = (double)param_6;
-  dVar2 = (double)param_5;
   if (param_1 != -1) {
     bVar1 = SND_IsEntChanInOcclusionMode(param_1);
     if (((bVar1) && (param_2 != 0)) && (param_3 != 0)) {
@@ -7090,9 +7090,9 @@ void SND_SetEq(char *param_1,int param_2,int param_3,SND_EQTYPE param_4,float pa
   double dVar3;
   double dVar4;
   
+  dVar3 = (double)param_6;
   dVar4 = (double)param_7;
   dVar2 = (double)param_5;
-  dVar3 = (double)param_6;
   iVar1 = SND_GetEntChannelFromName(param_1);
   if (iVar1 == -1) {
     Com_PrintError(9,"Unknown channel name (%s), please check channel definitions file\n");

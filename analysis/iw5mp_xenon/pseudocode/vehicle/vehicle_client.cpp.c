@@ -285,8 +285,8 @@ int VehicleCl_GetClientIndex(centity_s *param_1)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 VehicleClient * VehicleCl_GetClient(LocalClientNum_t param_1,centity_s *param_2)
 
@@ -429,8 +429,8 @@ VehicleDef * VehicleCl_GetClientDef(VehicleClient *param_1)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleCl_ResetEntity(LocalClientNum_t param_1,centity_s *param_2)
@@ -588,8 +588,8 @@ void VehicleCl_CalcLocalSpeed(LocalClientNum_t param_1,centity_s *param_2,float 
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleCl_CalcRotationalSpeed(LocalClientNum_t param_1,centity_s *param_2,float *param_3)
@@ -811,8 +811,8 @@ void VehicleCl_ClearBoneControllers(centity_s *param_1)
 /* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleCl_UpdateBoneControllers(LocalClientNum_t param_1,DObj *param_2,centity_s *param_3)
@@ -1010,8 +1010,8 @@ LAB_826bb2f8:
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 DObj * VehicleCl_GetEntDObj(LocalClientNum_t param_1,centity_s *param_2)
 
@@ -1039,8 +1039,8 @@ DObj * VehicleCl_GetEntDObj(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleCl_ProcessEntity(LocalClientNum_t param_1,centity_s *param_2)
@@ -1154,8 +1154,8 @@ void VehicleCl_PredictEntityPushing
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleCl_EntityEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3,uint param_4)
 
@@ -1211,8 +1211,8 @@ bool VehicleCl_UsingVehicle(LocalClientNum_t param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int VehicleCl_GetWheelBone(LocalClientNum_t param_1,centity_s *param_2,int param_3,int *param_4)
 
@@ -1240,8 +1240,8 @@ int VehicleCl_GetWheelBone(LocalClientNum_t param_1,centity_s *param_2,int param
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleCl_GetBoneOrigin(LocalClientNum_t param_1,centity_s *param_2,int param_3,float *param_4)
 

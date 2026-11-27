@@ -93,8 +93,8 @@ bool _cldTestFace(collData_t *param_1,float param_2,float param_3,float param_4,
   double dVar9;
   
   dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   dVar7 = (double)param_2;
   dVar9 = 0.0;
   if (((*in_r8 == 0.0) && (in_r8[1] == 0.0)) && (in_r8[2] == 0.0)) {

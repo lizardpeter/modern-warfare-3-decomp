@@ -285,8 +285,8 @@ float AimTarget_GetTargetRadius(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AimTarget_GetTargetCenter(LocalClientNum_t param_1,centity_s *param_2,float *param_3)
 
@@ -496,8 +496,8 @@ LAB_82265c60:
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void AimTarget_CreateTarget(LocalClientNum_t param_1,centity_s *param_2,AimTarget *param_3)
@@ -643,8 +643,8 @@ void AimTarget_StartTargetVisibilityTest
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool AimTarget_WaitForTargetVisibilityTest(LocalClientNum_t param_1,AimVis *param_2)

@@ -1621,8 +1621,8 @@ void VEH_JoltBody(gentity_s *param_1,float *param_2,float param_3,float param_4,
   float local_6c;
   
   dVar8 = (double)param_5;
-  dVar7 = (double)param_4;
   dVar6 = (double)param_3;
+  dVar7 = (double)param_4;
   if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x53a,0,
                     "%s");
@@ -7131,8 +7131,8 @@ void Vehicle_ExplosionEvent
   float local_bc;
   float local_b8;
   
-  dVar7 = (double)param_5;
   dVar6 = (double)param_3;
+  dVar7 = (double)param_5;
   dVar5 = (double)param_2;
   dVar15 = (double)(float)(dVar5 * dVar5);
   dVar14 = (double)(float)(dVar6 * dVar6);
@@ -7456,12 +7456,12 @@ int G_CanPlayerPlaceTank
   trace_t local_20f0;
   int local_20b0 [2092];
   
+  dVar17 = (double)param_5;
   dVar13 = (double)param_6;
   dVar14 = (double)param_7;
-  dVar17 = (double)param_5;
   dVar12 = (double)param_4;
-  dVar20 = (double)param_3;
   dVar18 = (double)param_2;
+  dVar20 = (double)param_3;
   if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle.cpp",0x15f4,0,
                     "%s");

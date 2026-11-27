@@ -4,8 +4,8 @@
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void Tracer_Spawn_ApplyOverrides
                (LocalClientNum_t param_1,centity_s *param_2,Weapon param_3,bool param_4,

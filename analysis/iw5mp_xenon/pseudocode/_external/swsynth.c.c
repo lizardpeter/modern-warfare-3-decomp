@@ -91,8 +91,8 @@ void NellySWSynth(void *param_1,short *param_2,float *param_3,float *param_4,flo
   float *in_stack_0000005c;
   uint *in_stack_0000007c;
   
-  dVar23 = (double)param_12;
   dVar20 = (double)param_13;
+  dVar23 = (double)param_12;
   dVar22 = (double)param_11;
   dVar21 = (double)param_5;
   dVar26 = 0.5;

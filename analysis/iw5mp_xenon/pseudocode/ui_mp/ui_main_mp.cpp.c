@@ -366,9 +366,9 @@ void UI_DrawSides(ScreenPlacement *param_1,float param_2,float param_3,float par
   
   dVar5 = (double)param_8;
   dVar4 = (double)param_5;
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   dVar6 = 0.0;
   CL_DrawStretchPic(param_1,param_2,param_3,param_8,param_5,param_6,param_7,0.0,0.0,0.0,0.0,param_9,
                     in_r7);
@@ -398,11 +398,11 @@ void UI_DrawTopBottom(ScreenPlacement *param_1,float param_2,float param_3,float
   double dVar5;
   double dVar6;
   
-  dVar4 = (double)param_5;
   dVar5 = (double)param_8;
+  dVar4 = (double)param_5;
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   dVar6 = 0.0;
   CL_DrawStretchPic(param_1,param_2,param_3,param_4,param_8,param_6,param_7,0.0,0.0,0.0,0.0,param_9,
                     in_r7);
@@ -432,9 +432,9 @@ void UI_DrawRect(ScreenPlacement *param_1,float param_2,float param_3,float para
   
   dVar4 = (double)param_5;
   dVar5 = (double)param_8;
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   UI_DrawTopBottom(param_1,param_2,param_3,param_4,param_5,param_6,param_7,param_8,param_9);
   UI_DrawSides(param_1,(float)dVar1,(float)(dVar2 + dVar5),(float)dVar3,
                -(float)(dVar5 * 2.0 - dVar4),param_6,param_7,(float)dVar5,param_9);
@@ -2014,8 +2014,8 @@ void UI_SetMap(char *param_1,char *param_2)
 /* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void UI_DrawLocalTalking(SessionData *param_1,LocalClientNum_t param_2,rectDef_s *param_3,
                         float *param_4)
@@ -2488,14 +2488,14 @@ void UI_OwnerDraw(LocalClientNum_t param_1,float param_2,float param_3,float par
   int in_stack_fffffea0;
   rectDef_s local_c0 [9];
   
-  dVar9 = (double)param_5;
-  dVar10 = (double)param_8;
-  dVar11 = (double)param_9;
   dVar12 = (double)param_13;
   dVar13 = (double)param_15;
+  dVar10 = (double)param_8;
+  dVar11 = (double)param_9;
+  dVar9 = (double)param_5;
   dVar8 = (double)param_4;
-  dVar7 = (double)param_3;
   dVar6 = (double)param_2;
+  dVar7 = (double)param_3;
   pcVar4 = (char *)param_11;
   pFVar5 = (Font_s *)param_12;
   iVar1 = CL_IsCgameInitialized(param_1);
@@ -4501,8 +4501,8 @@ void UI_UpdatePendingPings(uiInfo_s *param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void UpdatePartyDvars(LocalClientNum_t param_1,uint param_2,PartyData *param_3,ulong64 param_4)
 
@@ -4671,9 +4671,9 @@ char * UI_FeederItemText_NonPlayingLocalClients(uiInfo_s *param_1,int param_2,in
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * UI_FeederItemText_PartyMembers
@@ -4909,9 +4909,9 @@ char * UI_FeederItemText_TeamAndEnemyMembers
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 char * UI_FeederItemText_LobbyMembers
@@ -6109,9 +6109,9 @@ bool UI_FeederData(LocalClientNum_t param_1,itemDef_t *param_2,char *param_3,cha
 
 // 825A9EE8  UI_FeederDataExtended  (ui_mp/ui_main_mp.cpp:7125)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool UI_FeederDataExtended
                (LocalClientNum_t param_1,itemDef_t *param_2,char *param_3,char **param_4,
@@ -6126,9 +6126,9 @@ bool UI_FeederDataExtended
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_OverrideCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 
@@ -7493,9 +7493,9 @@ void Text_PaintCenter(ScreenPlacement *param_1,float param_2,float param_3,Font_
   int in_stack_ffffff24;
   int in_stack_ffffff28;
   
+  dVar4 = (double)param_3;
   dVar5 = (double)param_5;
   dVar3 = (double)param_2;
-  dVar4 = (double)param_3;
   iVar2 = 0;
   uVar1 = UI_TextWidthModCase(in_r9,0,(Font_s *)param_7,param_5,(int)param_7);
   UI_DrawTextWithGlow(param_1,in_r9,0x7fffffff,(Font_s *)param_7,
@@ -7538,8 +7538,8 @@ void Text_PaintCenterWithDots
   int in_stack_ffffff18;
   
   dVar6 = (double)param_5;
-  dVar5 = (double)param_3;
   dVar4 = (double)param_2;
+  dVar5 = (double)param_3;
   pcVar2 = param_7;
   Sys_Milliseconds();
   uVar1 = UI_TextWidthModCase(in_r9,0,(Font_s *)param_7,(float)dVar6,(int)pcVar2);

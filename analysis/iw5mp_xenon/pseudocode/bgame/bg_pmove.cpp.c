@@ -1537,9 +1537,9 @@ float PM_MoveScale(playerState_s *param_1,float param_2,float param_3,float para
   double dVar5;
   double dVar6;
   
-  dVar3 = (double)param_2;
   dVar4 = (double)param_3;
   dVar5 = (double)param_4;
+  dVar3 = (double)param_2;
   dVar6 = ABS(dVar3);
   if (dVar6 < ABS(dVar4)) {
     dVar6 = ABS(dVar4);
@@ -4512,8 +4512,8 @@ float PM_GetBobMove(PmStanceFrontBack param_1,float param_2,float param_3,int pa
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PmStanceFrontBack": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "PmStanceFrontBack": Some values do not have unique names */
 
 scriptAnimMoveTypes_t
 PM_GetMoveAnim(playerState_s *param_1,PmStanceFrontBack param_2,int param_3,int param_4)
@@ -5243,8 +5243,8 @@ void PM_UpdateViewAngles_ProneYawClamp
   double dVar6;
   float fVar7;
   
-  dVar4 = (double)param_5;
   dVar3 = (double)param_4;
+  dVar4 = (double)param_5;
   dVar6 = (double)param_2;
   if (param_1 == (playerState_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\bgame\\bg_pmove.cpp",0x1293,0,
@@ -5366,8 +5366,8 @@ void PM_UpdateViewAngles_Prone
   proneCheckType_t in_stack_fffffea8;
   FeetDirection in_stack_fffffeac;
   
-  dVar15 = (double)param_6;
   dVar13 = (double)param_3;
+  dVar15 = (double)param_6;
   ppVar9 = param_2;
   if (param_2 == (playerState_s *)0x0) {
     ppVar9 = (playerState_s *)0x12e8;

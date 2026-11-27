@@ -58,8 +58,8 @@ void R_DrawEmissiveCallback(void *param_1,GfxCmdBufContext param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_DrawEmissivePreWeave
                (GfxViewInfo *param_1,GfxDrawList *param_2,GfxDrawCallOutput *param_3,

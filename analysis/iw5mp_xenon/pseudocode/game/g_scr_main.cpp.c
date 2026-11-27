@@ -5450,9 +5450,9 @@ void SetupViewAngleClamp(viewClampState *param_1,float param_2,float param_3,flo
   dVar5 = (double)param_6;
   dVar6 = (double)param_7;
   dVar4 = (double)param_5;
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (param_1 == (viewClampState *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_scr_main.cpp",0x132d,0,
                     "%s");
@@ -10989,14 +10989,14 @@ void Scr_SetFog(char *param_1,float param_2,float param_3,float param_4,float pa
   char in_stack_00000057;
   int in_stack_00000094;
   
-  dVar11 = (double)param_16;
   dVar8 = (double)param_12;
-  dVar10 = (double)param_15;
   dVar9 = (double)param_14;
+  dVar10 = (double)param_15;
+  dVar11 = (double)param_16;
   dVar7 = (double)param_11;
-  dVar4 = (double)param_6;
   dVar5 = (double)param_8;
   dVar6 = (double)param_10;
+  dVar4 = (double)param_6;
   dVar3 = (double)param_5;
   dVar2 = (double)param_4;
   dVar13 = 0.0;

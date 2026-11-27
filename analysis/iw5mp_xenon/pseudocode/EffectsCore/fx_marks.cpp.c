@@ -1930,8 +1930,8 @@ void FX_ImpactMark(LocalClientNum_t param_1,Material *param_2,Material *param_3,
   uint auStack_4070 [2048];
   uint auStack_2070 [2076];
   
-  dVar2 = (double)param_9;
   dVar3 = (double)param_7;
+  dVar2 = (double)param_9;
   dVar4 = dVar2;
   pFVar1 = FX_GetMarksSystem(param_1);
   if ((((fx_marks->current).enabled != false) && (pFVar1->noMarks == false)) &&

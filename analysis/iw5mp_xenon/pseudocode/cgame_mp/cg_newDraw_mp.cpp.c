@@ -3521,13 +3521,13 @@ void CG_OwnerDraw(LocalClientNum_t param_1,rectDef_s param_2,float param_3,float
   undefined1 in_stack_ffffff1b;
   rectDef_s local_90 [7];
   
+  dVar17 = (double)param_15;
   dVar15 = (double)param_9;
   dVar16 = (double)param_10;
-  dVar17 = (double)param_15;
   dVar14 = (double)param_6;
+  dVar11 = (double)param_3;
   dVar13 = (double)param_5;
   dVar12 = (double)param_4;
-  dVar11 = (double)param_3;
   lVar9 = (longlong)param_11;
   lVar7 = (longlong)param_8;
   _param_19 = (longlong)param_7;

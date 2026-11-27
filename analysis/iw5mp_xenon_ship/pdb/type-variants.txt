@@ -1,0 +1,895 @@
+D3DDevice: 2 layouts, sizeof 10880, 11008
+  sizeof 10880 (0x2A80)
+    0x00000  m_Pending: _D3DTAGCOLLECTION
+    0x00028  m_Predicated_PendingMask2: unsigned __int64
+    0x00030  m_pRing: unsigned long*
+    0x00034  m_pRingLimit: unsigned long*
+    0x00038  m_pRingGuarantee: unsigned long*
+    0x0003C  m_ReferenceCount: unsigned long
+    0x00040  m_SetRenderStateCall: function*[404 bytes]
+    0x001D4  m_SetSamplerStateCall: function*[80 bytes]
+    0x00224  m_GetRenderStateCall: function*[404 bytes]
+    0x003B8  m_GetSamplerStateCall: function*[80 bytes]
+    0x00480  m_Constants: _D3DConstants
+    0x02820  m_ClipPlanes: float[16 bytes][96 bytes]
+    0x02880  m_DestinationPacket: GPU_DESTINATIONPACKET
+    0x028C0  m_WindowPacket: GPU_WINDOWPACKET
+    0x028CC  m_ValuesPacket: GPU_VALUESPACKET
+    0x02920  m_ProgramPacket: GPU_PROGRAMPACKET
+    0x02934  m_ControlPacket: GPU_CONTROLPACKET
+    0x02964  m_TessellatorPacket: GPU_TESSELLATORPACKET
+    0x029B8  m_MiscPacket: GPU_MISCPACKET
+    0x02A50  m_PointPacket: GPU_POINTPACKET
+  sizeof 11008 (0x2B00)
+    0x00000  m_Pending: _D3DTAGCOLLECTION
+    0x00028  m_Predicated_PendingMask2: unsigned __int64
+    0x00030  m_pRing: unsigned long*
+    0x00034  m_pRingLimit: unsigned long*
+    0x00038  m_pRingGuarantee: unsigned long*
+    0x0003C  m_ReferenceCount: unsigned long
+    0x00040  m_SetRenderStateCall: function*[404 bytes]
+    0x001D4  m_SetSamplerStateCall: function*[80 bytes]
+    0x00224  m_GetRenderStateCall: function*[404 bytes]
+    0x003B8  m_GetSamplerStateCall: function*[80 bytes]
+    0x00480  m_Constants: _D3DConstants
+    0x02820  m_ClipPlanes: float[16 bytes][96 bytes]
+    0x02880  m_DestinationPacket: GPU_DESTINATIONPACKET
+    0x028C0  m_WindowPacket: GPU_WINDOWPACKET
+    0x028CC  m_ValuesPacket: GPU_VALUESPACKET
+    0x02920  m_ProgramPacket: GPU_PROGRAMPACKET
+    0x02934  m_ControlPacket: GPU_CONTROLPACKET
+    0x02964  m_TessellatorPacket: GPU_TESSELLATORPACKET
+    0x029B8  m_MiscPacket: GPU_MISCPACKET
+    0x02A50  m_PointPacket: GPU_POINTPACKET
+    0x02A70  m_MaxAnisotropy: unsigned char[26 bytes]
+    0x02A8A  m_ZFilter: unsigned char[26 bytes]
+
+EbmlGlobal: 2 layouts, sizeof 12, 40
+  sizeof 12 (0xC)
+    0x00000  buf: unsigned char*
+    0x00004  length: unsigned
+    0x00008  offset: unsigned
+  sizeof 40 (0x28): globals ebml
+    0x00000  debug: int
+    0x00008  last_pts_ms: __int64
+    0x00010  startSegment: unsigned char*
+    0x00014  startCluster: unsigned char*
+    0x00018  now: unsigned char*
+    0x0001C  cluster_timecode: unsigned
+    0x00020  cluster_open: int
+
+FrameInfo: 2 layouts, sizeof 12, 20
+  sizeof 12 (0xC)
+    0x00000  pExceptionObject: void*
+    0x00004  pmfnUnwind: function*
+    0x00008  pNext: FrameInfo*
+  sizeof 20 (0x14)
+    0x00000  worldIndex: int
+    0x00004  timestep: float
+    0x00008  reducedContactListBase: ReducedContactList*
+    0x0000C  reducedContactListCount: long*
+    0x00010  reducedContactListMax: int
+
+FxSpriteInfo: 2 layouts, sizeof 16, 1616
+  sizeof 16 (0x10): globals g_spriteInfo
+    0x00000  indices: r_double_index_t*
+    0x00004  indexCount: unsigned
+    0x00008  material: Material*
+    0x0000C  name: char*
+  sizeof 1616 (0x650): globals g_spriteInfo
+    0x00000  spriteCount: int
+    0x00004  pad: int[12 bytes]
+    0x00010  sprites: FxSprite[1600 bytes]
+
+VehicleHandler: 2 layouts, sizeof 12, 28
+  sizeof 12 (0xC)
+    0x00000  trace: function*
+    0x00004  vehicle: function*
+    0x00008  wheel: function*
+  sizeof 28 (0x1C)
+    0x00000  UpdateAnimScriptedMove: function*
+    0x00004  UpdatePathConstrainedMove: function*
+    0x00008  UpdatePathFollowMove: function*
+    0x0000C  UpdateTrackMove: function*
+    0x00010  UpdateAiMove: function*
+    0x00014  UpdatePlayerMove: function*
+    0x00018  UpdateDefaultMove: function*
+
+XSTORAGEDEVICECHANGE_PARAMS: 2 layouts, sizeof 272, 276
+  sizeof 272 (0x110)
+    0x00000  szDevicePath: char[260 bytes]
+    0x00104  fRemoved: int
+    0x00108  deviceType: unsigned long
+    0x0010C  deviceId: unsigned long
+  sizeof 276 (0x114)
+    0x00000  szDevicePath: char[260 bytes]
+    0x00104  fRemoved: int
+    0x00108  deviceType: unsigned long
+    0x0010C  deviceId: unsigned long
+    0x00110  eState: DEVICESTATE
+
+_ACCOUNT_TROUBLESHOOT_RESPONSE: 2 layouts, sizeof 42, 50
+  sizeof 42 (0x2A)
+    0x00000  fNewTOS: int
+    0x00004  fNameChangeRequired: int
+    0x00008  fDowngraded: int
+    0x0000C  suspendedUntil: _FILETIME
+    0x00014  wTotalDaysSuspended: unsigned short
+    0x00016  voiceBannedUntil: _FILETIME
+    0x0001E  wTotalDaysVoiceBanned: unsigned short
+    0x00020  dwBillingHr: unsigned long
+    0x00024  wReservedBytesLength: unsigned short
+    0x00026  pbReservedBytes: unsigned char*
+  sizeof 50 (0x32)
+    0x00000  fNewTOS: int
+    0x00004  fNameChangeRequired: int
+    0x00008  fDowngraded: int
+    0x0000C  suspendedUntil: _FILETIME
+    0x00014  wTotalDaysSuspended: unsigned short
+    0x00016  voiceBannedUntil: _FILETIME
+    0x0001E  wTotalDaysVoiceBanned: unsigned short
+    0x00020  dwBillingHr: unsigned long
+    0x00024  fInvalidUserPassport: int
+    0x00028  fInvalidOwnerPassport: int
+    0x0002C  wReservedBytesLength: unsigned short
+    0x0002E  pbReservedBytes: unsigned char*
+
+_BACKGROUND_DOWNLOAD_ITEM: 2 layouts, sizeof 632, 896
+  sizeof 632 (0x278)
+    0x00000  MediaType: _XMARKETPLACE_MEDIA_TYPE
+    0x00004  dwEffectiveTitleId: unsigned long
+    0x00008  xuid: unsigned __int64
+    0x00010  consoleId: unsigned char[5 bytes]
+    0x00015  contentId: unsigned char[20 bytes]
+    0x0002C  dwState: unsigned long
+    0x00030  dwRatingId: unsigned long
+    0x00034  mediaId: _GUID
+    0x00044  mediaInstanceId: _GUID
+    0x00054  offerId: _GUID
+    0x00064  wszOfferName: wchar_t[256 bytes]
+    0x00164  szPath: char[260 bytes]
+    0x00268  liInstallSize: _LARGE_INTEGER
+    0x00270  dwPercentCompleted: unsigned long
+    0x00274  bRepeatDownload: int
+  sizeof 896 (0x380)
+    0x00000  MediaType: _XMARKETPLACE_MEDIA_TYPE
+    0x00004  dwEffectiveTitleId: unsigned long
+    0x00008  xuid: unsigned __int64
+    0x00010  consoleId: unsigned char[5 bytes]
+    0x00015  contentId: unsigned char[20 bytes]
+    0x0002C  dwState: unsigned long
+    0x00030  dwRatingId: unsigned long
+    0x00034  mediaId: _GUID
+    0x00044  mediaInstanceId: _GUID
+    0x00054  offerId: _GUID
+    0x00064  wszOfferName: wchar_t[256 bytes]
+    0x00164  szPath: char[260 bytes]
+    0x00268  liInstallSize: _LARGE_INTEGER
+    0x00270  dwPercentCompleted: unsigned long
+    0x00274  bRepeatDownload: int
+    0x00278  szUrl: char[256 bytes]
+    0x00378  liDownloadSize: _LARGE_INTEGER
+
+_GET_USER_SUBSCRIPTION_DETAILS_RESPONSE: 2 layouts, sizeof 245, 293
+  sizeof 245 (0xF5)
+    0x00000  wSubscriptionIdLength: unsigned short
+    0x00002  wszSubscriptionId: unsigned short*
+    0x00006  wDescriptionLength: unsigned short
+    0x00008  wszDescription: unsigned short*
+    0x0000C  bCurrentOfferStatus: unsigned char
+    0x0000D  bDelayedCancel: unsigned char
+    0x0000E  wFriendlyNameLength: unsigned short
+    0x00010  wszFriendlyName: unsigned short*
+    0x00014  bAnniversaryDate: unsigned char
+    0x00015  ftPurchaseDate: _FILETIME
+    0x0001D  ftActivationDate: _FILETIME
+    0x00025  ftEndDate: _FILETIME
+    0x0002D  bHasViolations: unsigned char
+    0x0002E  dwRenewalGracePeriod: unsigned long
+    0x00032  bRenewalOfferStatus: unsigned char
+    0x00033  qwRenewalOfferId: unsigned __int64
+    0x0003B  currentOfferDetails: _GET_USER_SUBSCRIPTION_DETAILS_DATA
+    0x00051  renewalOfferDetails: _GET_USER_SUBSCRIPTION_DETAILS_DATA
+    0x00067  paymentInstrument: _PAYMENT_INSTRUMENT_INFO
+  sizeof 293 (0x125)
+    0x00000  wSubscriptionIdLength: unsigned short
+    0x00002  wszSubscriptionId: unsigned short*
+    0x00006  wDescriptionLength: unsigned short
+    0x00008  wszDescription: unsigned short*
+    0x0000C  bCurrentOfferStatus: unsigned char
+    0x0000D  bDelayedCancel: unsigned char
+    0x0000E  wFriendlyNameLength: unsigned short
+    0x00010  wszFriendlyName: unsigned short*
+    0x00014  bAnniversaryDate: unsigned char
+    0x00015  ftPurchaseDate: _FILETIME
+    0x0001D  ftActivationDate: _FILETIME
+    0x00025  ftEndDate: _FILETIME
+    0x0002D  bHasViolations: unsigned char
+    0x0002E  dwRenewalGracePeriod: unsigned long
+    0x00032  bRenewalOfferStatus: unsigned char
+    0x00033  qwRenewalOfferId: unsigned __int64
+    0x0003B  currentOfferDetails: _GET_USER_SUBSCRIPTION_DETAILS_DATA
+    0x00051  renewalOfferDetails: _GET_USER_SUBSCRIPTION_DETAILS_DATA
+    0x00067  paymentInstrument: _PAYMENT_INSTRUMENT_INFO
+
+_HUD_PARAMS: 2 layouts, sizeof 8, 12
+  sizeof 8 (0x8)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  eHudType: HUDSCENE
+  sizeof 12 (0xC)
+    0x00000  dwTrackingID: unsigned long
+    0x00004  dwUserIndex: unsigned long
+    0x00008  eHudType: HUDSCENE
+
+_KD_GLOBAL_DATA_BLOCK: 2 layouts, sizeof 72, 80
+  sizeof 72 (0x48)
+    0x00000  MmTitlePfnRegion: void*
+    0x00004  MmSystemPfnRegion: void*
+    0x00008  ExTitlePoolDescriptor: void*
+    0x0000C  ExSystemPoolDescriptor: void*
+    0x00010  KeTitleProcess: void*
+    0x00014  KeSystemProcess: void*
+    0x00018  ObTitleObjectHandleTable: void*
+    0x0001C  ObSystemObjectHandleTable: void*
+    0x00020  MmAllocatedPagesByUsage: void*
+    0x00024  MmNumberOfPhysicalPages: void*
+    0x00028  ObpRootDirectoryObject: void*
+    0x0002C  HvStats: void*
+    0x00030  FscTitleCacheProcess: void*
+    0x00034  FscSystemCacheProcess: void*
+    0x00038  MmPfnDatabase: void*
+    0x0003C  MmPdeDatabase: void*
+    0x00040  MmDevkitMemoryPresent: void*
+    0x00044  MmDevkitPfnDatabase: void*
+  sizeof 80 (0x50)
+    0x00000  MmTitlePfnRegion: void*
+    0x00004  MmSystemPfnRegion: void*
+    0x00008  ExTitlePoolDescriptor: void*
+    0x0000C  ExSystemPoolDescriptor: void*
+    0x00010  KeTitleProcess: void*
+    0x00014  KeSystemProcess: void*
+    0x00018  ObTitleObjectHandleTable: void*
+    0x0001C  ObSystemObjectHandleTable: void*
+    0x00020  MmAllocatedPagesByUsage: void*
+    0x00024  MmNumberOfPhysicalPages: void*
+    0x00028  ObpRootDirectoryObject: void*
+    0x0002C  HvStats: void*
+    0x00030  FscTitleCacheProcess: void*
+    0x00034  FscSystemCacheProcess: void*
+    0x00038  MmPfnDatabase: void*
+    0x0003C  MmPdeDatabase: void*
+    0x00040  MmDevkitMemoryPresent: void*
+    0x00044  MmDevkitPfnDatabase: void*
+    0x00048  EtxObject: void*
+    0x0004C  ImagePtePage: void*
+
+_MEDIA_INSTANCE_URLS: 2 layouts, sizeof 356, 360
+  sizeof 356 (0x164)
+    0x00000  MediaID: _GUID
+    0x00010  MediaInstanceID: _GUID
+    0x00020  qwPackageSize: unsigned __int64
+    0x00028  qwInstallSize: unsigned __int64
+    0x00030  rgbSymKey: unsigned char[16 bytes]
+    0x00040  rgbPubKey: unsigned char[284 bytes]
+    0x0015C  dwUrlCount: unsigned long
+    0x00160  pUrls: _TYPED_MEDIA_URL*
+  sizeof 360 (0x168)
+    0x00000  MediaID: _GUID
+    0x00010  MediaInstanceID: _GUID
+    0x00020  qwPackageSize: unsigned __int64
+    0x00028  qwInstallSize: unsigned __int64
+    0x00030  rgbSymKey: unsigned char[16 bytes]
+    0x00040  rgbPubKey: unsigned char[284 bytes]
+    0x0015C  dwPackageType: unsigned long
+    0x00160  dwUrlCount: unsigned long
+    0x00164  pUrls: _TYPED_MEDIA_URL*
+
+_MESSAGEBOX_PARAMS: 2 layouts, sizeof 1052, 1148
+  sizeof 1052 (0x41C)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  eHudType: HUDSCENE
+    0x00008  szTitle: wchar_t[64 bytes]
+    0x00048  szText: wchar_t[768 bytes]
+    0x00348  cButtons: unsigned long
+    0x0034C  rgButtons: wchar_t[64 bytes][192 bytes]
+    0x0040C  dwFocusButton: unsigned long
+    0x00410  dwFlags: unsigned long
+    0x00414  pResult: _MESSAGEBOX_RESULT*
+    0x00418  pOverlapped: _XOVERLAPPED*
+  sizeof 1148 (0x47C)
+    0x00000  dwTrackingID: unsigned long
+    0x00004  dwUserIndex: unsigned long
+    0x00008  eHudType: HUDSCENE
+    0x0000C  szTitle: wchar_t[86 bytes]
+    0x00062  szText: wchar_t[768 bytes]
+    0x00364  cButtons: unsigned long
+    0x00368  rgButtons: wchar_t[86 bytes][258 bytes]
+    0x0046C  dwFocusButton: unsigned long
+    0x00470  dwFlags: unsigned long
+    0x00474  pResult: _MESSAGEBOX_RESULT*
+    0x00478  pOverlapped: _XOVERLAPPED*
+
+_PAYMENT_INSTRUMENT_INFO: 2 layouts, sizeof 142, 190
+  sizeof 142 (0x8E)
+    0x00000  wPaymentInstrumentIdLength: unsigned short
+    0x00002  wszPaymentInstrumentId: unsigned short*
+    0x00006  bPaymentTypeId: unsigned char
+    0x00007  address: _ADDRESS_INFO
+    0x0002B  phone: _PHONE_INFO
+    0x0003D  creditCard: _CREDIT_CARD_INFO
+    0x00058  directDebit: _DIRECT_DEBIT_INFO
+    0x00076  wholesale: _WHOLESALE_INFO
+  sizeof 190 (0xBE)
+    0x00000  wPaymentInstrumentIdLength: unsigned short
+    0x00002  wszPaymentInstrumentId: unsigned short*
+    0x00006  bPaymentTypeId: unsigned char
+    0x00007  address: _ADDRESS_INFO
+    0x0002B  phone: _PHONE_INFO
+    0x0003D  creditCard: _CREDIT_CARD_INFO
+    0x00058  directDebit: _DIRECT_DEBIT_INFO
+    0x00076  wholesale: _WHOLESALE_INFO
+    0x0008E  paypalPayin: _PAYPAL_PAYIN_INFO
+
+_PIAF_CREATE_PACKET: 2 layouts, sizeof 56, 64
+  sizeof 56 (0x38)
+    0x00000  DeviceName: _STRING*
+    0x00004  TargetDeviceObject: _DEVICE_OBJECT*
+    0x00008  PartitionLength: _LARGE_INTEGER
+    0x00010  FatByteOffset: _LARGE_INTEGER
+    0x00018  FileAreaByteOffset: _LARGE_INTEGER
+    0x00020  NumberOfClusters: unsigned long
+    0x00024  ClusterEntryMask: unsigned long
+    0x00028  DeviceObject: _DEVICE_OBJECT*
+    0x0002C  FragmentInformation: _PIAF_FRAGMENT_INFORMATION*
+    0x00030  NumberOfFragments: unsigned char
+    0x00031  NumberOfReservedFatEntries: unsigned char
+    0x00032  FatEntryShift: unsigned char
+    0x00033  ClusterShift: unsigned char
+    0x00034  SectorShift: unsigned char
+    0x00035  LittleEndian: unsigned char
+    0x00036  RawMountOnly: unsigned char
+  sizeof 64 (0x40)
+    0x00000  DeviceName: _STRING*
+    0x00004  TargetDeviceObject: _DEVICE_OBJECT*
+    0x00008  PartitionLength: _LARGE_INTEGER
+    0x00010  FatByteOffset: _LARGE_INTEGER
+    0x00018  FileAreaByteOffset: _LARGE_INTEGER
+    0x00020  BytesPerCluster: unsigned long
+    0x00024  NumberOfClusters: unsigned long
+    0x00028  ClusterEntryMask: unsigned long
+    0x0002C  SectorSize: unsigned long
+    0x00030  FirstCluster: unsigned long
+    0x00034  FileSize: unsigned long
+    0x00038  DeviceObject: _DEVICE_OBJECT*
+    0x0003C  NumberOfReservedFatEntries: unsigned char
+    0x0003D  FatEntryShift: unsigned char
+    0x0003E  ClusterShift: unsigned char
+    0x0003F  LittleEndian: unsigned char
+
+_PLAYTIMERGUIDE_PARAMS: 2 layouts, sizeof 12, 16
+  sizeof 12 (0xC)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  eHudType: HUDSCENE
+    0x00008  pOverlapped: _XOVERLAPPED*
+  sizeof 16 (0x10)
+    0x00000  dwTrackingID: unsigned long
+    0x00004  dwUserIndex: unsigned long
+    0x00008  eHudType: HUDSCENE
+    0x0000C  pOverlapped: _XOVERLAPPED*
+
+_PURCHASE_OFFER_PRICE: 2 layouts, sizeof 24, 28
+  sizeof 24 (0x18)
+    0x00000  OfferID: _GUID
+    0x00010  dwMediaType: unsigned long
+    0x00014  dwPrice: unsigned long
+  sizeof 28 (0x1C)
+    0x00000  OfferID: _GUID
+    0x00010  dwMediaType: unsigned long
+    0x00014  dwWholePrice: unsigned long
+    0x00018  dwFractionalPrice: unsigned long
+
+_REMINDER_ITEM: 2 layouts, sizeof 248, 272
+  sizeof 248 (0xF8)
+    0x00000  reminderId: _GUID
+    0x00010  dwTitleId: unsigned long
+    0x00014  ftStartTime: _FILETIME
+    0x0001C  ftEndTime: _FILETIME
+    0x00024  wszReminderTitle: wchar_t[64 bytes]
+    0x00064  wszReminderSubtitle: wchar_t[64 bytes]
+    0x000A4  wszReminderParam: wchar_t[80 bytes]
+    0x000F4  fNotified: int
+  sizeof 272 (0x110)
+    0x00000  reminderId: _GUID
+    0x00010  dwTitleId: unsigned long
+    0x00014  dwReminderType: unsigned long
+    0x00018  dwContentType: unsigned long
+    0x0001C  ftStartTime: _FILETIME
+    0x00024  ftEndTime: _FILETIME
+    0x0002C  wszReminderTitle: wchar_t[64 bytes]
+    0x0006C  wszReminderSubtitle: wchar_t[64 bytes]
+    0x000AC  wszReminderParam: wchar_t[80 bytes]
+    0x000FC  offerId: _GUID
+    0x0010C  fNotified: int
+
+_SVOD_CREATE_PACKET: 2 layouts, sizeof 40, 44
+  sizeof 40 (0x28)
+    0x00000  DeviceName: _STRING
+    0x00008  BaseDirectoryName: _STRING
+    0x00010  BaseDirectoryHandle: void*
+    0x00014  DeviceDescriptor: _SVOD_DEVICE_DESCRIPTOR*
+    0x00018  BlockArray: void*
+    0x0001C  DeviceExtensionSize: unsigned long
+    0x00020  DeviceObject: _DEVICE_OBJECT*
+    0x00024  DeviceExtension: void*
+  sizeof 44 (0x2C)
+    0x00000  DeviceName: _STRING
+    0x00008  BaseDirectoryName: _STRING
+    0x00010  BaseDirectoryHandle: void*
+    0x00014  DeviceDescriptor: _SVOD_DEVICE_DESCRIPTOR*
+    0x00018  BlockArray: void*
+    0x0001C  DeviceExtensionSize: unsigned long
+    0x00020  DeviceObject: _DEVICE_OBJECT*
+    0x00024  DeviceExtension: void*
+    0x00028  TitleOwned: unsigned char
+
+_XAMPACKAGEMANAGER_HASEXTENDEDPARTITION_MSG: 2 layouts, sizeof 8, 12
+  sizeof 8 (0x8)
+    0x00000  DeviceID: unsigned long
+    0x00004  pbHasExtendedPartition: int*
+  sizeof 12 (0xC)
+    0x00000  DeviceID: unsigned long
+    0x00004  pbHasExtendedPartition: int*
+    0x00008  pulExtendedPartitionSize: unsigned long*
+
+_XMSTV_CREATE_CERTIFICATE_REQUEST: 2 layouts, sizeof 576, 580
+  sizeof 576 (0x240)
+    0x00000  Flags: unsigned long
+    0x00004  abAVPubKey: unsigned char[272 bytes]
+    0x00114  abAuthPubKey: unsigned char[272 bytes]
+    0x00224  SigningKeyNonce: unsigned __int64
+    0x0022C  KeyedHash: unsigned char[20 bytes]
+  sizeof 580 (0x244)
+    0x00000  Flags: unsigned long
+    0x00004  abAVPubKey: unsigned char[272 bytes]
+    0x00114  abAuthPubKey: unsigned char[272 bytes]
+    0x00224  SigningKeyNonce: unsigned __int64
+    0x0022C  KeyedHash: unsigned char[20 bytes]
+    0x00240  pResponse: _XMSTV_CREATE_CERTIFICATE_REPLY*
+
+_XPARTY_SEND_INVITE_PARAMS: 2 layouts, sizeof 536, 1336
+  sizeof 536 (0x218)
+    0x00000  dwUserIndex: unsigned long
+    0x00008  XuidRecipient: unsigned __int64
+    0x00010  szText: wchar_t[512 bytes]
+    0x00210  InternalCreateParams: _XPARTY_CREATE_PARAMS
+  sizeof 1336 (0x538)
+    0x00000  dwUserIndex: unsigned long
+    0x00008  XuidRecipients: unsigned __int64[800 bytes]
+    0x00328  cRecipients: unsigned
+    0x0032C  szText: wchar_t[512 bytes]
+    0x0052C  InternalCreateParams: _XPARTY_CREATE_PARAMS
+
+_XSHOWDEVICESELECTORUI_PARAMS: 2 layouts, sizeof 32, 40
+  sizeof 32 (0x20)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  dwContentType: unsigned long
+    0x00008  dwContentFlags: unsigned long
+    0x00010  uliBytesRequested: _ULARGE_INTEGER
+    0x00018  pDeviceID: unsigned long*
+    0x0001C  pOverlapped: _XOVERLAPPED*
+  sizeof 40 (0x28)
+    0x00000  dwTrackingID: unsigned long
+    0x00004  dwUserIndex: unsigned long
+    0x00008  dwContentType: unsigned long
+    0x0000C  dwContentFlags: unsigned long
+    0x00010  uliBytesRequested: _ULARGE_INTEGER
+    0x00018  pDeviceID: unsigned long*
+    0x0001C  pOverlapped: _XOVERLAPPED*
+    0x00020  fNuiEnabled: int
+
+_XSHOWMARKETPLACEUI_PARAMS: 2 layouts, sizeof 160, 192
+  sizeof 160 (0xA0)
+    0x00000  dwUserIndex: unsigned long
+    0x00008  UserXuid: unsigned __int64
+    0x00010  dwEntryPoint: unsigned long
+    0x00018  qwOfferID: unsigned __int64
+    0x00020  dwOfferType: unsigned long
+    0x00024  dwContentCategories: unsigned long
+    0x00028  bRequestFlags: unsigned char
+    0x00030  qwSourceId: unsigned __int64
+    0x00038  dwTitleId: unsigned long
+    0x0003C  eUpgradeReason: GOLD_UPGRADE_REASON
+    0x00040  bOnlineCountry: unsigned char
+    0x00044  pBillingInfo: _MP_BILLING_ACCOUNT_INFO*
+    0x00048  pOverlapped: _XOVERLAPPED*
+    0x0004C  mediaId: _GUID
+    0x0005C  dwMediaType: unsigned long
+    0x00060  aullOfferIDs: unsigned __int64[48 bytes]
+    0x00090  dwOfferIdCount: unsigned long
+    0x00094  phrResult: HRESULT*
+    0x00098  pVoid: void*
+  sizeof 192 (0xC0)
+    0x00000  header: _XSHOWMARKETPLACEUI_DATA
+    0x00008  dwTrackingID: unsigned long
+    0x0000C  dwUserIndex: unsigned long
+    0x00010  UserXuid: unsigned __int64
+    0x00018  dwEntryPoint: unsigned long
+    0x00020  qwOfferID: unsigned __int64
+    0x00028  dwOfferType: unsigned long
+    0x0002C  dwContentCategories: unsigned long
+    0x00030  bRequestFlags: unsigned char
+    0x00038  qwSourceId: unsigned __int64
+    0x00040  dwTitleId: unsigned long
+    0x00044  eUpgradeReason: GOLD_UPGRADE_REASON
+    0x00048  bOnlineCountry: unsigned char
+    0x0004C  pBillingInfo: _MP_BILLING_ACCOUNT_INFO*
+    0x00050  pOverlapped: _XOVERLAPPED*
+    0x00054  fNuiEnabled: int
+    0x00058  mediaId: _GUID
+    0x00068  dwMediaType: unsigned long
+    0x0006C  bundleOfferId: _GUID
+    0x00080  aullOfferIDs: unsigned __int64[48 bytes]
+    0x000B0  dwOfferIdCount: unsigned long
+    0x000B4  phrResult: HRESULT*
+    0x000B8  pVoid: void*
+
+_XSHOWSIGNINUI_PARAMS: 2 layouts, sizeof 16, 20
+  sizeof 16 (0x10)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  cPanes: unsigned long
+    0x00008  dwFlags: unsigned long
+    0x0000C  pOverlapped: _XOVERLAPPED*
+  sizeof 20 (0x14)
+    0x00000  dwTrackingID: unsigned long
+    0x00004  dwUserIndex: unsigned long
+    0x00008  cPanes: unsigned long
+    0x0000C  dwFlags: unsigned long
+    0x00010  pOverlapped: _XOVERLAPPED*
+
+_XSHOWSTOREPICKERUI_PARAMS: 2 layouts, sizeof 12, 16
+  sizeof 12 (0xC)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  eHudType: HUDSCENE
+    0x00008  dwTabToFocus: unsigned long
+  sizeof 16 (0x10)
+    0x00000  dwTrackingID: unsigned long
+    0x00004  dwUserIndex: unsigned long
+    0x00008  eHudType: HUDSCENE
+    0x0000C  dwTabToFocus: unsigned long
+
+_XSHOWUPDATERUI_PARAMS: 2 layouts, sizeof 1064, 1072
+  sizeof 1064 (0x428)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  dwUpdateFlags: unsigned long
+    0x00008  szUpdatePath: char[260 bytes]
+    0x0010C  ExecutionId: _XEX_EXECUTION_ID
+    0x00124  szTitleToLaunchWhenDone: char[256 bytes]
+    0x00224  szTitleToLaunchDDrive: char[256 bytes]
+    0x00324  szPackageInstallDevice: char[260 bytes]
+  sizeof 1072 (0x430)
+    0x00000  dwUserIndex: unsigned long
+    0x00004  dwUpdateFlags: unsigned long
+    0x00008  szUpdatePath: char[260 bytes]
+    0x0010C  ExecutionId: _XEX_EXECUTION_ID
+    0x00124  szTitleToLaunchWhenDone: char[256 bytes]
+    0x00224  szTitleToLaunchDDrive: char[256 bytes]
+    0x00324  szPackageInstallDevice: char[260 bytes]
+    0x00428  pszPackageInstallDevice: char*
+    0x0042C  pOverlapped: _XOVERLAPPED*
+
+constant: 4 layouts, sizeof 112, 120, 128, 184
+  sizeof 112 (0x70): globals gConstExp
+    0x00000  OVFX: _dbl
+    0x00008  UFLX: _dbl
+    0x00010  inf: _dbl
+    0x00018  EPS: double
+    0x00020  LN2INV: double
+    0x00028  C1: double
+    0x00030  C2: double
+    0x00038  p0: double
+    0x00040  p1: double
+    0x00048  p2: double
+    0x00050  q0: double
+    0x00058  q1: double
+    0x00060  q2: double
+    0x00068  zero: float
+    0x0006C  one_half: float
+  sizeof 120 (0x78): globals gConstSin
+    0x00000  PI_OVER_TWO: double
+    0x00008  PI_INV: double
+    0x00010  YMAX: double
+    0x00018  zero: float
+    0x0001C  one: float
+    0x00020  minus_one: float
+    0x00024  one_half: float
+    0x00028  _C1: _dbl
+    0x00030  _C2: _dbl
+    0x00038  SinCosCoeffr1: double
+    0x00040  SinCosCoeffr2: double
+    0x00048  SinCosCoeffr3: double
+    0x00050  SinCosCoeffr4: double
+    0x00058  SinCosCoeffr5: double
+    0x00060  SinCosCoeffr6: double
+    0x00068  SinCosCoeffr7: double
+    0x00070  SinCosCoeffr8: double
+  sizeof 128 (0x80): globals gConstASin
+    0x00000  zero: float
+    0x00004  one: float
+    0x00008  two: float
+    0x0000C  one_half: float
+    0x00010  a: double[16 bytes]
+    0x00020  b: double[16 bytes]
+    0x00030  p1: double
+    0x00038  p2: double
+    0x00040  p3: double
+    0x00048  p4: double
+    0x00050  p5: double
+    0x00058  q0: double
+    0x00060  q1: double
+    0x00068  q2: double
+    0x00070  q3: double
+    0x00078  q4: double
+  sizeof 184 (0xB8): globals gConsts
+    0x00000  EPS: double
+    0x00008  PI_OVER_TWO: double
+    0x00010  PI: double
+    0x00018  TWO_M_SQRT3: double
+    0x00020  SQRT3_M_ONE: double
+    0x00028  SQRT3: double
+    0x00030  MAX_ARG: double
+    0x00038  p0: double
+    0x00040  p1: double
+    0x00048  p2: double
+    0x00050  p3: double
+    0x00058  q0: double
+    0x00060  q1: double
+    0x00068  q2: double
+    0x00070  q3: double
+    0x00078  q4: double
+    0x00080  a: double[32 bytes]
+    0x000A0  kDBL_MIN: double
+    0x000A8  zero: float
+    0x000AC  half: float
+    0x000B0  one: float
+
+db_inflate_codes_state: 2 layouts, sizeof 4, 28
+  sizeof 4 (0x4)
+    0x00000  dummy: int
+  sizeof 28 (0x1C)
+    0x00000  mode: inflate_codes_mode
+    0x00004  len: unsigned
+    0x00008  sub: <unnamed-tag>
+    0x00010  lbits: unsigned char
+    0x00011  dbits: unsigned char
+    0x00014  ltree: db_inflate_huft_s*
+    0x00018  dtree: db_inflate_huft_s*
+
+db_internal_state: 2 layouts, sizeof 4, 20
+  sizeof 4 (0x4)
+    0x00000  dummy: int
+  sizeof 20 (0x14)
+    0x00000  mode: db_inflate_mode
+    0x00004  sub: <unnamed-tag>
+    0x00008  nowrap: int
+    0x0000C  wbits: unsigned
+    0x00010  blocks: db_inflate_blocks_state*
+
+inflate_blocks_state: 2 layouts, sizeof 4, 64
+  sizeof 4 (0x4)
+    0x00000  dummy: int
+  sizeof 64 (0x40)
+    0x00000  mode: inflate_block_mode
+    0x00004  sub: <unnamed-tag>
+    0x00018  last: unsigned
+    0x0001C  bitk: unsigned
+    0x00020  bitb: unsigned long
+    0x00024  hufts: inflate_huft_s*
+    0x00028  window: unsigned char*
+    0x0002C  end: unsigned char*
+    0x00030  read: unsigned char*
+    0x00034  write: unsigned char*
+    0x00038  checkfn: function*
+    0x0003C  check: unsigned long
+
+inflate_codes_state: 2 layouts, sizeof 4, 28
+  sizeof 4 (0x4)
+    0x00000  dummy: int
+  sizeof 28 (0x1C)
+    0x00000  mode: inflate_codes_mode
+    0x00004  len: unsigned
+    0x00008  sub: <unnamed-tag>
+    0x00010  lbits: unsigned char
+    0x00011  dbits: unsigned char
+    0x00014  ltree: inflate_huft_s*
+    0x00018  dtree: inflate_huft_s*
+
+internal_state: 3 layouts, sizeof 4, 24, 5816
+  sizeof 4 (0x4)
+    0x00000  dummy: int
+  sizeof 24 (0x18)
+    0x00000  mode: inflate_mode
+    0x00004  sub: <unnamed-tag>
+    0x0000C  nowrap: int
+    0x00010  wbits: unsigned
+    0x00014  blocks: inflate_blocks_state*
+  sizeof 5816 (0x16B8)
+    0x00000  strm: z_stream_s*
+    0x00004  status: int
+    0x00008  pending_buf: unsigned char*
+    0x0000C  pending_buf_size: unsigned long
+    0x00010  pending_out: unsigned char*
+    0x00014  pending: int
+    0x00018  noheader: int
+    0x0001C  data_type: unsigned char
+    0x0001D  method: unsigned char
+    0x00020  last_flush: int
+    0x00024  w_size: unsigned
+    0x00028  w_bits: unsigned
+    0x0002C  w_mask: unsigned
+    0x00030  window: unsigned char*
+    0x00034  window_size: unsigned long
+    0x00038  prev: unsigned short*
+    0x0003C  head: unsigned short*
+    0x00040  ins_h: unsigned
+    0x00044  hash_size: unsigned
+    0x00048  hash_bits: unsigned
+    0x0004C  hash_mask: unsigned
+    0x00050  hash_shift: unsigned
+    0x00054  block_start: long
+    0x00058  match_length: unsigned
+    0x0005C  prev_match: unsigned
+    0x00060  match_available: int
+    0x00064  strstart: unsigned
+    0x00068  match_start: unsigned
+    0x0006C  lookahead: unsigned
+    0x00070  prev_length: unsigned
+    0x00074  max_chain_length: unsigned
+    0x00078  max_lazy_match: unsigned
+    0x0007C  level: int
+    0x00080  strategy: int
+    0x00084  good_match: unsigned
+    0x00088  nice_match: int
+    0x0008C  dyn_ltree: ct_data_s[2292 bytes]
+    0x00980  dyn_dtree: ct_data_s[244 bytes]
+    0x00A74  bl_tree: ct_data_s[156 bytes]
+    0x00B10  l_desc: tree_desc_s
+    0x00B1C  d_desc: tree_desc_s
+    0x00B28  bl_desc: tree_desc_s
+    0x00B34  bl_count: unsigned short[32 bytes]
+    0x00B54  heap: int[2292 bytes]
+    0x01448  heap_len: int
+    0x0144C  heap_max: int
+    0x01450  depth: unsigned char[573 bytes]
+    0x01690  l_buf: unsigned char*
+    0x01694  lit_bufsize: unsigned
+    0x01698  last_lit: unsigned
+    0x0169C  d_buf: unsigned short*
+    0x016A0  opt_len: unsigned long
+    0x016A4  static_len: unsigned long
+    0x016A8  matches: unsigned
+    0x016AC  last_eob_len: int
+    0x016B0  bi_buf: unsigned short
+    0x016B4  bi_valid: int
+
+my_coef_controller: 3 layouts, sizeof 68, 104, 116
+  sizeof 68 (0x44)
+    0x00000  pub: jpeg_c_coef_controller
+    0x00008  iMCU_row_num: unsigned
+    0x0000C  mcu_ctr: unsigned
+    0x00010  MCU_vert_offset: int
+    0x00014  MCU_rows_per_iMCU_row: int
+    0x00018  whole_image: jvirt_barray_control**
+    0x0001C  dummy_buffer: short[128 bytes]*[40 bytes]
+  sizeof 104 (0x68)
+    0x00000  pub: jpeg_c_coef_controller
+    0x00008  iMCU_row_num: unsigned
+    0x0000C  mcu_ctr: unsigned
+    0x00010  MCU_vert_offset: int
+    0x00014  MCU_rows_per_iMCU_row: int
+    0x00018  MCU_buffer: short[128 bytes]*[40 bytes]
+    0x00040  whole_image: jvirt_barray_control*[40 bytes]
+  sizeof 116 (0x74)
+    0x00000  pub: jpeg_d_coef_controller
+    0x00014  MCU_ctr: unsigned
+    0x00018  MCU_vert_offset: int
+    0x0001C  MCU_rows_per_iMCU_row: int
+    0x00020  MCU_buffer: short[128 bytes]*[40 bytes]
+    0x00048  whole_image: jvirt_barray_control*[40 bytes]
+    0x00070  coef_bits_latch: int*
+
+my_cquantizer: 2 layouts, sizeof 44, 88
+  sizeof 44 (0x2C)
+    0x00000  pub: jpeg_color_quantizer
+    0x00010  sv_colormap: unsigned char**
+    0x00014  desired: int
+    0x00018  histogram: unsigned short[64 bytes]**
+    0x0001C  needs_zeroed: unsigned char
+    0x00020  fserrors: short*
+    0x00024  on_odd_row: unsigned char
+    0x00028  error_limiter: int*
+  sizeof 88 (0x58)
+    0x00000  pub: jpeg_color_quantizer
+    0x00010  sv_colormap: unsigned char**
+    0x00014  sv_actual: int
+    0x00018  colorindex: unsigned char**
+    0x0001C  is_padded: unsigned char
+    0x00020  Ncolors: int[16 bytes]
+    0x00030  row_index: int
+    0x00034  odither: int[64 bytes]*[16 bytes]
+    0x00044  fserrors: short*[16 bytes]
+    0x00054  on_odd_row: unsigned char
+
+my_main_controller: 2 layouts, sizeof 64, 80
+  sizeof 64 (0x40)
+    0x00000  pub: jpeg_c_main_controller
+    0x00008  cur_iMCU_row: unsigned
+    0x0000C  rowgroup_ctr: unsigned
+    0x00010  suspended: unsigned char
+    0x00014  pass_mode: J_BUF_MODE
+    0x00018  buffer: unsigned char**[40 bytes]
+  sizeof 80 (0x50)
+    0x00000  pub: jpeg_d_main_controller
+    0x00008  buffer: unsigned char**[40 bytes]
+    0x00030  buffer_full: unsigned char
+    0x00034  rowgroup_ctr: unsigned
+    0x00038  xbuffer: unsigned char***[8 bytes]
+    0x00040  whichptr: int
+    0x00044  context_state: int
+    0x00048  rowgroups_avail: unsigned
+    0x0004C  iMCU_row_ctr: unsigned
+
+my_upsampler: 2 layouts, sizeof 48, 160
+  sizeof 48 (0x30)
+    0x00000  pub: jpeg_upsampler
+    0x0000C  upmethod: function*
+    0x00010  Cr_r_tab: int*
+    0x00014  Cb_b_tab: int*
+    0x00018  Cr_g_tab: long*
+    0x0001C  Cb_g_tab: long*
+    0x00020  spare_row: unsigned char*
+    0x00024  spare_full: unsigned char
+    0x00028  out_row_width: unsigned
+    0x0002C  rows_to_go: unsigned
+  sizeof 160 (0xA0)
+    0x00000  pub: jpeg_upsampler
+    0x0000C  color_buf: unsigned char**[40 bytes]
+    0x00034  methods: function*[40 bytes]
+    0x0005C  next_row_out: int
+    0x00060  rows_to_go: unsigned
+    0x00064  rowgroup_height: int[40 bytes]
+    0x0008C  h_expand: unsigned char[10 bytes]
+    0x00096  v_expand: unsigned char[10 bytes]
+
+savable_state: 3 layouts, sizeof 16, 20, 24
+  sizeof 16 (0x10)
+    0x00000  last_dc_val: int[16 bytes]
+  sizeof 20 (0x14)
+    0x00000  EOBRUN: unsigned
+    0x00004  last_dc_val: int[16 bytes]
+  sizeof 24 (0x18)
+    0x00000  put_buffer: long
+    0x00004  put_bits: int
+    0x00008  last_dc_val: int[16 bytes]
+
+static_tree_desc_s: 2 layouts, sizeof 4, 20
+  sizeof 4 (0x4)
+    0x00000  dummy: int
+  sizeof 20 (0x14): globals static_bl_desc, static_d_desc, static_l_desc
+    0x00000  static_tree: ct_data_s*
+    0x00004  extra_bits: int*
+    0x00008  extra_base: int
+    0x0000C  elems: int
+    0x00010  max_length: int
+
+std::__non_rtti_object: 2 layouts, sizeof 8, 12
+  sizeof 8 (0x8)
+  sizeof 12 (0xC)
+
+std::bad_cast: 2 layouts, sizeof 8, 12
+  sizeof 8 (0x8)
+  sizeof 12 (0xC)
+
+std::bad_typeid: 2 layouts, sizeof 8, 12
+  sizeof 8 (0x8)
+  sizeof 12 (0xC)
+

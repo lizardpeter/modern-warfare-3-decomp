@@ -1166,11 +1166,11 @@ void Material_Sort_Callback(XAssetHeader param_1,void *param_2)
 // 82756FA8  Material_Sort  (gfx_d3d/r_material_load_obj.cpp:12027)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void Material_Sort(void)
 

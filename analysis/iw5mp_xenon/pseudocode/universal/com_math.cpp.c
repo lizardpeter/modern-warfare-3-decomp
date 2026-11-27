@@ -2956,8 +2956,8 @@ void FinitePerspectiveMatrix
   
   dVar4 = (double)param_4;
   dVar1 = (double)param_1;
-  dVar2 = (double)param_2;
   dVar3 = (double)param_3;
+  dVar2 = (double)param_2;
   if (in_r7 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x959,
                     0,"%s");
@@ -2993,8 +2993,8 @@ void InfinitePerspectiveMatrix(float param_1,float param_2,float param_3,float (
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_3;
   dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
   dVar1 = (double)param_1;
   if (in_r6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x97b,
@@ -3029,9 +3029,9 @@ void OrthographicMatrix(float param_1,float param_2,float param_3,float (*param_
   double dVar3;
   double dVar4;
   
+  dVar2 = (double)param_2;
   dVar3 = (double)param_3;
   dVar1 = (double)param_1;
-  dVar2 = (double)param_2;
   if (in_r6 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0x999,
                     0,"%s");
@@ -4312,11 +4312,11 @@ int IsPosInsideArc(float *param_1,float param_2,float *param_3,float param_4,flo
   float local_5c;
   float local_58;
   
-  dVar6 = (double)param_6;
   dVar7 = (double)param_7;
+  dVar6 = (double)param_6;
   dVar4 = (double)param_5;
-  dVar3 = (double)param_4;
   dVar2 = (double)param_2;
+  dVar3 = (double)param_4;
   if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xc9d,
                     0,"%s");
@@ -4525,8 +4525,8 @@ void VectorPolar(float *param_1,float param_2,float param_3,float param_4)
   double dVar5;
   double dVar6;
   
-  dVar3 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar3 = (double)param_3;
   dVar2 = sin(dVar3);
   dVar6 = (double)(float)dVar2;
   dVar2 = cos(dVar3);
@@ -4901,9 +4901,9 @@ float SnapFloat(float param_1,float param_2,float param_3)
   double dVar6;
   double dVar7;
   
+  dVar3 = (double)param_2;
   dVar4 = (double)param_3;
   dVar7 = (double)param_1;
-  dVar3 = (double)param_2;
   dVar5 = 0.0;
   if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xe43,
@@ -5060,8 +5060,8 @@ bool PointInsideCone(float *param_1,float *param_2,float param_3,float param_4,f
   double dVar5;
   double dVar6;
   
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   if (0.002 <= ABS((param_2[1] * param_2[1] + param_2[2] * param_2[2] + *param_2 * *param_2) - 1.0))
   {
     va("(%g %g %g) len %g");
@@ -5298,8 +5298,8 @@ float DistanceFromConicSectionOfSphereToPoint
   double dVar13;
   double dVar14;
   
-  dVar12 = (double)param_4;
   dVar8 = (double)param_3;
+  dVar12 = (double)param_4;
   dVar14 = 0.0;
   if (dVar8 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xf47,
@@ -5361,8 +5361,8 @@ void ClosestPointOnConicSectionOfSphereToPoint
   double dVar11;
   double dVar12;
   
-  dVar7 = (double)param_3;
   dVar8 = (double)param_4;
+  dVar7 = (double)param_3;
   dVar12 = 0.0;
   if (dVar7 < 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.cpp",0xf83,

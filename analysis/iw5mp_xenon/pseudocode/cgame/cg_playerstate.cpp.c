@@ -590,8 +590,8 @@ float ClampFloat(float param_1,float param_2,float param_3)
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_3;
   dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
   dVar1 = (double)param_1;
   if (dVar3 <= dVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\com_math.h",0x274,0,

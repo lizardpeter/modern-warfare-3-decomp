@@ -34,8 +34,8 @@ void CG_DrawRotatedPicPhysical
   float local_9c [39];
   
   dVar11 = (double)param_5;
-  dVar8 = (double)param_4;
   dVar9 = (double)param_3;
+  dVar8 = (double)param_4;
   dVar6 = (double)param_2;
   dVar10 = (double)(param_6 * 0.017453292);
   dVar5 = sin(dVar10);
@@ -322,33 +322,33 @@ void CG_Draw2DLine(ScreenPlacement *param_1,float param_2,float param_3,float pa
   float local_54;
   
   dVar6 = (double)param_6;
-  dVar4 = (double)param_5;
+  dVar5 = (double)param_5;
   dVar1 = (double)param_3;
-  dVar5 = (double)param_4;
-  if (((double)param_2 != dVar5) || (dVar1 != dVar4)) {
+  dVar3 = (double)param_4;
+  if (((double)param_2 != dVar3) || (dVar1 != dVar5)) {
     fVar7 = ScrPlace_ApplyXWithoutSplitScreenScaling(param_1,param_2,param_7);
     dVar2 = (double)fVar7;
-    fVar7 = ScrPlace_ApplyXWithoutSplitScreenScaling(param_1,(float)dVar5,param_7);
-    dVar5 = (double)fVar7;
-    fVar7 = ScrPlace_ApplyYWithoutSplitScreenScaling(param_1,(float)dVar1,param_7);
+    fVar7 = ScrPlace_ApplyXWithoutSplitScreenScaling(param_1,(float)dVar3,param_7);
     dVar3 = (double)fVar7;
-    fVar7 = ScrPlace_ApplyYWithoutSplitScreenScaling(param_1,(float)dVar4,param_7);
+    fVar7 = ScrPlace_ApplyYWithoutSplitScreenScaling(param_1,(float)dVar1,param_7);
     dVar4 = (double)fVar7;
-    local_78 = (float)(dVar5 - dVar2);
-    local_74 = (float)(dVar4 - dVar3);
+    fVar7 = ScrPlace_ApplyYWithoutSplitScreenScaling(param_1,(float)dVar5,param_7);
+    dVar5 = (double)fVar7;
+    local_78 = (float)(dVar3 - dVar2);
+    local_74 = (float)(dVar5 - dVar4);
     Vec2NormalizeTo(&local_78,&local_80);
     fVar7 = -local_7c;
     local_7c = (float)(dVar6 * 0.5) * local_80;
     dVar1 = (double)local_7c;
     local_80 = (float)(dVar6 * 0.5) * fVar7;
     dVar6 = (double)local_80;
-    local_6c = (float)(dVar1 + dVar3);
-    local_64 = (float)(dVar1 + dVar4);
-    local_5c = (float)(dVar4 - dVar1);
-    local_54 = (float)(dVar3 - dVar1);
+    local_6c = (float)(dVar1 + dVar4);
+    local_64 = (float)(dVar1 + dVar5);
+    local_5c = (float)(dVar5 - dVar1);
+    local_54 = (float)(dVar4 - dVar1);
     local_70 = (float)(dVar6 + dVar2);
-    local_68 = (float)(dVar6 + dVar5);
-    local_60 = (float)(dVar5 - dVar6);
+    local_68 = (float)(dVar6 + dVar3);
+    local_60 = (float)(dVar3 - dVar6);
     local_58 = (float)(dVar2 - dVar6);
     R_AddCmdDrawQuadPic((float (*) [2])&local_70,in_stack_00000054,in_stack_0000005c);
   }
@@ -439,8 +439,8 @@ int CG_DrawDevString(ScreenPlacement *param_1,float param_2,float param_3,float 
   Font_s *in_stack_00000054;
   
   dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
   dVar9 = (double)param_3;
+  dVar5 = (double)param_4;
   dVar8 = (double)param_2;
   uVar1 = in_r10 & 3;
   pcVar4 = in_r8;
@@ -1048,8 +1048,8 @@ void CG_DebugArc(float *param_1,float param_2,float param_3,float param_4,float 
   float fStack_134;
   float local_130 [76];
   
-  dVar6 = (double)param_2;
   dVar12 = (double)param_3;
+  dVar6 = (double)param_2;
   dVar11 = (double)((float)((double)param_4 - dVar12) * 0.06666667);
   if (dVar11 < 0.0) {
     dVar12 = (double)(float)(dVar12 - 360.0);

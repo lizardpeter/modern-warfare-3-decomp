@@ -244,9 +244,9 @@ int G_ItemClipMask(gentity_s *param_1)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void Item_GetTunnelTraceOffset(gentity_s *param_1,WeaponDef *param_2,float *param_3,float *param_4)
 

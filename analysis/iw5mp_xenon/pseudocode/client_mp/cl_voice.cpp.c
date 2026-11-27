@@ -987,8 +987,8 @@ int CL_FindGoodRouteForClientNum(SessionData *param_1,int param_2,int *param_3,i
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_BuildRouteList(SessionData *param_1,LocalClientNum_t param_2,int param_3,int *param_4)
 
@@ -1565,8 +1565,8 @@ void CL_VoiceConnectionTestPacket(LocalClientNum_t param_1,msg_t *param_2,netadr
 /* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_VoicePacket(LocalClientNum_t param_1,msg_t *param_2)
 
@@ -1871,8 +1871,8 @@ int CL_FindRouteForClientNum(SessionData *param_1,int param_2,int param_3,int pa
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool CL_SendRelayPacket(SessionData *param_1,LocalClientNum_t param_2,int param_3,int param_4,
                        uchar *param_5,int param_6,bool param_7)

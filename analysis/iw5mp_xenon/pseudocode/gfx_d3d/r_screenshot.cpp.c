@@ -93,8 +93,8 @@ uchar R_CubemapShotCalcReflectionFactor
   double dVar7;
   float fVar8;
   
-  dVar6 = (double)param_5;
   dVar5 = (double)param_4;
+  dVar6 = (double)param_5;
   if (param_1 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
                     0x31b,0,"%s\n\t(shotIndex) = %i");
@@ -389,8 +389,8 @@ void R_CubemapShotWriteTargaFile(char *param_1,CubemapShot param_2,float param_3
   double dVar4;
   double dVar5;
   
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
                     0x3ae,0,"%s");
@@ -517,8 +517,8 @@ void R_SaveCubemapShot(char *param_1,CubemapShot param_2,float param_3,float par
   double dVar4;
   double dVar5;
   
-  dVar4 = (double)param_3;
   dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
   if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_screenshot.cpp",
                     0x3ae,0,"%s");

@@ -446,8 +446,8 @@ void FX_GetVelocityAtTime
   undefined4 local_80;
   float afStack_78 [30];
   
-  dVar6 = (double)param_3;
   dVar4 = (double)param_4;
+  dVar6 = (double)param_3;
   if (param_1 == (FxElemDef *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_util.cpp"
                     ,0x12e,0,"%s");
@@ -783,8 +783,8 @@ void FX_AddVisBlocker(FxSystem *param_1,float *param_2,float param_3,float param
   ushort uStack_4a;
   ushort uStack_42;
   
-  dVar6 = (double)param_4;
   dVar5 = (double)param_3;
+  dVar6 = (double)param_4;
   pFVar1 = param_1->visStateBufferWrite;
   if (pFVar1->blockerCount + 1 < 0x100) {
     pFVar4 = pFVar1->blocker + pFVar1->blockerCount + 1;

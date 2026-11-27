@@ -454,8 +454,8 @@ void CG_StopBoltedEffects(LocalClientNum_t param_1,FxEffectDef *param_2,int para
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_PlayFx(LocalClientNum_t param_1,centity_s *param_2,float *param_3)
@@ -1091,8 +1091,8 @@ LAB_822cbd28:
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Type propagation algorithm not settling */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -2286,8 +2286,8 @@ void CG_CheckEvents(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CG_CheckEntEvents(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 

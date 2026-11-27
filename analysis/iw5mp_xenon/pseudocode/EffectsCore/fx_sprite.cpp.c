@@ -336,8 +336,8 @@ void FX_GenerateSpriteCodeMeshVertsFixedWorldSize
   double dVar5;
   FxGenerateVertsCmd local_60;
   
-  dVar2 = (double)param_5;
   dVar3 = (double)param_4;
+  dVar2 = (double)param_5;
   dVar4 = 0.0;
   if (0.0 < dVar2) {
     param_6 = in_r10;

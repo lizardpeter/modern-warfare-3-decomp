@@ -612,9 +612,9 @@ void CollideTrajectories(uint param_1,uint param_2,float param_3,float param_4,f
   float local_d4;
   float local_d0;
   
+  dVar14 = (double)param_4;
   dVar15 = (double)param_5;
   dVar13 = (double)param_3;
-  dVar14 = (double)param_4;
   lVar4 = (longlong)(int)param_7;
   lVar5 = (longlong)(int)param_1;
   PIXBeginNamedEvent_Copy_NoVarArgs(0xffffffff,"Spark CollideTrajectories");
@@ -1050,9 +1050,9 @@ void FX_DrawElem_SparkFountain_PopulateVertices
   float local_c0;
   
   dVar24 = (double)param_8;
+  dVar22 = (double)param_6;
   dVar23 = (double)param_7;
   dVar21 = (double)param_5;
-  dVar22 = (double)param_6;
   pGVar11 = *param_2;
   dVar28 = 1.0;
   pfVar17 = *param_4 + 2;
@@ -1206,8 +1206,8 @@ void FX_DrawElem_SparkFountain_GetBoostedTime
   double dVar7;
   
   dVar2 = (double)param_5;
-  dVar3 = (double)param_2;
   dVar1 = (double)param_1;
+  dVar3 = (double)param_2;
   dVar5 = 0.0;
   if (0.0 < dVar1) {
     dVar4 = 1.5707963705062866;

@@ -144,8 +144,8 @@ LAB_8234d550:
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -293,8 +293,8 @@ void CL_Migrate(LocalClientNum_t param_1,_XSESSION_INFO *param_2,netadr_t param_
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_SendPing(LocalClientNum_t param_1,netadr_t param_2)
 
@@ -814,8 +814,8 @@ void HandleStartMsg(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void HandleSaveDataMsg(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3)
 
@@ -934,8 +934,8 @@ void HandlePingAckMsg(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void HandleHeaderMsg(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3)
 
@@ -978,8 +978,8 @@ void HandleHeaderMsg(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void HandleStateMsg(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3)
 
@@ -999,8 +999,8 @@ void HandleStateMsg(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CL_MigrationPacket(LocalClientNum_t param_1,char *param_2,netadr_t param_3,msg_t *param_4)
 

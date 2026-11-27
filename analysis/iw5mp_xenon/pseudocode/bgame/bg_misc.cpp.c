@@ -1928,8 +1928,8 @@ void BG_PlayerToEntity_SetFlags(playerState_s *param_1,entityState_s *param_2)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void BG_PlayerToEntity_SetMisc(playerState_s *param_1,entityState_s *param_2)
@@ -2220,9 +2220,9 @@ bool BG_CheckProneValid(int param_1,float *param_2,float param_3,float param_4,f
   float local_f0;
   
   dVar19 = (double)param_13;
-  dVar8 = (double)param_3;
   dVar20 = (double)param_4;
   dVar9 = (double)param_5;
+  dVar8 = (double)param_3;
   bVar3 = true;
   pfVar4 = (float *)param_1;
   if (1 < in_stack_0000007c) {

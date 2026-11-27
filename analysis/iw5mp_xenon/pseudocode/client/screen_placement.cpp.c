@@ -98,13 +98,13 @@ void ScrPlace_CalcSpecificSafeAreaOffsets
   int in_stack_0000006c;
   int in_stack_00000074;
   
+  dVar8 = (double)param_7;
   dVar6 = (double)param_5;
   dVar2 = (double)param_6;
-  dVar8 = (double)param_7;
   dVar5 = (double)param_4;
-  dVar1 = (double)param_1;
   dVar3 = (double)param_2;
   dVar4 = (double)param_3;
+  dVar1 = (double)param_1;
   dVar12 = 0.0;
   dVar7 = 1.0;
   if ((dVar2 < 0.0) || (1.0 < dVar2)) {
@@ -206,8 +206,8 @@ void ScrPlace_CalcSafeAreaOffsets
   
   dVar6 = (double)param_6;
   dVar5 = (double)param_5;
-  dVar4 = (double)param_4;
   dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
   dVar2 = (double)param_2;
   pfVar1 = param_1->realViewableMax;
   ScrPlace_CalcSpecificSafeAreaOffsets

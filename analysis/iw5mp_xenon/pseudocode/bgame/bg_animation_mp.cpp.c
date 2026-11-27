@@ -2762,8 +2762,8 @@ void BG_SwingAngles(float param_1,float param_2,float param_3,float param_4,floa
   float fVar12;
   
   dVar10 = (double)param_4;
-  dVar6 = (double)param_3;
   dVar5 = (double)param_2;
+  dVar6 = (double)param_3;
   dVar3 = (double)param_1;
   BG_CheckThread();
   iVar2 = *in_r13;
@@ -3484,8 +3484,8 @@ void BG_UpdateWeaponHidePartBitsForModel(Weapon param_1,XModel *param_2,uint *pa
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void BG_UpdatePlayerDObj(LocalClientNum_t param_1,DObj *param_2,entityState_s *param_3,
                         clientInfo_t *param_4,int param_5)

@@ -3499,8 +3499,8 @@ dvar_t * Dvar_RegisterVec3(char *param_1,float param_2,float param_3,float param
   
   dVar7 = (double)param_6;
   dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   dVar3 = (double)param_2;
   if ((dVar3 < dVar6) || (dVar7 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dvar.cpp",0x846,0,
@@ -3545,9 +3545,9 @@ dvar_t * Dvar_RegisterVec3Color
   char *pcStack_64;
   
   dVar6 = (double)param_5;
+  dVar4 = (double)param_3;
   dVar5 = (double)param_4;
   dVar3 = (double)param_2;
-  dVar4 = (double)param_3;
   dVar7 = 0.0;
   if (dVar6 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dvar.cpp",0x856,0,
@@ -3594,12 +3594,12 @@ dvar_t * Dvar_RegisterVec4(char *param_1,float param_2,float param_3,float param
   double dVar8;
   DvarValue in_stack_ffffff38;
   
-  dVar6 = (double)param_5;
   dVar7 = (double)param_6;
   dVar8 = (double)param_7;
+  dVar6 = (double)param_5;
   dVar5 = (double)param_4;
-  dVar4 = (double)param_3;
   dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
   if ((dVar3 < dVar7) || (dVar8 < dVar3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dvar.cpp",0x867,0,
                     "%s");
@@ -3638,8 +3638,8 @@ dvar_t * Dvar_RegisterVec4(char *param_1,float *param_2,float param_3,float para
   double dVar4;
   double dVar5;
   
-  dVar4 = (double)param_3;
   dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
   pcVar3 = (char *)(int)(short)param_5;
   uVar2 = (ushort)param_2;
   if (param_2 == (float *)0x0) {
@@ -3762,8 +3762,8 @@ dvar_t * Dvar_RegisterColor(char *param_1,float param_2,float param_3,float para
   undefined4 uStack_64;
   
   dVar7 = (double)param_5;
-  dVar6 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar6 = (double)param_4;
   dVar11 = 1.0;
   dVar10 = 0.0;
   dVar9 = 255.0;
@@ -4098,8 +4098,8 @@ void Dvar_SetColorFromSource
   
   dVar4 = (double)param_5;
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 == (dvar_t *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\universal\\dvar.cpp",0x950,0,
                     "%s");
@@ -4403,8 +4403,8 @@ void Dvar_SetVec2ByName(char *param_1,float param_2,float param_3)
   double dVar3;
   double dVar4;
   
-  dVar4 = (double)param_3;
   dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
   pdVar1 = Dvar_FindMalleableVar(param_1);
   if (pdVar1 == (dvar_t *)0x0) {
     pcVar2 = va("%g %g");
@@ -4430,8 +4430,8 @@ void Dvar_SetVec3ByName(char *param_1,float param_2,float param_3,float param_4)
   double dVar5;
   
   dVar3 = (double)param_2;
-  dVar4 = (double)param_3;
   dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
   pdVar1 = Dvar_FindMalleableVar(param_1);
   if (pdVar1 == (dvar_t *)0x0) {
     pcVar2 = va("%g %g %g");
@@ -4461,8 +4461,8 @@ void Dvar_SetVec4ByName(char *param_1,float param_2,float param_3,float param_4,
   double dVar6;
   
   dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   dVar3 = (double)param_2;
   pdVar1 = Dvar_FindMalleableVar(param_1);
   if (pdVar1 == (dvar_t *)0x0) {
@@ -4572,8 +4572,8 @@ void Dvar_SetColorByName(char *param_1,float param_2,float param_3,float param_4
   
   dVar6 = (double)param_5;
   dVar5 = (double)param_4;
-  dVar4 = (double)param_3;
   dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
   pdVar1 = Dvar_FindMalleableVar(param_1);
   if (pdVar1 == (dvar_t *)0x0) {
     pcVar2 = va("%g %g %g %g");

@@ -157,8 +157,8 @@ void RB_TessRectBillboard
   double dVar17;
   GfxViewport aGStack_70 [7];
   
-  dVar13 = (double)param_6;
   dVar10 = (double)param_4;
+  dVar13 = (double)param_6;
   dVar11 = (double)param_3;
   R_GetViewport(&gfxCmdBufSourceState,aGStack_70);
   pGVar8 = gfxCmdBufSourceState.viewParms3D;
@@ -376,8 +376,8 @@ void RB_UpdateVisibilityWithoutQuery(OcclusionQuery *param_1)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawOcclusionQuerySprite(OcclusionQuery *param_1)
@@ -682,8 +682,8 @@ float R_UpdateOverTime(float param_1,float param_2,int param_3,int param_4,int p
   double dVar1;
   double dVar2;
   
-  dVar2 = (double)param_1;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_1;
   if (in_r7 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_query.cpp",0x268,0,
                     "%s\n\t(frametime) = %i");

@@ -15,9 +15,9 @@ void dBodyAddTorque(dxBody *param_1,float param_2,float param_3,float param_4)
   double dVar5;
   double dVar6;
   
+  dVar5 = (double)param_3;
   dVar6 = (double)param_4;
   dVar4 = (double)param_2;
-  dVar5 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
                     0x2f,0,"%s");
@@ -66,8 +66,8 @@ void dBodyAddForce(dxBody *param_1,float param_2,float param_3,float param_4)
   double dVar5;
   
   dVar5 = (double)param_4;
-  dVar4 = (double)param_3;
   dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
   if (param_1 == (dxBody *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
                     0x3e,0,"%s");
@@ -264,26 +264,26 @@ void setAnchors(dxJoint *param_1,float param_2,float param_3,float param_4,float
   
   pdVar1 = param_1->node[0].body;
   if (pdVar1 != (dxBody *)0x0) {
-    fVar3 = param_3 - (pdVar1->info).pos[1];
-    fVar2 = param_4 - (pdVar1->info).pos[2];
+    fVar2 = param_3 - (pdVar1->info).pos[1];
+    fVar3 = param_4 - (pdVar1->info).pos[2];
     fVar4 = param_2 - (pdVar1->info).pos[0];
-    *in_r7 = (pdVar1->info).R[0] * fVar4 + (pdVar1->info).R[8] * fVar2 + (pdVar1->info).R[4] * fVar3
+    *in_r7 = (pdVar1->info).R[0] * fVar4 + (pdVar1->info).R[8] * fVar3 + (pdVar1->info).R[4] * fVar2
     ;
     in_r7[1] = fVar4 * (pdVar1->info).R[1] +
-               (pdVar1->info).R[9] * fVar2 + (pdVar1->info).R[5] * fVar3;
+               (pdVar1->info).R[9] * fVar3 + (pdVar1->info).R[5] * fVar2;
     in_r7[2] = (pdVar1->info).R[2] * fVar4 +
-               (pdVar1->info).R[10] * fVar2 + (pdVar1->info).R[6] * fVar3;
+               (pdVar1->info).R[10] * fVar3 + (pdVar1->info).R[6] * fVar2;
     pdVar1 = param_1->node[1].body;
     if (pdVar1 != (dxBody *)0x0) {
-      fVar3 = param_3 - (pdVar1->info).pos[1];
-      fVar2 = param_4 - (pdVar1->info).pos[2];
+      fVar2 = param_3 - (pdVar1->info).pos[1];
+      fVar3 = param_4 - (pdVar1->info).pos[2];
       fVar4 = param_2 - (pdVar1->info).pos[0];
       *in_r8 = (pdVar1->info).R[0] * fVar4 +
-               (pdVar1->info).R[8] * fVar2 + (pdVar1->info).R[4] * fVar3;
+               (pdVar1->info).R[8] * fVar3 + (pdVar1->info).R[4] * fVar2;
       in_r8[1] = (pdVar1->info).R[1] * fVar4 +
-                 (pdVar1->info).R[9] * fVar2 + (pdVar1->info).R[5] * fVar3;
+                 (pdVar1->info).R[9] * fVar3 + (pdVar1->info).R[5] * fVar2;
       in_r8[2] = (pdVar1->info).R[2] * fVar4 +
-                 (pdVar1->info).R[10] * fVar2 + (pdVar1->info).R[6] * fVar3;
+                 (pdVar1->info).R[10] * fVar3 + (pdVar1->info).R[6] * fVar2;
       in_r7[3] = 0.0;
       in_r8[3] = 0.0;
       return;
@@ -324,8 +324,8 @@ void setAxes(dxJoint *param_1,float param_2,float param_3,float param_4,float *p
   float local_48;
   undefined4 local_44;
   
-  dVar7 = (double)param_4;
   dVar6 = (double)param_3;
+  dVar7 = (double)param_4;
   dVar5 = (double)param_2;
   if (param_1->node[0].body != (dxBody *)0x0) {
     dVar8 = 0.0;
@@ -913,8 +913,8 @@ void dJointSetBallAnchor(dxJointBall *param_1,float param_2,float param_3,float 
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (dxJointBall *)0x0) {
     in_r5 = (float *)0x0;
@@ -1199,8 +1199,8 @@ void dJointSetHingeAnchor(dxJointHinge *param_1,float param_2,float param_3,floa
   double dVar4;
   
   dVar4 = (double)param_4;
-  dVar3 = (double)param_3;
   dVar2 = (double)param_2;
+  dVar3 = (double)param_3;
   if (param_1 == (dxJointHinge *)0x0) {
     in_r5 = (float *)0x0;
     in_r4 = (float *)0x35d;
@@ -1245,8 +1245,8 @@ void dJointSetHingeAxis(dxJointHinge *param_1,float param_2,float param_3,float 
   double dVar4;
   
   dVar2 = (double)param_2;
-  dVar3 = (double)param_3;
   dVar4 = (double)param_4;
+  dVar3 = (double)param_3;
   if (param_1 == (dxJointHinge *)0x0) {
     in_r5 = (float *)0x0;
     in_r4 = (float *)0x367;
@@ -2333,9 +2333,9 @@ void dJointSetSliderAxis(dxJointSlider *param_1,float param_2,float param_3,floa
   double dVar8;
   double dVar9;
   
+  dVar8 = (double)param_3;
   dVar9 = (double)param_4;
   dVar7 = (double)param_2;
-  dVar8 = (double)param_3;
   if (param_1 == (dxJointSlider *)0x0) {
     in_r5 = (float *)0x0;
     in_r4 = (float *)0x5be;
@@ -3368,8 +3368,8 @@ void dJointSetUniversalAnchor(dxJointUniversal *param_1,float param_2,float para
   double dVar2;
   double dVar3;
   
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (dxJointUniversal *)0x0) {
     in_r5 = (float *)0x0;
@@ -3403,9 +3403,9 @@ void dJointSetUniversalAxis1(dxJointUniversal *param_1,float param_2,float param
   double dVar2;
   double dVar3;
   
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (param_1 == (dxJointUniversal *)0x0) {
     in_r5 = (float *)0x0;
     in_r4 = (float *)0x81f;
@@ -3439,8 +3439,8 @@ void dJointSetUniversalAxis2(dxJointUniversal *param_1,float param_2,float param
   double dVar3;
   
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 == (dxJointUniversal *)0x0) {
     in_r5 = (float *)0x0;
     in_r4 = (float *)0x82c;
@@ -4416,8 +4416,8 @@ void dJointSetAMotorAxis(dxJointAMotor *param_1,int param_2,int param_3,float pa
   double dVar5;
   
   dVar3 = (double)param_4;
-  dVar4 = (double)param_5;
   dVar5 = (double)param_6;
+  dVar4 = (double)param_5;
   if ((((param_1 == (dxJointAMotor *)0x0) || (param_2 < 0)) || (2 < param_2)) ||
      ((param_3 < 0 || (2 < param_3)))) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
@@ -4740,8 +4740,8 @@ void dJointAddAMotorTorques(dxJointAMotor *param_1,float param_2,float param_3,f
   float local_48;
   
   dVar4 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar5 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 == (dxJointAMotor *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\joint.cpp",
                     0xa4e,0,"%s");

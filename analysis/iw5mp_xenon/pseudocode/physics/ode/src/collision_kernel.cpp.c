@@ -558,9 +558,9 @@ void dGeomSetPosition(dxGeom *param_1,float param_2,float param_3,float param_4)
   double dVar2;
   double dVar3;
   
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (param_1 == (dxGeom *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\collision_kernel.cpp"
                     ,0x17d,0,"%s");

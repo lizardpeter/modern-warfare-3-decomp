@@ -3169,11 +3169,11 @@ void Load_PhysPresetAsset(PhysPreset **param_1)
 
 // 823F3B18  Mark_PhysPresetAsset  (database/db_registry.cpp:921)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_PhysPresetAsset(PhysPreset *param_1,int param_2)
 
@@ -3209,11 +3209,11 @@ void Load_PhysCollmapAsset(PhysCollmap **param_1)
 
 // 823F3B78  Mark_PhysCollmapAsset  (database/db_registry.cpp:943)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_PhysCollmapAsset(PhysCollmap *param_1,int param_2)
 
@@ -3249,11 +3249,11 @@ void Load_XAnimPartsAsset(XAnimParts **param_1)
 
 // 823F3BD8  Mark_XAnimPartsAsset  (database/db_registry.cpp:965)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_XAnimPartsAsset(XAnimParts *param_1,int param_2)
 
@@ -3289,11 +3289,11 @@ void Load_XModelSurfsAsset(XModelSurfs **param_1)
 
 // 823F3C38  Mark_XModelSurfsAsset  (database/db_registry.cpp:987)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_XModelSurfsAsset(XModelSurfs *param_1,int param_2)
 
@@ -3413,11 +3413,11 @@ void Load_XModelAsset(XModel **param_1)
 
 // 823F3CB0  Mark_XModelAsset  (database/db_registry.cpp:1054)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_XModelAsset(XModel *param_1,int param_2)
 
@@ -3469,11 +3469,11 @@ void Load_MaterialAsset(Material **param_1)
 
 // 823F3D58  Mark_MaterialAsset  (database/db_registry.cpp:1091)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_MaterialAsset(Material *param_1,int param_2)
 
@@ -3526,11 +3526,11 @@ void Load_MaterialPixelShaderAsset(MaterialPixelShader **param_1)
 
 // 823F3E08  Mark_MaterialPixelShaderAsset  (database/db_registry.cpp:1125)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_MaterialPixelShaderAsset(MaterialPixelShader *param_1,int param_2)
 
@@ -3569,11 +3569,11 @@ void Load_MaterialTechniqueSetAsset(MaterialTechniqueSet **param_1)
 
 // 823F3E78  Mark_MaterialTechniqueSetAsset  (database/db_registry.cpp:1211)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_MaterialTechniqueSetAsset(MaterialTechniqueSet *param_1,int param_2)
 
@@ -3641,11 +3641,11 @@ void Load_GfxImageAsset(GfxImage **param_1)
 
 // 823F3EE8  Mark_GfxImageAsset  (database/db_registry.cpp:1291)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_GfxImageAsset(GfxImage *param_1,int param_2)
 
@@ -3697,11 +3697,11 @@ void Load_snd_alias_list_Asset(snd_alias_list_t **param_1)
 
 // 823F3F90  Mark_snd_alias_list_Asset  (database/db_registry.cpp:1330)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_snd_alias_list_Asset(snd_alias_list_t *param_1,int param_2)
 
@@ -3737,11 +3737,11 @@ void Load_SndCurveAsset(SndCurve **param_1)
 
 // 823F3FF0  Mark_SndCurveAsset  (database/db_registry.cpp:1352)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_SndCurveAsset(SndCurve *param_1,int param_2)
 
@@ -3777,11 +3777,11 @@ void Load_LoadedSoundAsset(LoadedSound **param_1)
 
 // 823F4050  Mark_LoadedSoundAsset  (database/db_registry.cpp:1374)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_LoadedSoundAsset(LoadedSound *param_1,int param_2)
 
@@ -3875,11 +3875,11 @@ void Load_ClipMapAsset(clipMap_t **param_1)
 
 // 823F40B8  Mark_ClipMapAsset  (database/db_registry.cpp:1429)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_ClipMapAsset(clipMap_t *param_1,int param_2)
 
@@ -3945,11 +3945,11 @@ void Load_ComWorldAsset(ComWorld **param_1)
 
 // 823F4118  Mark_ComWorldAsset  (database/db_registry.cpp:1457)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_ComWorldAsset(ComWorld *param_1,int param_2)
 
@@ -3985,11 +3985,11 @@ void Load_GlassWorldAsset(GlassWorld **param_1)
 
 // 823F4178  Mark_GlassWorldAsset  (database/db_registry.cpp:1485)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_GlassWorldAsset(GlassWorld *param_1,int param_2)
 
@@ -4026,10 +4026,10 @@ void Load_PathDataAsset(PathData **param_1)
 // 823F41D8  Mark_PathDataAsset  (database/db_registry.cpp:1507)
 
 /* WARNING: Enum "nodeType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_PathDataAsset(PathData *param_1,int param_2)
 
@@ -4065,11 +4065,11 @@ void Load_VehicleTrackAsset(VehicleTrack **param_1)
 
 // 823F4238  Mark_VehicleTrackAsset  (database/db_registry.cpp:1529)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_VehicleTrackAsset(VehicleTrack *param_1,int param_2)
 
@@ -4108,11 +4108,11 @@ void Load_MapEntsAsset(MapEnts **param_1)
 
 // 823F42B0  Mark_MapEntsAsset  (database/db_registry.cpp:1560)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_MapEntsAsset(MapEnts *param_1,int param_2)
 
@@ -4148,11 +4148,11 @@ void Load_FxWorldAsset(FxWorld **param_1)
 
 // 823F4310  Mark_FxWorldAsset  (database/db_registry.cpp:1582)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_FxWorldAsset(FxWorld *param_1,int param_2)
 
@@ -4188,11 +4188,11 @@ void Load_GfxWorldAsset(GfxWorld **param_1)
 
 // 823F4370  Mark_GfxWorldAsset  (database/db_registry.cpp:1604)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_GfxWorldAsset(GfxWorld *param_1,int param_2)
 
@@ -4247,11 +4247,11 @@ void Load_LightDefAsset(GfxLightDef **param_1)
 
 // 823F43D0  Mark_LightDefAsset  (database/db_registry.cpp:1632)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_LightDefAsset(GfxLightDef *param_1,int param_2)
 
@@ -4287,11 +4287,11 @@ void Load_FontAsset(Font_s **param_1)
 
 // 823F4430  Mark_FontAsset  (database/db_registry.cpp:1654)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_FontAsset(Font_s *param_1,int param_2)
 
@@ -4329,9 +4329,9 @@ void Load_MenuListAsset(MenuList **param_1)
 
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_MenuListAsset(MenuList *param_1,int param_2)
 
@@ -4391,9 +4391,9 @@ void Load_MenuAsset(menuDef_t **param_1)
 
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_MenuAsset(menuDef_t *param_1,int param_2)
 
@@ -4481,11 +4481,11 @@ void Load_LocalizeEntryAsset(LocalizeEntry **param_1)
 
 // 823F45D8  Mark_LocalizeEntryAsset  (database/db_registry.cpp:1761)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_LocalizeEntryAsset(LocalizeEntry *param_1,int param_2)
 
@@ -4522,10 +4522,10 @@ void Load_WeaponAttachmentAsset(WeaponAttachment **param_1)
 // 823F4638  Mark_WeaponAttachmentAsset  (database/db_registry.cpp:1783)
 
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_WeaponAttachmentAsset(WeaponAttachment *param_1,int param_2)
 
@@ -4562,10 +4562,10 @@ void Load_WeaponCompleteDefAsset(WeaponCompleteDef **param_1)
 // 823F4698  Mark_WeaponCompleteDefAsset  (database/db_registry.cpp:1805)
 
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_WeaponCompleteDefAsset(WeaponCompleteDef *param_1,int param_2)
 
@@ -4615,11 +4615,11 @@ void Load_SndDriverGlobalsAsset(SndDriverGlobals **param_1)
 
 // 823F46F8  Mark_SndDriverGlobalsAsset  (database/db_registry.cpp:1844)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_SndDriverGlobalsAsset(SndDriverGlobals *param_1,int param_2)
 
@@ -4655,11 +4655,11 @@ void Load_FxEffectDefAsset(FxEffectDef **param_1)
 
 // 823F4758  Mark_FxEffectDefAsset  (database/db_registry.cpp:1871)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_FxEffectDefAsset(FxEffectDef *param_1,int param_2)
 
@@ -4716,11 +4716,11 @@ void Load_FxImpactTableAsset(FxImpactTable **param_1)
 
 // 823F4800  Mark_FxImpactTableAsset  (database/db_registry.cpp:1906)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_FxImpactTableAsset(FxImpactTable *param_1,int param_2)
 
@@ -4756,11 +4756,11 @@ void Load_SurfaceFxTableAsset(SurfaceFxTable **param_1)
 
 // 823F4860  Mark_SurfaceFxTableAsset  (database/db_registry.cpp:1928)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_SurfaceFxTableAsset(SurfaceFxTable *param_1,int param_2)
 
@@ -4800,11 +4800,11 @@ void Load_RawFileAsset(RawFile **param_1)
 
 // 823F48F8  Mark_RawFileAsset  (database/db_registry.cpp:1984)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_RawFileAsset(RawFile *param_1,int param_2)
 
@@ -4840,11 +4840,11 @@ void Load_ScriptFileAsset(ScriptFile **param_1)
 
 // 823F4958  Mark_ScriptFileAsset  (database/db_registry.cpp:2047)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_ScriptFileAsset(ScriptFile *param_1,int param_2)
 
@@ -4880,11 +4880,11 @@ void Load_StringTableAsset(StringTable **param_1)
 
 // 823F49B8  Mark_StringTableAsset  (database/db_registry.cpp:2069)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_StringTableAsset(StringTable *param_1,int param_2)
 
@@ -4920,11 +4920,11 @@ void Load_LeaderboardDefAsset(LeaderboardDef **param_1)
 
 // 823F4A18  Mark_LeaderboardDefAsset  (database/db_registry.cpp:2091)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_LeaderboardDefAsset(LeaderboardDef *param_1,int param_2)
 
@@ -4960,11 +4960,11 @@ void Load_StructuredDataDefAsset(StructuredDataDefSet **param_1)
 
 // 823F4A78  Mark_StructuredDataDefAsset  (database/db_registry.cpp:2114)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_StructuredDataDefAsset(StructuredDataDefSet *param_1,int param_2)
 
@@ -5000,11 +5000,11 @@ void Load_TracerDefAsset(TracerDef **param_1)
 
 // 823F4AD8  Mark_TracerDefAsset  (database/db_registry.cpp:2136)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_TracerDefAsset(TracerDef *param_1,int param_2)
 
@@ -5041,10 +5041,10 @@ void Load_VehicleDefAsset(VehicleDef **param_1)
 // 823F4B38  Mark_VehicleDefAsset  (database/db_registry.cpp:2157)
 
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_VehicleDefAsset(VehicleDef *param_1,int param_2)
 
@@ -5080,11 +5080,11 @@ void Load_AddonMapEntsAsset(AddonMapEnts **param_1)
 
 // 823F4B98  Mark_AddonMapEntsAsset  (database/db_registry.cpp:2177)
 
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int Mark_AddonMapEntsAsset(AddonMapEnts *param_1,int param_2)
 
@@ -5332,11 +5332,11 @@ XAssetHeader DB_AllocXAssetHeader(XAssetType param_1)
 
 // 823ED9F0  DB_FreeXAssetHeader  (database/db_registry.cpp:3359)
 
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void DB_FreeXAssetHeader(XAssetType param_1,XAssetHeader param_2)
 
@@ -5603,11 +5603,11 @@ switchD_823edefc_caseD_9:
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void DB_EnumXAssets_Internal
                (XAssetType param_1,_func___cdecl_void_XAssetHeader_void_ptr *param_2,void *param_3,
@@ -5646,11 +5646,11 @@ void DB_EnumXAssets_Internal
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void DB_EnumXAssets_FastFile
                (XAssetType param_1,_func___cdecl_void_XAssetHeader_void_ptr *param_2,void *param_3,
@@ -6528,11 +6528,11 @@ LAB_823ef410:
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 XAssetEntry * DB_LinkXAssetEntry1(XAssetType param_1,XAssetHeader *param_2)
 
@@ -6730,11 +6730,11 @@ void DB_PostAddXAsset(void)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int DB_GetXAsset(XAssetType param_1,XAssetHeader param_2,int param_3)
 
@@ -7106,11 +7106,11 @@ void DB_SyncXAssets(void)
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void DB_LoadXAssets(XZoneInfo *param_1,uint param_2,uint param_3)
 

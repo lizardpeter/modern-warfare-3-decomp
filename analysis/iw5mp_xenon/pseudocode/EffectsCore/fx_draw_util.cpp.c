@@ -58,8 +58,8 @@ bool FX_CullCylinder(FxCamera *param_1,uint param_2,float *param_3,float *param_
   double dVar7;
   double dVar8;
   
-  dVar5 = (double)param_5;
   dVar6 = (double)param_6;
+  dVar5 = (double)param_5;
   if (param_1->isValid == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_draw_util.cpp",
                     0x54,0,"%s");

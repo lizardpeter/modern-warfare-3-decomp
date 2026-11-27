@@ -7,9 +7,6 @@
 ; 82918044  __savevmx_120  (line unknown)
   82918044  3960FF80             li r11,-0x80
   82918048  130B61CF             stvx128 v120,r11,r12
-__savevmx_121:
-  8291804C  3960FF90             li r11,-0x70
-  82918050  132B61CF             stvx128 v121,r11,r12
 
 ; 82918054  __savevmx_122  (line unknown)
   82918054  3960FFA0             li r11,-0x60
@@ -22,16 +19,6 @@ __savevmx_121:
 ; 82918064  __savevmx_124  (line unknown)
   82918064  3960FFC0             li r11,-0x40
   82918068  138B61CF             stvx128 v124,r11,r12
-__savevmx_125:
-  8291806C  3960FFD0             li r11,-0x30
-  82918070  13AB61CF             stvx128 v125,r11,r12
-__savevmx_126:
-  82918074  3960FFE0             li r11,-0x20
-  82918078  13CB61CF             stvx128 v126,r11,r12
-__savevmx_127:
-  8291807C  3960FFF0             li r11,-0x10
-  82918080  13EB61CF             stvx128 v127,r11,r12
-  82918084  4E800020             blr
 
 ; 829182D4  __restvmx_119  (line unknown)
   829182D4  3960FF70             li r11,-0x90
@@ -40,9 +27,6 @@ __savevmx_127:
 ; 829182DC  __restvmx_120  (line unknown)
   829182DC  3960FF80             li r11,-0x80
   829182E0  130B60CF             lvx128 v120,r11,r12
-__restvmx_121:
-  829182E4  3960FF90             li r11,-0x70
-  829182E8  132B60CF             lvx128 v121,r11,r12
 
 ; 829182EC  __restvmx_122  (line unknown)
   829182EC  3960FFA0             li r11,-0x60
@@ -55,13 +39,3 @@ __restvmx_121:
 ; 829182FC  __restvmx_124  (line unknown)
   829182FC  3960FFC0             li r11,-0x40
   82918300  138B60CF             lvx128 v124,r11,r12
-__restvmx_125:
-  82918304  3960FFD0             li r11,-0x30
-  82918308  13AB60CF             lvx128 v125,r11,r12
-__restvmx_126:
-  8291830C  3960FFE0             li r11,-0x20
-  82918310  13CB60CF             lvx128 v126,r11,r12
-__restvmx_127:
-  82918314  3960FFF0             li r11,-0x10
-  82918318  13EB60CF             lvx128 v127,r11,r12
-  8291831C  4E800020             blr

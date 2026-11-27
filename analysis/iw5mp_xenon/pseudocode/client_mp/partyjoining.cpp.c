@@ -476,8 +476,8 @@ PartyActiveClient PartyAtomicJoin_GetMainActiveClient(PartyJoinInfo *param_1,uin
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int PartyAtomicJoin_GetSecondaryActiveClient(PartyJoinInfo *param_1,PartyActiveClient *param_2)
 
@@ -1488,8 +1488,8 @@ void PartyAtomic_HandleFailedJoinAttempt(PartyJoinInfo *param_1)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyAtomic_AskToJoinParty_Internal(PartyActiveClient *param_1,PartyJoinInfo *param_2)
 
@@ -1622,8 +1622,8 @@ char * PartyAtomic_JoinInfoToString(PartyJoinInfo *param_1)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int PartyAtomicClient_HasClientJoinedAcceptedParty(PartyJoinInfo *param_1,LocalClientNum_t param_2)
 
@@ -1676,8 +1676,8 @@ int PartyAtomicClient_HaveAllClientsJoinedAcceptedParty(PartyJoinInfo *param_1)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyAtomicClient_JoinAcceptedParty_Internal
                (PartyData *param_1,PartyActiveClient *param_2,PartyJoinInfo *param_3)

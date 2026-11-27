@@ -834,9 +834,9 @@ void XAnimCalcRelDeltaParts
   undefined1 local_70 [16];
   undefined1 local_60 [16];
   
+  dVar10 = (double)param_3;
   dVar11 = (double)param_4;
   dVar9 = (double)param_2;
-  dVar10 = (double)param_3;
   uVar4 = ZEXT48(&stack0x00000000);
   if ((param_1->flags & 2) != 0) {
     fStack0000001c = param_2;
@@ -1309,8 +1309,8 @@ float XAnimGetNotifyFracLeaf(XAnimState *param_1,XAnimState *param_2,float param
   double dVar5;
   double dVar6;
   
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   if (dVar5 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0x458,0,"%s")
     ;
@@ -3969,8 +3969,8 @@ void XAnimGetRelDelta(XAnim_s *param_1,uint param_2,float *param_3,float *param_
   double dVar6;
   double dVar7;
   
-  dVar4 = (double)param_5;
   dVar5 = (double)param_6;
+  dVar4 = (double)param_5;
   pXVar2 = (XAnimRotPos *)param_2;
   pfVar3 = param_3;
   Profile_Begin(0x12e);
@@ -4506,8 +4506,8 @@ void XAnimClearGoalWeightKnobInternal(XAnimTree *param_1,uint param_2,float para
   double dVar7;
   double dVar8;
   
-  dVar6 = (double)param_4;
   dVar8 = (double)param_3;
+  dVar6 = (double)param_4;
   if (param_1 == (XAnimTree *)0x0) {
     in_r5 = 0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xe89,0,"%s")
@@ -4857,8 +4857,8 @@ int XAnimSetCompleteGoalWeightKnob
   double dVar9;
   
   dVar6 = (double)param_3;
-  dVar7 = (double)param_4;
   dVar8 = (double)param_5;
+  dVar7 = (double)param_4;
   if (param_1 == (DObj *)0x0) {
     param_6 = 0;
     param_7 = (int)"%s";
@@ -4930,9 +4930,9 @@ int XAnimSetGoalWeightKnobAll
   double dVar9;
   double dVar10;
   
+  dVar8 = (double)param_5;
   dVar9 = (double)param_6;
   dVar10 = (double)param_4;
-  dVar8 = (double)param_5;
   lVar5 = (longlong)(int)param_7;
   lVar4 = (longlong)(int)param_3;
   lVar6 = -0x7dfff068;
@@ -5008,8 +5008,8 @@ int XAnimSetCompleteGoalWeightKnobAll
   double dVar10;
   
   dVar9 = (double)param_6;
-  dVar8 = (double)param_5;
   dVar10 = (double)param_4;
+  dVar8 = (double)param_5;
   lVar5 = (longlong)(int)param_7;
   lVar4 = (longlong)(int)param_3;
   lVar6 = -0x7dfff068;
@@ -5086,8 +5086,8 @@ int XAnimSetGoalWeightKnob
   double dVar8;
   double dVar9;
   
-  dVar8 = (double)param_5;
   dVar7 = (double)param_4;
+  dVar8 = (double)param_5;
   dVar6 = (double)param_3;
   Profile_Begin(0x143);
   if (param_1 == (DObj *)0x0) {
@@ -5283,8 +5283,8 @@ int XAnimSetGoalWeightNode
   double dVar12;
   
   dVar12 = (double)param_5;
-  dVar8 = (double)param_4;
   dVar7 = (double)param_3;
+  dVar8 = (double)param_4;
   if (param_1 == (XAnimTree *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim.cpp",0xfc1,0,"%s")
     ;
@@ -5817,9 +5817,9 @@ int XAnimSetGoalWeight(DObj *param_1,uint param_2,float param_3,float param_4,fl
   double dVar8;
   double dVar9;
   
+  dVar7 = (double)param_4;
   dVar8 = (double)param_5;
   dVar6 = (double)param_3;
-  dVar7 = (double)param_4;
   Profile_Begin(0x143);
   if (param_1 == (DObj *)0x0) {
     param_6 = 0;
@@ -6041,8 +6041,8 @@ int XAnimSetCompleteGoalWeight
   double dVar9;
   
   dVar8 = (double)param_5;
-  dVar7 = (double)param_4;
   dVar6 = (double)param_3;
+  dVar7 = (double)param_4;
   Profile_Begin(0x143);
   if (param_1 == (DObj *)0x0) {
     param_6 = 0;
@@ -6126,9 +6126,9 @@ int XAnimSetCompleteGoalWeightRel
   double dVar10;
   int in_stack_00000054;
   
+  dVar8 = (double)param_5;
   dVar9 = (double)param_6;
   dVar7 = (double)param_4;
-  dVar8 = (double)param_5;
   pcVar4 = (char *)param_8;
   Profile_Begin(0x143);
   if (param_1 == (DObj *)0x0) {

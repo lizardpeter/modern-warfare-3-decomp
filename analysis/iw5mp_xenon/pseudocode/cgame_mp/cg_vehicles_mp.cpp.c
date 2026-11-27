@@ -124,8 +124,8 @@ LAB_82309870:
 
 // 823098C8  Veh_GetTurretBarrelRoll  (cgame_mp/cg_vehicles_mp.cpp:98)
 
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 float Veh_GetTurretBarrelRoll(LocalClientNum_t param_1,centity_s *param_2)
@@ -184,8 +184,8 @@ void Veh_IncTurretBarrelRoll(LocalClientNum_t param_1,int param_2,float param_3)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleFXTest(LocalClientNum_t param_1,DObj *param_2,centity_s *param_3)

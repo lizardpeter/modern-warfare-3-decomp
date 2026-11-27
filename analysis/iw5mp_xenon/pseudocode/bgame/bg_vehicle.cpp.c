@@ -2040,8 +2040,8 @@ void BG_VehicleMove(pmove_t *param_1,pml_t *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void BG_PlayerStateToVehicleState
                (playerState_s *param_1,entityState_s *param_2,int param_3,uchar param_4)

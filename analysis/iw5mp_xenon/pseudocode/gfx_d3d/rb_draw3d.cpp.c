@@ -4,8 +4,8 @@
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ShowTris(GfxCmdBufContext param_1,GfxDrawList *param_2)
@@ -57,8 +57,8 @@ void R_ClearForFrameBuffer(D3DDevice *param_1,LocalClientNum_t param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_EndSceneDebug(GfxCmdBufContext param_1,GfxViewInfo *param_2)
 
@@ -179,8 +179,8 @@ void RB_GetSceneViewportToResolve(GfxViewInfo *param_1,GfxViewport *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "GPUTimerId": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
@@ -462,8 +462,8 @@ void R_SetAndClearSceneTarget(GfxRenderTargetId param_1,LocalClientNum_t param_2
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_DrawFullbrightOrDebugShader
                (_func___cdecl_void_void_ptr_GfxCmdBufContext *param_1,GfxViewInfo *param_2,

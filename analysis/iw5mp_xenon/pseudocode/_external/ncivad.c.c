@@ -20,8 +20,8 @@ ushort nemAgcVadMain(void *param_1,float param_2,float param_3)
   float fVar10;
   undefined1 uStack_39;
   
-  dVar6 = (double)param_2;
   dVar9 = (double)param_3;
+  dVar6 = (double)param_2;
   *(float *)((int)param_1 + 0xc) = param_2;
   *(float *)((int)param_1 + 0x10) = param_3;
   uVar1 = ZEXT48(*(void **)((int)param_1 + 8));

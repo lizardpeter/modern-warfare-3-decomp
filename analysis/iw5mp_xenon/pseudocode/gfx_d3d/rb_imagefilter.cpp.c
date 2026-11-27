@@ -403,8 +403,8 @@ int RB_GenerateGaussianFilterChain
   int local_9c;
   longlong local_98;
   
-  dVar11 = (double)param_1;
   dVar12 = (double)param_2;
+  dVar11 = (double)param_1;
   lVar2 = (longlong)param_3;
   dVar5 = 1.3895604610443115;
   iVar4 = 0;

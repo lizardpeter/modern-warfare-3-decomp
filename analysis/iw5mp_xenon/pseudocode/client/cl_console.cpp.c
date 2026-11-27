@@ -2489,9 +2489,9 @@ void ConDraw_Box(float param_1,float param_2,float param_3,float param_4,float *
   GfxDrawSurf local_58 [8];
   
   dVar4 = (double)param_4;
-  dVar1 = (double)param_1;
   dVar2 = (double)param_2;
   dVar3 = (double)param_3;
+  dVar1 = (double)param_1;
   dVar6 = 0.0;
   R_AddCmdDrawStretchPic(param_1,param_2,param_3,param_4,0.0,0.0,0.0,0.0,param_5,in_r4);
   dVar5 = 2.0;

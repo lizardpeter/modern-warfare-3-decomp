@@ -407,9 +407,9 @@ void MissileLandAnglesFlat(gentity_s *param_1,trace_t *param_2,float *param_3)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 BounceMissileResult
 MissileLandAnglesKnife
@@ -714,8 +714,8 @@ float GrenadeBounceMirrorVelocity(float *param_1,float *param_2,WeaponDef *param
 
 // 8247EC00  GrenadeBounceVelocity  (game/g_missile.cpp:488)
 
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 bool GrenadeBounceVelocity
                (float *param_1,float param_2,float *param_3,int param_4,WeaponDef *param_5,
@@ -1244,9 +1244,9 @@ bool GrenadeDud(gentity_s *param_1,Weapon param_2,bool param_3)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 bool JavelinProjectile(gentity_s *param_1,WeaponDef *param_2)
 
@@ -3270,8 +3270,8 @@ void MissileVerticalSteerToTarget
   double dVar10;
   
   dVar7 = (double)param_3;
-  dVar8 = (double)param_4;
   dVar9 = (double)param_5;
+  dVar8 = (double)param_4;
   dVar10 = 0.0;
   if (dVar7 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_missile.cpp",0x897,0,

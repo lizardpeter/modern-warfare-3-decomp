@@ -67,8 +67,8 @@ void FXIW_IntegrateVelocityAcrossSegments
   float local_74;
   
   dVar5 = (double)param_8;
-  dVar4 = (double)param_6;
   dVar3 = (double)param_5;
+  dVar4 = (double)param_6;
   pIVar2 = &IMAGE_DOS_HEADER_82000000;
   dVar7 = 0.0;
   dVar6 = 1.0;
@@ -155,8 +155,8 @@ void FXIW_IntegrateVelocityInSegment
   float local_70;
   float local_6c;
   
-  dVar3 = (double)param_7;
   dVar2 = (double)param_5;
+  dVar3 = (double)param_7;
   dVar1 = (double)param_4;
   dVar5 = 0.0;
   dVar4 = 1.0;
@@ -212,8 +212,8 @@ void FXIW_IntegrateVelocity
   undefined4 local_94;
   undefined4 local_90;
   
-  dVar9 = (double)param_2;
   dVar10 = (double)param_3;
+  dVar9 = (double)param_2;
   if (param_1 == (FxUpdateElem *)0x0) {
     in_r6 = "%s";
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_elem.cpp"

@@ -992,8 +992,8 @@ void CL_Demo_WriteFooter(LocalClientNum_t param_1,clientDemoFooter_t *param_2)
 
 /* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 

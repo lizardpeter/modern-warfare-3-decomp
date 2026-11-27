@@ -176,8 +176,8 @@ void VehicleCam_SetClientViewAngles(cg_s *param_1,float *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleCam_UpdateModeParams(LocalClientNum_t param_1,centity_s *param_2)
@@ -234,9 +234,9 @@ void VehicleCam_UpdateModeParams(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void VehicleCam_UpdateMode
                (LocalClientNum_t param_1,cg_s *param_2,centity_s *param_3,VehicleCamera *param_4)
@@ -511,9 +511,9 @@ float VehicleCam_ClampAngle(float param_1,float param_2)
 /* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleCam_UpdateCamInternal
@@ -809,9 +809,9 @@ void VehicleCam_UpdateCamInternal
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleCam_UpdateDriveCam(LocalClientNum_t param_1,cg_s *param_2,float *param_3,float *param_4)
 
@@ -877,9 +877,9 @@ bool VehicleCam_IsRemoteControlCam(LocalClientNum_t param_1)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleCam_UpdateRemoteControlCam
                (LocalClientNum_t param_1,cg_s *param_2,float *param_3,float *param_4)

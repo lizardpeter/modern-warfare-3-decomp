@@ -144,9 +144,9 @@ void CL_GetCurrentSnapshotNumber(LocalClientNum_t param_1,int *param_2,int *para
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CL_GetSnapshot(LocalClientNum_t param_1,int param_2,snapshot_s *param_3)
 
@@ -872,9 +872,9 @@ void CL_DrawStretchPicPhysical
   Material *in_stack_0000005c;
   
   dVar5 = (double)param_4;
-  dVar2 = (double)param_1;
   dVar3 = (double)param_2;
   dVar4 = (double)param_3;
+  dVar2 = (double)param_1;
   pMVar1 = (Material *)&stack0x00000034;
   pcStack00000034 = (char *)param_5;
   uStack0000003c = param_6;
@@ -914,8 +914,8 @@ void CL_DrawStretchPicPhysicalRotateXY
   
   dVar6 = (double)param_9;
   dVar5 = (double)param_4;
-  dVar4 = (double)param_3;
   dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
   dVar2 = (double)param_1;
   pMVar1 = (Material *)&stack0x00000034;
   pcStack00000034 = (char *)param_5;
@@ -995,10 +995,10 @@ void CL_DrawStretchPic(ScreenPlacement *param_1,float param_2,float param_3,floa
   float fStack0000002c;
   float fStack00000034;
   
-  dVar2 = (double)param_8;
-  dVar3 = (double)param_9;
   dVar4 = (double)param_10;
   dVar5 = (double)param_11;
+  dVar2 = (double)param_8;
+  dVar3 = (double)param_9;
   pMVar1 = (Material *)&stack0x0000001c;
   pcStack0000001c = (char *)param_2;
   uStack00000024 = param_3;
@@ -1036,10 +1036,10 @@ void CL_DrawStretchPicFlipST
   float fStack0000002c;
   float fStack00000034;
   
-  dVar2 = (double)param_8;
-  dVar3 = (double)param_9;
   dVar4 = (double)param_10;
   dVar5 = (double)param_11;
+  dVar2 = (double)param_8;
+  dVar3 = (double)param_9;
   pMVar1 = (Material *)&stack0x0000001c;
   pcStack0000001c = (char *)param_2;
   uStack00000024 = param_3;
@@ -1085,10 +1085,10 @@ void CL_DrawStretchPicRotatedST
   Material *in_stack_0000009c;
   
   dVar6 = (double)param_16;
-  dVar2 = (double)param_8;
-  dVar3 = (double)param_9;
   dVar4 = (double)param_10;
   dVar5 = (double)param_11;
+  dVar2 = (double)param_8;
+  dVar3 = (double)param_9;
   fStack0000001c = param_2;
   fStack00000024 = param_3;
   fStack0000002c = param_4;

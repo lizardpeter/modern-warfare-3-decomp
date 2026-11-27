@@ -1138,8 +1138,8 @@ void Phys_CalcSpringParms
   
   dVar3 = (double)param_4;
   dVar1 = (double)param_1;
-  dVar4 = (double)param_2;
   dVar2 = (double)param_3;
+  dVar4 = (double)param_2;
   dVar5 = 0.0;
   if (dVar3 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
@@ -2998,8 +2998,8 @@ void PhysVeh_SetPathConstraintState
   float local_58;
   float local_54;
   
-  dVar2 = (double)param_4;
   dVar3 = (double)param_5;
+  dVar2 = (double)param_4;
   if (param_1 == (PhysVehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_vehicle.cpp",
                     0x7c1,0,"%s");

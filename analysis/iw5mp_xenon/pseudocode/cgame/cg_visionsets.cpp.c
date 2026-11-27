@@ -75,11 +75,11 @@ void CG_AddVisionSetMenuItem(XAssetHeader param_1,void *param_2)
 // 823140A0  CG_InitVisionSetsMenu  (cgame/cg_visionsets.cpp:76)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void CG_InitVisionSetsMenu(void)
 
@@ -464,9 +464,9 @@ float LerpFloat(float param_1,float param_2,float param_3,visionSetLerpStyle_t p
   double dVar3;
   double dVar4;
   
+  dVar2 = (double)param_1;
   dVar3 = (double)param_3;
   dVar4 = (double)param_2;
-  dVar2 = (double)param_1;
   if (in_r6 == 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_visionsets.cpp",0x16a
                     ,0,"%s");
@@ -1528,8 +1528,8 @@ void CG_VisionSetApplyToRefdef
   double dVar5;
   visionSetVars_t local_e0;
   
-  dVar5 = (double)param_6;
   dVar4 = (double)param_5;
+  dVar5 = (double)param_6;
   bVar1 = CG_KillCamEntityEnabled(param_1);
   if (!bVar1) {
     bVar1 = CL_Demo_IsFollowCamera(param_1);

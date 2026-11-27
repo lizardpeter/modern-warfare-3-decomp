@@ -98,11 +98,11 @@ void Com_GetGraphList(XAssetHeader param_1,void *param_2)
 // 825E6E20  Com_InitSoundDevGuiGraphs_FastFile  (universal/com_sndalias.cpp:293)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void Com_InitSoundDevGuiGraphs_FastFile(void)
 
@@ -118,11 +118,11 @@ void Com_InitSoundDevGuiGraphs_FastFile(void)
 // 825E6E60  Com_InitSoundDevGuiGraphs  (universal/com_sndalias.cpp:303)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void Com_InitSoundDevGuiGraphs(void)
 

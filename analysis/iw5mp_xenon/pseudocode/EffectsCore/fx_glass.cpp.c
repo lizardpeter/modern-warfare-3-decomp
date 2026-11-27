@@ -353,8 +353,8 @@ void Glass_GetInertiaTensor
   undefined8 local_478;
   float local_470 [284];
   
-  dVar21 = (double)param_4;
   dVar19 = (double)param_5;
+  dVar21 = (double)param_4;
   uVar14 = (ulonglong)(int)param_3;
   lVar13 = (longlong)(int)param_2;
   param_1->xx = 0.0;

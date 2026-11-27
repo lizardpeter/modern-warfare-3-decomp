@@ -635,8 +635,8 @@ float FresnelTerm(float param_1,float param_2,float param_3)
   double dVar6;
   
   dVar2 = (double)param_3;
-  dVar4 = (double)param_2;
   dVar3 = (double)param_1;
+  dVar4 = (double)param_2;
   if (dVar2 < -1.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_utils.cpp",0x1d6,1,
                     "%s\n\t(cosIncidentAngle) = %g");

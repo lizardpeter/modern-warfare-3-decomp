@@ -960,8 +960,8 @@ void R_AddOmniLightToScene(float *param_1,float param_2,float param_3,float para
   double dVar6;
   
   dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   dVar3 = (double)param_2;
   if (rgp.world != (GfxWorld *)0x0) {
     if (!rg.inFrame) {
@@ -1037,9 +1037,9 @@ void R_AddSpotLightToScene
   float *in_stack_00000054;
   
   dVar8 = (double)param_7;
+  dVar6 = (double)param_5;
   dVar7 = (double)param_6;
   dVar9 = (double)param_4;
-  dVar6 = (double)param_5;
   if (rgp.world != (GfxWorld *)0x0) {
     if (!rg.inFrame) {
       MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_scene.cpp",0x34f,0
@@ -2526,8 +2526,8 @@ void R_PerformanceWarning(char *param_1,float param_2)
 
 // 82770968  R_SetDepthOfField  (gfx_d3d/r_scene.cpp:1969)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_SetDepthOfField(GfxViewInfo *param_1,GfxSceneParms *param_2)
 
@@ -2777,8 +2777,8 @@ void R_UpdateColorManipulation(GfxViewInfo *param_1)
 
 // 82770FC0  R_SetWaterSheetingFx  (gfx_d3d/r_scene.cpp:2279)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_SetWaterSheetingFx(GfxViewInfo *param_1,GfxSceneParms *param_2)
 
@@ -2792,8 +2792,8 @@ void R_SetWaterSheetingFx(GfxViewInfo *param_1,GfxSceneParms *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_SetStageInfo(GfxViewInfo *param_1,GfxSceneParms *param_2)
 
@@ -2931,8 +2931,8 @@ void R_SetFilmInfo(GfxViewInfo *param_1,GfxSceneParms *param_2)
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Removing unreachable block (ram,0x82771478) */
 /* WARNING: Removing unreachable block (ram,0x827714b4) */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetGlowInfo(GfxViewInfo *param_1,GfxSceneParms *param_2)
 
@@ -3049,8 +3049,8 @@ void R_SetCharacterPrimaryLightScaleInfo(GfxViewInfo *param_1,GfxSceneParms *par
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetViewModelPrimaryLightScaleInfo(GfxViewInfo *param_1,GfxSceneParms *param_2)
 
@@ -3591,8 +3591,8 @@ void R_GetViewInfo(GfxViewInfo **param_1,int param_2)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_SetupViewInfo(GfxViewInfo *param_1,GfxSceneParms *param_2,GfxViewParms *param_3,
                     ShadowType param_4)
@@ -4050,8 +4050,8 @@ void R_SetupSunShadowVariables(GfxViewInfo *param_1,ShadowType param_2,float (*p
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_SetupViewInfoVariables
                (GfxSceneParms *param_1,GfxViewInfo *param_2,GfxViewParms *param_3,ShadowType param_4
@@ -4231,8 +4231,8 @@ void R_WaitForCellStatic(void)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
 void R_DrawLightsAndObjectsPass1
@@ -4305,8 +4305,8 @@ LAB_827734c4:
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
 void R_DrawBspLightsAndObjectsPass2
@@ -4347,8 +4347,8 @@ void R_DrawBspLightsAndObjectsPass2
 
 // 82773600  R_DrawSModelLightsAndObjectsPass2  (gfx_d3d/r_scene.cpp:3514)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "WorkerCmdType": Some values do not have unique names */
 
 void R_DrawSModelLightsAndObjectsPass2(GfxViewInfo *param_1,GfxSceneParms *param_2)

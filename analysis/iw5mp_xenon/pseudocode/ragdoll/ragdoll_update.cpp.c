@@ -2214,8 +2214,8 @@ void Ragdoll_ExplosionEvent
   dvar_t *pdVar5;
   
   dVar12 = (double)param_7;
-  dVar20 = (double)param_5;
   dVar15 = (double)param_4;
+  dVar20 = (double)param_5;
   if (param_3 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x55d,0,"%s");
@@ -2360,8 +2360,8 @@ void Ragdoll_JitterEvent(LocalClientNum_t param_1,float *param_2,float param_3,f
   
   dVar6 = (double)param_6;
   dVar4 = (double)param_3;
-  dVar8 = (double)param_4;
   dVar5 = (double)param_5;
+  dVar8 = (double)param_4;
   if (param_2 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\ragdoll\\ragdoll_update.cpp",
                     0x5d2,0,"%s");

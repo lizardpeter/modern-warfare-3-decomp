@@ -48,8 +48,8 @@ int IWNet_GetSendInterval(uchar param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "IWNetCommand": Some values do not have unique names */
+/* WARNING: Enum "IWNetClientNetworkMessage": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void IWNet_WriteCommandHeader

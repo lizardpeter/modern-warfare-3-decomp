@@ -445,8 +445,8 @@ void MSG_WriteOriginFloat
   double dVar7;
   double dVar8;
   
-  dVar6 = (double)param_6;
   dVar7 = (double)param_7;
+  dVar6 = (double)param_6;
   if (param_4->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
                     0x17b,0,"%s");
@@ -538,8 +538,8 @@ void MSG_WriteOriginZFloat
   double dVar7;
   double dVar8;
   
-  dVar7 = (double)param_6;
   dVar6 = (double)param_5;
+  dVar7 = (double)param_6;
   if (param_4->readOnly != 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\qcommon\\sv_msg_write_mp.cpp",
                     0x1d3,0,"%s");
@@ -594,8 +594,8 @@ void MSG_WriteOriginZFloat
 
 // 825142E0  MSG_ShouldSendPSField  (qcommon/sv_msg_write_mp.cpp:543)
 
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool MSG_ShouldSendPSField
                (SnapshotInfo_s *param_1,bool param_2,bool param_3,playerState_s *param_4,
@@ -1749,8 +1749,8 @@ LAB_8251626c:
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void MSG_WriteEntityDeltaFields
                (SnapshotInfo_s *param_1,msg_t *param_2,int param_3,entityState_s *param_4,
@@ -2027,8 +2027,8 @@ bool MSG_ShouldEntityFieldBeForcedSent
 
 // 82516C50  MSG_ShouldEntityFieldBeForcedHidden  (qcommon/sv_msg_write_mp.cpp:2018)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool MSG_ShouldEntityFieldBeForcedHidden
                (SnapshotInfo_s *param_1,entityState_s *param_2,entityState_s *param_3,
@@ -2064,8 +2064,8 @@ bool MSG_ShouldEntityFieldBeForcedHidden
 
 // 82516D60  MSG_ShouldSendEntityField  (qcommon/sv_msg_write_mp.cpp:2040)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool MSG_ShouldSendEntityField
                (SnapshotInfo_s *param_1,entityState_s *param_2,entityState_s *param_3,
@@ -2857,8 +2857,8 @@ void MSG_WriteEmptyPlayerstate(msg_t *param_1)
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void MSG_WriteDeltaPlayerstate

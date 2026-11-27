@@ -217,8 +217,8 @@ bool CG_CalcNamePosition(LocalClientNum_t param_1,float *param_2,float *param_3,
 /* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_DrawOverheadNames(LocalClientNum_t param_1,centity_s *param_2,float param_3)
@@ -816,8 +816,8 @@ LAB_822bba0c:
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_StartVisibleNameTrace

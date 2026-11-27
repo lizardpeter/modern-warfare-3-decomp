@@ -645,11 +645,11 @@ void CG_ModPrvGetAssetName(XAssetHeader param_1,void *param_2)
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void CG_ModPrvEnumerateModels_FastFile(void)
 
@@ -689,11 +689,11 @@ void CG_ModPrvEnumerateModels_FastFile(void)
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void CG_ModPrvEnumerateAnimations_FastFile(void)
 
@@ -3040,8 +3040,8 @@ void MdlPrvFreeMove(cg_s *param_1,float param_2,float param_3)
   float local_38;
   float afStack_30 [12];
   
-  dVar1 = (double)param_2;
   dVar2 = (double)param_3;
+  dVar1 = (double)param_2;
   AngleVectors(param_1->refdefViewAngles,&local_40,&local_50,afStack_30);
   g_mdlprv.viewer.freeModeOrigin[0] =
        g_mdlprv.viewer.freeModeOrigin[0] + (float)((double)local_50 * dVar2) +
@@ -3565,9 +3565,9 @@ void MdlPrvControlsGamepad
   char acStack_160 [352];
   
   dVar8 = (double)param_5;
-  dVar6 = (double)param_2;
   dVar7 = (double)param_3;
   dVar10 = (double)param_4;
+  dVar6 = (double)param_2;
   bVar5 = DevGui_IsActive();
   if (bVar5) {
     return;
@@ -3774,8 +3774,8 @@ void CG_ModelPreviewerHandleGamepadEvents
   char acStack_160 [352];
   
   dVar8 = (double)param_5;
-  dVar10 = (double)param_4;
   dVar7 = (double)param_3;
+  dVar10 = (double)param_4;
   dVar6 = (double)param_2;
   bVar5 = DevGui_IsActive();
   if (bVar5) {

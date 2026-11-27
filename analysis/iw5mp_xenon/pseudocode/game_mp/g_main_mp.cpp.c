@@ -834,8 +834,8 @@ bool G_CheckLoadGame(SaveGame *param_1)
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "ConfigString": Some values do not have unique names */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void G_InitGame(int param_1,uint param_2,int param_3,int param_4,int param_5)

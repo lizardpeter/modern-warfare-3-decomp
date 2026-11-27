@@ -56,15 +56,7 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 82254420	8	sha1_test	Global	undefined sha1_test()	unknown		IMPORTED	2	8286a529f25a748db551e16c92ccf02567e092085eb2f9c47fed829693da3b13
 82254428	224	ltc_init_multi	Global	undefined ltc_init_multi()	unknown		IMPORTED	56	4a84fbdbfcc33f1234d44231ab0bb274738092b3f563a29d637244150f7857a9
 82254508	144	ltc_deinit_multi	Global	undefined ltc_deinit_multi()	unknown		IMPORTED	36	70e77fa75b8b5a1191528ff5c587bd8cc488555f21052df8cab95315f7d6436d
-82254598	748	der_decode_sequence_ex	Global	undefined der_decode_sequence_ex()	unknown		IMPORTED	187	c3a8078f47184e0f8255b6c9c73a4b28ab6f1c00f1d1f494b3261437f19666ef
-82254724	88	caseD_1	switchD_822546e4	undefined caseD_1()	unknown		ANALYSIS	22	6fb2369092c95ae7735a6e5f73fce0d1751c53e21cc262283725ff681deb68fc
-822547B0	104	FUN_822547b0	Global	undefined FUN_822547b0()	unknown		DEFAULT	26	d8caa706a9235b5374439750dd067436ad46c9b7b6aa27a2d0a54bbbed8d32a4
-82254818	116	caseD_3	switchD_822546e4	undefined caseD_3()	unknown		ANALYSIS	29	365a5ecb74216446fd937c67406584a36e8a5cf134275eaee77a30d62734c5bb
-822548CC	76	caseD_5	switchD_822546e4	undefined caseD_5()	unknown		ANALYSIS	19	d7b0cfe24dc3516de020e0704865d1f5dbbe63457337be809de85e78cd413152
-82254948	68	caseD_7	switchD_822546e4	undefined caseD_7()	unknown		ANALYSIS	17	1ece99dae70c4ed36390e2d4864b1300ba48d83855e5c78e6adc719d0cca2a54
-822549D0	68	caseD_9	switchD_822546e4	undefined caseD_9()	unknown		ANALYSIS	17	63e211481f00a8cdfc72b1d69e17f6e2dd4a49ca95b1fdb6637efe9e2eb0b725
-82254A58	40	caseD_b	switchD_822546e4	undefined caseD_b()	unknown		ANALYSIS	10	726f225118b251f1e780227b7e559809e4c4aac47e7d22243068255aa7ab2d54
-82254AC4	108	caseD_d	switchD_822546e4	undefined caseD_d()	unknown		ANALYSIS	27	4cf1eb05b564da4a83157956c63a785720f0dd8aade8dea26d17bfb541b09711
+82254598	1416	der_decode_sequence_ex	Global	undefined der_decode_sequence_ex()	unknown		IMPORTED	354	25ecf9e1ccb490e3e52598f8d8b03987a23e9a2d4041fa3e3238038faeb770a8
 82254B60	292	pkcs_1_v1_5_decode	Global	undefined pkcs_1_v1_5_decode()	unknown		IMPORTED	73	c69482f7c154b37646ddb0417f19be8b2053a470849414ff7c09bcfffae769f5
 82254C88	908	pkcs_1_pss_decode	Global	undefined pkcs_1_pss_decode()	unknown		IMPORTED	227	c32d593605fa113a20c22c6e8406d94c8279efb32affaabbca18c876f299723a
 82255018	488	der_decode_sequence_multi	Global	undefined der_decode_sequence_multi()	unknown		IMPORTED	122	a90a71a13e35ad1639edd50a289b024454fa46afc2e03fe62f7252d1e37c6134
@@ -76,33 +68,14 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 82255D20	212	der_decode_octet_string	Global	undefined der_decode_octet_string()	unknown		IMPORTED	53	c7cc7e697d0168e3111b34219abc85bb853e519aaded1c124363159e9e092d15
 82255DF8	376	der_decode_utf8_string	Global	undefined der_decode_utf8_string()	unknown		IMPORTED	94	7db807ef45634f3157381792930acb825215a9818e44f035748f8608bbf15461
 82255F70	108	der_length_bit_string	Global	undefined der_length_bit_string()	unknown		IMPORTED	27	28f3f85a6c4d839fa6b3134b86add5359c1d8f4c0f0af1d8e465c1629383e831
-82255FE0	216	der_length_sequence	Global	undefined der_length_sequence()	unknown		IMPORTED	54	850b388acadef0d25dcc528522a93cc72eb99c8970f97e55bf6a7eea1c9c0629
-8225608C	12	caseD_2	switchD_82256040	undefined caseD_2()	unknown		ANALYSIS	3	20ecd6b270c1ce71700f1fbf08964cd679457634da7820a4ade13fefd8257370
-822560A8	16	caseD_4	switchD_82256040	undefined caseD_4()	unknown		ANALYSIS	4	41d5875f0a437d0d8d300c1b6e1e8557c24791b32cc8810c12354fbf5de9b267
-822560C8	8	caseD_6	switchD_82256040	undefined caseD_6()	unknown		ANALYSIS	2	7b38907224f0f448d550106a821158ca12a300522f279bbbdf1db5d07f54dd4a
-822560E0	16	caseD_8	switchD_82256040	undefined caseD_8()	unknown		ANALYSIS	4	173264bff8ff4f4fcad1775416f21d6eafe8a0d67567f06e1a86730a3cccfda1
-82256128	16	caseD_a	switchD_82256040	undefined caseD_a()	unknown		ANALYSIS	4	882ea6b7bcc625a5efc01472418f5a9dbd9f6e7beeddfeb7e539e26837b50cdd
-82256138	164	caseD_d	switchD_82256040	undefined caseD_d()	unknown		ANALYSIS	41	cb33fbbe21f273e55c05b941506762e1756c34373b4ae049c9378d7b89ef384a
-822561DC	12	caseD_c	switchD_82256040	undefined caseD_c()	unknown		ANALYSIS	3	45971e876a4d53d72a5047c5967bcc86a1b8f0f4f969225611ae732b96eb5af9
+82255FE0	460	der_length_sequence	Global	undefined der_length_sequence()	unknown		IMPORTED	115	9f8ca417e39b15a226b8576d45e1876fa7bd595386a8e189610a7d4b7d35e5f4
 822561E8	96	der_length_short_integer	Global	undefined der_length_short_integer()	unknown		IMPORTED	24	75e5656186a1c7455ce8086c6b1c8940dc88d8b5013f4d0aa1e4c04823dc70f8
 82256248	232	der_length_utf8_string	Global	undefined der_length_utf8_string()	unknown		IMPORTED	58	0256fbf57d0e79a14b3c43593ae858acad07e0742e27c4565a90c1962435179e
 82256330	208	der_length_ia5_string	Global	undefined der_length_ia5_string()	unknown		IMPORTED	52	4c9ae9c4bb6e5be580e2a2bea6d539db0f0bbc3d4b8d3e84a28bc81e1a940ee9
 82256400	316	der_decode_printable_string	Global	undefined der_decode_printable_string()	unknown		IMPORTED	79	ee06f3bbe1a276255874474e922351ada0e62f83fdf23c2f2d797f1c693ee45a
 82256540	208	der_length_printable_string	Global	undefined der_length_printable_string()	unknown		IMPORTED	52	96d3e30aab114131686e099f50b03525b92c3e56d2d6699e83fcb5baae1ade9f
-82256610	500	der_decode_choice	Global	undefined der_decode_choice()	unknown		IMPORTED	125	62049cffde3628bba46f36166916b36030c5a9fe7ca0d69c0c1a5e6e5095bf13
-822566D0	40	caseD_2	switchD_82256694	undefined caseD_2()	unknown		ANALYSIS	10	712ee6e56d51e150028d295766799fb8a24b098a1c1f9bf914562c5e13e36350
-8225675C	88	caseD_4	switchD_82256694	undefined caseD_4()	unknown		ANALYSIS	22	dcc517afad77561dd7dbdcdf0c720f8c03d90c7085f8b670b41ec5f5809bdc56
-8225680C	76	caseD_6	switchD_82256694	undefined caseD_6()	unknown		ANALYSIS	19	34b6b73bc813189049f24659cd0ecda3083eccc7379909a029e5098564283c55
-822568B4	56	caseD_8	switchD_82256694	undefined caseD_8()	unknown		ANALYSIS	14	04f2c5d729898f1163fc04fb5c25b5f89790c2948bb36593405255f1137505e5
-82256924	56	caseD_a	switchD_82256694	undefined caseD_a()	unknown		ANALYSIS	14	f6ad5098e39c9340ec3417f2f893455298d5bc81661782b0af1162e78d463d2b
-82256978	120	caseD_d	switchD_82256694	undefined caseD_d()	unknown		ANALYSIS	30	c6760b7d13c8eed996455914e8a6ab564f527e6b74c429a897ccc23a84632411
-822569F0	12	caseD_c	switchD_82256694	undefined caseD_c()	unknown		ANALYSIS	3	c3b6234cbfdc27ee1dfcdf7db1039e6911f032a7773e039d61cb4e0eab880eb0
-82256A00	88	char_to_int	Global	undefined char_to_int()	unknown		IMPORTED	22	fd01038fc78147e2a1dbc8acd674724770f467583e656404eb07460182c59dd1
-82256A50	8	caseD_30	switchD_82256a24	undefined caseD_30()	unknown		ANALYSIS	2	d4e9e7520ef19698837e384bfe1708ac4b91fcf26b16ec098ec21c1e344ad3db
-82256A60	8	caseD_32	switchD_82256a24	undefined caseD_32()	unknown		ANALYSIS	2	8286a529f25a748db551e16c92ccf02567e092085eb2f9c47fed829693da3b13
-82256A70	8	caseD_34	switchD_82256a24	undefined caseD_34()	unknown		ANALYSIS	2	fe9c110b732955f4deec1dfac58f1e6efe4f68d3a99c9b6c005a30e659c54080
-82256A80	8	caseD_36	switchD_82256a24	undefined caseD_36()	unknown		ANALYSIS	2	e988c9e8beedcb40a2ce67db5727d53f8e248fda49998df4aaa4f7bd0060616e
-82256A90	8	caseD_38	switchD_82256a24	undefined caseD_38()	unknown		ANALYSIS	2	6523ed091725299b3edc74d6604f7a727568bb0fe66ff9d81fdf2c6e759010ce
+82256610	948	der_decode_choice	Global	undefined der_decode_choice()	unknown		IMPORTED	237	58682d6660f8b1e9e16e0ebe9b083fb9803e4b9d9066e49ab4ef7c91cf3e0ecc
+82256A00	128	char_to_int	Global	undefined char_to_int()	unknown		IMPORTED	32	e05344bc9f0a9fbc269e1a3ae4a9f669f5a5534f2ee660386f72518e4766f4f6
 82256AA8	832	der_decode_utctime	Global	undefined der_decode_utctime()	unknown		IMPORTED	208	90aeebeb6fc7282a5477ed3c7111254d8502ddf5c3a8836eaa9053b917bf8b73
 82256DE8	112	der_length_octet_string	Global	undefined der_length_octet_string()	unknown		IMPORTED	28	59251fa45d819d528ffbe434b7f47940c1cfc5a524ee96ced12ee0b509fef38b
 82256E58	312	der_length_object_identifier	Global	undefined der_length_object_identifier()	unknown		IMPORTED	78	b50c8642a191840be863fc08d175a958b302d8d864b01e2e5e2e445d65ece4dc
@@ -436,9 +409,9 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 822781E8	136	PM_trace	Global	void PM_trace(pmove_t * param_1, trace_t * param_2, float * param_3, float * param_4, Bounds * param_5, int param_6, int param_7)	__stdcall		IMPORTED	34	35cb9abe8b5430008c167a88dcdbf682dddb296aaa799749f0f113f6264f7ebe
 82278220	140	PM_traceHandler	Global	void PM_traceHandler(uchar param_1, trace_t * param_2, float * param_3, float * param_4, Bounds * param_5, int param_6, int param_7)	__stdcall		IMPORTED	35	b82c49ce8a6fd86ad6328951be86bb2bbcb7c248ff211d46575f39b5fd98f563
 822782B0	64	PM_debugLine	Global	void PM_debugLine(uchar param_1, float * param_2, float * param_3, float * param_4, int param_5, int param_6)	__stdcall		IMPORTED	16	146ee8b90ec0270e7685caedb40bcd41c3ec8062171ae4b76f0cf526cd0a115c
-822782F8	164	PM_getPlayerTurretWeapon	Global	Weapon PM_getPlayerTurretWeapon(uchar param_1, playerState_s * param_2)	__stdcall		IMPORTED	41	6e0186c566907cc4ded74bcf76c4491d0b0020d60cdc7f29f26e4a494ad48547
+822782F8	80	PM_getPlayerTurretWeapon	Global	Weapon PM_getPlayerTurretWeapon(uchar param_1, playerState_s * param_2)	__stdcall		IMPORTED	20	9cdd67fbdb929d3607b1ea91d28871f8404900d1a702fcb172380f089dbdb802
 82278348	72	PM_getEntityOrigin	Global	int PM_getEntityOrigin(uchar param_1, int param_2, float * param_3)	__stdcall		IMPORTED	18	3c0b8bf8c2f717edc428b735eca6db93b8ec8e78413668741856601969deb49c
-82278390	376	PM_getEntityVelocity	Global	int PM_getEntityVelocity(uchar param_1, int param_2, float * param_3)	__stdcall		IMPORTED	94	82d03836677cad374b7527a7403ee41d953f4798791a5ec6c327bde742633b86
+82278390	460	PM_getEntityVelocity	Global	int PM_getEntityVelocity(uchar param_1, int param_2, float * param_3)	__stdcall		IMPORTED	115	6927dfae9735475749f00fc94c6eee04688f95bebb1f1fa1ea68ebcde6938783
 822783D8	20	PM_AddEvent	Global	void PM_AddEvent(playerState_s * param_1, uint param_2)	__stdcall		IMPORTED	5	c9d5c59f80e6bbc0af2f4524100b7eea2102ff54e08ecb781c2948e8c38270d5
 822783F0	188	PM_AddTouchEnt	Global	void PM_AddTouchEnt(pmove_t * param_1, int param_2)	__stdcall		IMPORTED	47	c735f9a82d454e73b53dd545aac5ebeb7341f65ab0597bdd68bcbffb7a81a2c4
 822784B0	96	PM_ClipVelocity	Global	void PM_ClipVelocity(float * param_1, float * param_2, float * param_3)	__stdcall		IMPORTED	24	3081433033d71dc43a19251ff3a525230d530ec013e092807c7b840bc65121e8
@@ -8207,8 +8180,7 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 8240F2F0	820	DynEntCl_GetClosestEntities	Global	uint DynEntCl_GetClosestEntities(DynEntityDrawType param_1, float * param_2, float param_3, ushort * param_4, bool param_5, int param_6)	__stdcall		IMPORTED	205	095bc085849b7b259004bc46e6c85eb32a868af43e4e64ef596ee667bbec8815
 8240F628	1568	DynEntCl_ExplosionEvent	Global	void DynEntCl_ExplosionEvent(LocalClientNum_t param_1, bool param_2, float * param_3, float param_4, float param_5, float * param_6, float param_7, int param_8, int param_9, int param_10)	__stdcall		IMPORTED	392	c6599291fc07c8f957351a4b2337eeb25d1e22286360ff108a9467135897fd3e
 8240FC48	1032	DynEntCl_JitterEvent	Global	void DynEntCl_JitterEvent(LocalClientNum_t param_1, float * param_2, float param_3, float param_4, float param_5, float param_6)	__stdcall		IMPORTED	258	45b772360d317c5d4a56448537715fd9db833539a310419ccd4c95164b7ae08d
-82410050	44	DynEntCl_WakeUpAroundPlayer	Global	void DynEntCl_WakeUpAroundPlayer(LocalClientNum_t param_1)	__stdcall		IMPORTED	11	5407c617a6357aaff6e7f3c00d58da0c874e9d60713ecf51cde35c123b1052e4
-8241007C	588	FUN_8241007c	Global	undefined FUN_8241007c()	unknown		DEFAULT	147	2a5d4010b2def81d9992e498d8ce9c79467f323373965166ce16512af88be3e4
+82410050	632	DynEntCl_WakeUpAroundPlayer	Global	void DynEntCl_WakeUpAroundPlayer(LocalClientNum_t param_1)	__stdcall		IMPORTED	158	8ac305906d052b4a141739b1165d3dda4c7ff2250890e1c899c352fc486069ec
 824102C8	168	_Push_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>	std	void _Push_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>(DynEntSortStruct * param_1, int param_2, int param_3, DynEntSortStruct * param_4, _func___cdecl_bool_DynEntSortStruct_ptr_DynEntSortStruct_ptr * param_5)	unknown		IMPORTED	42	9b94367574e3b998765c757c14c49e328c03999949f7d421ab4f31422e8ffa76
 82410370	324	_Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>	std	void _Adjust_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>(DynEntSortStruct * param_1, int param_2, int param_3, DynEntSortStruct * param_4, _func___cdecl_bool_DynEntSortStruct_ptr_DynEntSortStruct_ptr * param_5)	unknown		IMPORTED	81	fb415fcd3276858c0470c2d7a8f614cdcaba3286ed2e8e5147f558775d2ec2ec
 824104B8	260	_Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>	std	void _Make_heap<DynEntSortStruct_*,int,DynEntSortStruct,bool_(__cdecl*)(DynEntSortStruct_const_&,DynEntSortStruct_const_&)>(DynEntSortStruct * param_1, DynEntSortStruct * param_2, _func___cdecl_bool_DynEntSortStruct_ptr_DynEntSortStruct_ptr * param_3, int * param_4, DynEntSortStruct * param_5)	unknown		IMPORTED	65	b43e625707b54a78d2be4c495123ed2ba2ac231b845ed786b683507cf8102cf7
@@ -23590,8 +23562,7 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 8280F928	1096	validate_config	Global	vpx_codec_err_t validate_config(vpx_codec_alg_priv * param_1, vpx_codec_enc_cfg * param_2, vp8_extracfg * param_3)	__stdcall		IMPORTED	274	71c16cfbdc1c9eed1a20ad37ec6d682730b9401ea9cb7f96db2b6dba55ded6e5
 8280FD70	124	validate_img	Global	vpx_codec_err_t validate_img(vpx_codec_alg_priv * param_1, vpx_image * param_2)	__stdcall		IMPORTED	31	ec925e0e20667cf7c2c4ea5c53a30b1beea7c7df017f249441fa817f51129d6d
 8280FDF0	568	set_vp8e_config	Global	vpx_codec_err_t set_vp8e_config(VP8_CONFIG * param_1, vpx_codec_enc_cfg param_2, vp8_extracfg param_3)	__stdcall		IMPORTED	142	c38120fda0aa7287210c3020639e942a07deaf91607efc28d02bf6b10ea90c0c
-82810028	116	vp8e_set_config	Global	vpx_codec_err_t vp8e_set_config(vpx_codec_alg_priv * param_1, vpx_codec_enc_cfg * param_2)	__stdcall		IMPORTED	29	ef6572111e890c91c574acfe5757a0ec95f141e715dff4aa2fdf54d86392addd
-8281009C	120	FUN_8281009c	Global	undefined FUN_8281009c()	unknown		DEFAULT	30	8cb5f92e8a8e3eafe7dcb476ec306110062bbb348e7e180619cedd66de374a5a
+82810028	260	vp8e_set_config	Global	vpx_codec_err_t vp8e_set_config(vpx_codec_alg_priv * param_1, vpx_codec_enc_cfg * param_2)	__stdcall		IMPORTED	65	c1a62adc16518d88d66b0b95cc7b0de8b7181eb245535eb943d7aecebd0082fa
 82810130	128	get_param	Global	vpx_codec_err_t get_param(vpx_codec_alg_priv * param_1, int param_2, char * param_3)	__stdcall		IMPORTED	32	2dd0ae51e42f43e8bb95397ca6ec1066aa75c08049c8801163debde6d81db77f
 828101B0	420	set_param	Global	vpx_codec_err_t set_param(vpx_codec_alg_priv * param_1, int param_2, char * param_3)	__stdcall		IMPORTED	105	8838cd1afa361ec204c055da876fa613dd6459ad5786d94000cb36740632742a
 82810388	424	vp8e_init	Global	vpx_codec_err_t vp8e_init(vpx_codec_ctx * param_1)	__stdcall		IMPORTED	106	8632ffca313e1006cb505ba5e66c92d0c10e269f1aee633c65e1d78f8895dc91
@@ -25813,8 +25784,7 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 828AFA50	244	StfcFsdQueryInformation	Global	void StfcFsdQueryInformation(_STFC_VOLUME_EXTENSION * param_1, _IRP * param_2)	__stdcall		IMPORTED	61	a7fad5c1e3db2d2ead4fca40311e54d8c10cd2cff5e8b0d9faaf8a267e2a62f2
 828AFB48	108	StfcFsdFlushBuffers	Global	void StfcFsdFlushBuffers(_STFC_VOLUME_EXTENSION * param_1, _IRP * param_2)	__stdcall		IMPORTED	27	06111593cfcdcbb68b5f7681b6d4280e295fd145d3b81d0c3546c22403781eba
 828AFBB8	792	StfcByteOffsetToBlockNumber	Global	long StfcByteOffsetToBlockNumber(_STFC_VOLUME_EXTENSION * param_1, _STFC_FCB * param_2, ulong param_3, ulong * param_4, ulong * param_5, ulong * param_6)	__stdcall		IMPORTED	198	402e48fed925f18fc361a587fac4eb33e28519c72a7901d76c4e71f1558d019e
-828AFED0	324	StfcLookupElementNameInDirectory	Global	long StfcLookupElementNameInDirectory(_STFC_VOLUME_EXTENSION * param_1, _STFC_FCB * param_2, _STRING * param_3, _DIRECTORY_ENUM_CONTEXT * param_4, _STFC_DIRECTORY_LOOKUP * param_5)	__stdcall		IMPORTED	81	e1560c1235937560a007f620f412b5209fc233c1e1cfd70d6a0a937a1b308b70
-828B0014	184	FUN_828b0014	Global	undefined FUN_828b0014()	unknown		DEFAULT	46	4b54d835e8931a70f8fcc6dfd2c09d8ee3fcce7bd417b15d709d38bb6e55ac72
+828AFED0	508	StfcLookupElementNameInDirectory	Global	long StfcLookupElementNameInDirectory(_STFC_VOLUME_EXTENSION * param_1, _STFC_FCB * param_2, _STRING * param_3, _DIRECTORY_ENUM_CONTEXT * param_4, _STFC_DIRECTORY_LOOKUP * param_5)	__stdcall		IMPORTED	127	3ddda8b8d2d9bd8eea33de7e79d99f873d638ff2c1df8c394dc136021fa52f7a
 828B00D0	260	StfcFindExitingBlock	Global	ulong StfcFindExitingBlock(_STFC_VOLUME_EXTENSION * param_1, ulong param_2, int param_3, ulong * param_4)	__stdcall		IMPORTED	65	4c9b4bb48656f7e4703eb4fb7df717c25714887111370e33be06d59736b8ecd5
 828B01D8	564	StfcExtendBackingFileSize	Global	long StfcExtendBackingFileSize(_STFC_VOLUME_EXTENSION * param_1, ulong param_2)	__stdcall		IMPORTED	141	1d5740f1feebc8c968fc352f392f4c32cfd5f4024bbdbcd0d2bef77991bd6727
 828B0410	348	StfcAllocateBlocksFromLevel0HashBlock	Global	long StfcAllocateBlocksFromLevel0HashBlock(_STFC_VOLUME_EXTENSION * param_1, ulong param_2, ulong param_3, _STFC_ALLOCATE_BLOCK_STATE * param_4)	__stdcall		IMPORTED	87	303684d6691201390ecc7d144edf3290c58d85bdfcbe6a70e4768f3b4c0235b6
@@ -28179,7 +28149,9 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 829166B0	4	__savegprlr_26	Global	undefined __savegprlr_26()	unknown		IMPORTED	1	a7940344e731fdddfe0e80631665bf08f120bb394074a08fe87a13a13c8290b7
 829166B4	4	__savegprlr_27	Global	undefined __savegprlr_27()	unknown		IMPORTED	1	df3802534799d7a2a72ab69e7ad6070c25e7bea7493cd51bc97788ea919cdce9
 829166B8	4	__savegprlr_28	Global	undefined __savegprlr_28()	unknown		IMPORTED	1	792cdfd7ea0a6cdae123a6a3389351755c9cd66ea733f833143e07dad211231f
-829166BC	20	__savegprlr_29	Global	undefined __savegprlr_29()	unknown		IMPORTED	5	23e99a25ef9a223fa60d3ba49a6a8000a700e3b9cdaf774ede418bc08b6a3fa8
+829166BC	4	__savegprlr_29	Global	undefined __savegprlr_29()	unknown		IMPORTED	1	c1e4a2e2d182aafac5c06f92be025ef8706ddbbcf8e0af9467587bae7af30117
+829166C0	4	__savegprlr_30	Global	undefined __savegprlr_30()	unknown		IMPORTED	1	cbfa4178656b7e232455bc590d4e62f9f03efee497689688b81a30ed7ad96ee4
+829166C4	12	__savegprlr_31	Global	undefined __savegprlr_31()	unknown		IMPORTED	3	4885784f16f423c606dd6e4f0eb5ca80a137bf6d4026150fdf4991af5a6b249a
 829166D0	4	__restgprlr	Global	void __restgprlr(void)	unknown		IMPORTED	1	b2ab91beb240c6277f5a057fafb53bcb48d791dcfb87ab64d28c1f82ef4af493
 829166D4	4	__restgprlr_15	Global	undefined __restgprlr_15()	unknown		IMPORTED	1	8b53332fa7b92da9b5081017019d14318261caaec85cdbc21f63fd4c7262c0cd
 829166D8	4	__restgprlr_16	Global	undefined __restgprlr_16()	unknown		IMPORTED	1	eaacebd97644f3d66081dc7bdb022253149b5d23ec1149ec0f546c676af3173b
@@ -28195,7 +28167,9 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 82916700	4	__restgprlr_26	Global	undefined __restgprlr_26()	unknown		IMPORTED	1	54d9f124a426129dc6e8798a577a0657c40fe275d76c0e33fca5fb7addb4f265
 82916704	4	__restgprlr_27	Global	undefined __restgprlr_27()	unknown		IMPORTED	1	f16ec5f7093ef4af4de189871349ed709ceeeaa46d671130505c429d6cb1aea7
 82916708	4	__restgprlr_28	Global	undefined __restgprlr_28()	unknown		IMPORTED	1	eaf50521a8c24d2e6244509b698d03054e25cf19957e55aadf5e60eb6416de75
-8291670C	24	__restgprlr_29	Global	undefined __restgprlr_29()	unknown		IMPORTED	6	f79dd71f5c2ff37a5c01175a3160a61c92cba48e0d8fe916d254f691036c8bce
+8291670C	4	__restgprlr_29	Global	undefined __restgprlr_29()	unknown		IMPORTED	1	7b7fe35a6c986617a6095e2d6d8fd3a08c8b83e4301baa8701c91e7c364e6ed2
+82916710	4	__restgprlr_30	Global	undefined __restgprlr_30()	unknown		IMPORTED	1	a5cc1a5afac5a300dc997443de042ada2078d965a47826277bd33034b71cf2c6
+82916714	16	__restgprlr_31	Global	undefined __restgprlr_31()	unknown		IMPORTED	4	91a9c876c1b3c92bb59ff40af304db91e16f67e55475746a8bcd010fd151944e
 82916724	12	$$$00003	Global	void $$$00003(void)	unknown		IMPORTED	3	9b7037afd730dcd72a391f6a04f2d6aa4723b90c596dfb4d3f2f37d7d44ce5b9
 82916730	40	__u64tod	Global	void __u64tod(void)	unknown		IMPORTED	10	3a7ea905d16291348fe23279b2674a507a873e2be23254e13091ccacf26ff303
 82916760	4	__savefpr	Global	void __savefpr(void)	unknown		IMPORTED	1	97fe8578951460ad19f1de7ffbe7f3494628599440756bb1b1bdfaf320e175e3
@@ -28212,7 +28186,10 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 8291678C	4	__savefpr_25	Global	undefined __savefpr_25()	unknown		IMPORTED	1	74360d94c6f77a3629613c200a7e4a7c51578e46e73afc75446261dea78e5889
 82916790	4	__savefpr_26	Global	undefined __savefpr_26()	unknown		IMPORTED	1	ca15b8708f570ac755db6c8171105ec2fbb23eace56c7e5c75997e9aa845e9d7
 82916794	4	__savefpr_27	Global	undefined __savefpr_27()	unknown		IMPORTED	1	0a28fa1154c2fc18d01be8d735641f96808d168ce181f309e29c961d09762ca7
-82916798	20	__savefpr_28	Global	undefined __savefpr_28()	unknown		IMPORTED	5	14fca88fe5d5b925f682abee8b20c57e1c48499aeb988d91117fcf9788ef7c01
+82916798	4	__savefpr_28	Global	undefined __savefpr_28()	unknown		IMPORTED	1	f9a3a3fd12125e2006cc377d2d8b62808f5e7878b10bd75005ee939df247bbc2
+8291679C	4	__savefpr_29	Global	undefined __savefpr_29()	unknown		IMPORTED	1	7aaba95acf844f9519648d6472755f56d7cd46069e734a657495cf87dc760ecc
+829167A0	4	__savefpr_30	Global	undefined __savefpr_30()	unknown		IMPORTED	1	0086bb0cbccea1c475f4b5b332126d556926a7e380aab703c174512fa261641c
+829167A4	8	__savefpr_31	Global	undefined __savefpr_31()	unknown		IMPORTED	2	2e8164675cd3bd1cc078010fb1c5f7e278710faa76329b20e4856459ff9bc7ed
 829167AC	4	__restfpr	Global	void __restfpr(void)	unknown		IMPORTED	1	a62318c468c27da01bd6bdc0086ae2243d6ece9b87bb6e2be91a14fbedf440cd
 829167B0	4	__restfpr_15	Global	undefined __restfpr_15()	unknown		IMPORTED	1	a93bc603910d70dbcbda72400a49cb3d7eff3efcefc2d9974d0fb8d8371834ab
 829167B4	4	__restfpr_16	Global	undefined __restfpr_16()	unknown		IMPORTED	1	20b5b027f313df702ef0e917629609a87fc399f28cebf0a9caf349e5ba0c321f
@@ -28227,7 +28204,10 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 829167D8	4	__restfpr_25	Global	undefined __restfpr_25()	unknown		IMPORTED	1	5bf67ca55f67473e8ab8e81ef893d283b7e58ffbfc5cd428fdc96c65c8da1775
 829167DC	4	__restfpr_26	Global	undefined __restfpr_26()	unknown		IMPORTED	1	2097a7920fa5c0da85d398658a7a2705710377f456b71c842e2917fa6062b0f7
 829167E0	4	__restfpr_27	Global	undefined __restfpr_27()	unknown		IMPORTED	1	b9a16807d8341b417843313981bb2c6e182ffc3d2c15c7cad89c3da536a2b4e3
-829167E4	20	__restfpr_28	Global	undefined __restfpr_28()	unknown		IMPORTED	5	467bc70d8b8c7e9c707ac28295e2f24235b659d43d9ab1e5534b229d70fbf537
+829167E4	4	__restfpr_28	Global	undefined __restfpr_28()	unknown		IMPORTED	1	ab856d2d45e6ce11f85ff5afced6ac39052945d50f5da378c8ba1a96f915e4b8
+829167E8	4	__restfpr_29	Global	undefined __restfpr_29()	unknown		IMPORTED	1	12de4e87edc2be322829e83556afcad6672a8847bec84236146c0f8521d0266c
+829167EC	4	__restfpr_30	Global	undefined __restfpr_30()	unknown		IMPORTED	1	e831518f9a1a6ebf754ed75e6e1c1eff004bf76fd27f48caf57d1c5685676954
+829167F0	8	__restfpr_31	Global	undefined __restfpr_31()	unknown		IMPORTED	2	cb75a5f8758360e416d96a3adc177aa96b168c106ac92a60e1e3c9d5ea65b7d5
 82916800	160	memset	Global	void memset(void)	unknown		IMPORTED	40	b89e717560e2a52f7975ff89a362a8301cab15e05c3d5f90dac72af83eadb91a
 829168A0	188	memmove	Global	void memmove(void)	unknown		IMPORTED	47	19301c3498fe64ce814a0459f3304531d0ed2cd7f17638c7ae137d0f60c8ca98
 82916960	1160	memcpy	Global	void memcpy(void)	unknown		IMPORTED	290	b58acfd13eca317586498bdc5d3631b38fe1004e3507ace34b0dc80cc9d97e67
@@ -28262,18 +28242,170 @@ va	size	name	namespace	signature	calling_convention	thunk	name_source	instructio
 82917A30	900	qsort	Global	void qsort(void * param_1, uint param_2, uint param_3, _func___cdecl_int_void_ptr_void_ptr * param_4)	__stdcall		IMPORTED	225	6855e9526a8f2c6a1a6797b2f08dd3d488520fd9d64c849b71d43909d4d936cc
 82917DC0	4	_RtlCheckStack	Global	void _RtlCheckStack(void)	unknown		IMPORTED	1	b0256fbd34e5bb5d944dcc55420dc321687156a401d21a6f412d19f35b6d43ed
 82917DC4	36	_RtlCheckStack12	Global	undefined _RtlCheckStack12()	unknown		IMPORTED	9	5d671dff2d8b1fb649de479f8260a2747a060c4efcd33e3d6c6c15bb876cea8b
-82917DF0	148	__savevmx	Global	void __savevmx(void)	unknown		IMPORTED	37	0b4cd9e0ed1baf93bc20c155bd67921e535bd14d5b7871ec7206682972aff16d
+82917DF0	8	__savevmx	Global	void __savevmx(void)	unknown		IMPORTED	2	79a94bec51b8541a07f2e72d904cf2fd7cd7bd03aed4bb0e7a7bfd312f965bc4
+82917DF8	8	__savevmx_15	Global	undefined __savevmx_15()	unknown		IMPORTED	2	4cc15cfc722d2ab1d1124066b9b26c270a91d693fa2f1db27432b6990ad682ba
+82917E00	8	__savevmx_16	Global	undefined __savevmx_16()	unknown		IMPORTED	2	f17938ebc93f1d17cdc65392f30b6a1577d18a0d1fa8ab6bbc61c3c513136e03
+82917E08	8	__savevmx_17	Global	undefined __savevmx_17()	unknown		IMPORTED	2	12324dfa7c369de1a6d58b2b98502530e3a72c985dfa0b2c09c160691945488f
+82917E10	8	__savevmx_18	Global	undefined __savevmx_18()	unknown		IMPORTED	2	54d0be7998da202fb8b7312aaaebf7b3928ea4d07c5b7c16051a85987c77ddeb
+82917E18	8	__savevmx_19	Global	undefined __savevmx_19()	unknown		IMPORTED	2	e2869ebc790c0f1e5130920ee7351c026762cf7418c30b1a9b6fea24fe9959c6
+82917E20	8	__savevmx_20	Global	undefined __savevmx_20()	unknown		IMPORTED	2	786463cd26f1ec9b305d1346f7dfe8ad2ded57ba2004d1a1b4644223ebdfac68
+82917E28	8	__savevmx_21	Global	undefined __savevmx_21()	unknown		IMPORTED	2	87d8bd7aed15d4b5853eae7d8eaa5b6c6b9d96c08084c509ab52639b1cfdb329
+82917E30	8	__savevmx_22	Global	undefined __savevmx_22()	unknown		IMPORTED	2	0f38f325c06e7f34b603b5c299cfe2985826139b741c682f876cfa2b723a4276
+82917E38	8	__savevmx_23	Global	undefined __savevmx_23()	unknown		IMPORTED	2	a859be32e4228b52167dbc05d36d5ba23c5b380594c753514b8a954cfaebd406
+82917E40	8	__savevmx_24	Global	undefined __savevmx_24()	unknown		IMPORTED	2	03dd7f81104011543df3a08344a9c55e9ca17c92a1f72f4113de49c47f24db5e
+82917E48	8	__savevmx_25	Global	undefined __savevmx_25()	unknown		IMPORTED	2	b2886d91838d4a8a680165600c3cc2fc2720c8814c493d3a33c9a99cb48f05b7
+82917E50	8	__savevmx_26	Global	undefined __savevmx_26()	unknown		IMPORTED	2	eea71c70b2efb20ed61633c7a280b4a9c750e1d5ef09f47ca9304e84637880ae
+82917E58	8	__savevmx_27	Global	undefined __savevmx_27()	unknown		IMPORTED	2	dfd7a97f14c80dcf1a6a2348ea61ad2eaf8e102812653539f4b132abddc3e2f3
+82917E60	8	__savevmx_28	Global	undefined __savevmx_28()	unknown		IMPORTED	2	36786f3d39cb7120c2167f966d3f6766e7b5d3c244e8bd3ff643ab8830c86903
+82917E68	8	__savevmx_29	Global	undefined __savevmx_29()	unknown		IMPORTED	2	734e1d35c511d94566f7f7dafccd5fae617a9b4b94e34593f2efceeb806cc152
+82917E70	8	__savevmx_30	Global	undefined __savevmx_30()	unknown		IMPORTED	2	0ba2d5d8bad06ab6448292ac27ffc0129131404835780983e9d59a04b68f2071
+82917E78	12	__savevmx_31	Global	undefined __savevmx_31()	unknown		IMPORTED	3	dee0c59c66ad71bc89b846757d94bed7ede55b685586df524b84a789ae188c41
+82917E84	8	__savevmx_64	Global	undefined __savevmx_64()	unknown		IMPORTED	2	dea6c9d6b58eba4f351e9d882730b442433b19a534d37f83044e8216a4f28e0a
+82917E8C	8	__savevmx_65	Global	undefined __savevmx_65()	unknown		IMPORTED	2	6f01691be39af2f537b46b3d1fcefd0d335ad71c0492c352270380ca38a6c69b
+82917E94	8	__savevmx_66	Global	undefined __savevmx_66()	unknown		IMPORTED	2	e38e7a9134bd83d7e560a686e7f1aea6d581895479847b4d869ed6064a8c7f36
+82917E9C	8	__savevmx_67	Global	undefined __savevmx_67()	unknown		IMPORTED	2	aca510c3e3e0d86fe7a76d5c2fa2f6e5bbcc9cf8b4be363708b30236ac74773d
+82917EA4	8	__savevmx_68	Global	undefined __savevmx_68()	unknown		IMPORTED	2	4fc9d868d3f55499f603a57fae714a6442a5a5e58ea70fa7178e111abcbe518e
+82917EAC	8	__savevmx_69	Global	undefined __savevmx_69()	unknown		IMPORTED	2	d8100118c567524edcebcacfc8b241ac10fc163e34a033182bef8f0712e140dc
+82917EB4	8	__savevmx_70	Global	undefined __savevmx_70()	unknown		IMPORTED	2	bd6617e81a30e3b237551746cb06ff1230f78e805deac1d0875e7e3852e592b9
+82917EBC	8	__savevmx_71	Global	undefined __savevmx_71()	unknown		IMPORTED	2	bea44c6b66fcaf4c778d2818e47487601c1b1e8d0d874c1ead20aa49d463b5d0
+82917EC4	8	__savevmx_72	Global	undefined __savevmx_72()	unknown		IMPORTED	2	72e9d96b14ac7b2067635e79365626ab1a9941f7a530a3141e8b8069ed7ed46d
+82917ECC	8	__savevmx_73	Global	undefined __savevmx_73()	unknown		IMPORTED	2	e1ba2555c6fc168102c7658e17e3518c667f7cb3c2c9d53b19e16972e9507998
+82917ED4	8	__savevmx_74	Global	undefined __savevmx_74()	unknown		IMPORTED	2	de6a1846ef3ca5ae1e29551d251ce91bfd2498db30cb3481749daa2a0ce1e931
+82917EDC	8	__savevmx_75	Global	undefined __savevmx_75()	unknown		IMPORTED	2	dfe464f00bff6af8c636301189cf17198c9815f71ba0581d1c8b865f3166ef74
+82917EE4	8	__savevmx_76	Global	undefined __savevmx_76()	unknown		IMPORTED	2	0278a658dc440c1a8b72ab0948ca7b6f15fe8f4f3fa6f7e477155d43dda3a168
+82917EEC	8	__savevmx_77	Global	undefined __savevmx_77()	unknown		IMPORTED	2	c930d92f874695d5f3a7213958cdede0deb0a18b9f1c43e6b609c20d50dbdb83
+82917EF4	8	__savevmx_78	Global	undefined __savevmx_78()	unknown		IMPORTED	2	0cfbb79b60108c4bba2b5a6cb1bc0be382e92429c184163b906f5f06ce4d08bf
+82917EFC	8	__savevmx_79	Global	undefined __savevmx_79()	unknown		IMPORTED	2	6c41ebf994ce6fc4255210eb5b7a2e8b401d4e601907bd43fd47a278e7d5fcc0
+82917F04	8	__savevmx_80	Global	undefined __savevmx_80()	unknown		IMPORTED	2	aca3916a4d8b442c43de50e035d6e76d652ab46b46b3c46124e3b186a71174b0
+82917F0C	8	__savevmx_81	Global	undefined __savevmx_81()	unknown		IMPORTED	2	d2b989d58070ef4e196c4a56c25a07ed859d47296f2c14378e4daf6bb41b013f
+82917F14	8	__savevmx_82	Global	undefined __savevmx_82()	unknown		IMPORTED	2	673e0bd0b916ef74cb04fb6dd2071094e16baa7668458ea9122bcbc356f38c15
+82917F1C	8	__savevmx_83	Global	undefined __savevmx_83()	unknown		IMPORTED	2	65b1940ca4bcd8fc0d4e4c6add95a5fcdd62be278ac91ef92829a707292cff8d
+82917F24	8	__savevmx_84	Global	undefined __savevmx_84()	unknown		IMPORTED	2	0898fefe3e78878cf0e0e1ab9cf6d44978b2c50064e42234be4d8deef9b4e879
+82917F2C	8	__savevmx_85	Global	undefined __savevmx_85()	unknown		IMPORTED	2	b1be220c6c9514c03b3417d4eaea9b84f9fa536232d994479e6575dd88f23d23
+82917F34	8	__savevmx_86	Global	undefined __savevmx_86()	unknown		IMPORTED	2	7d41b9d91890e3e242a739d13289968a1577c3cafbea4aac6fe9cd8c88672ed8
+82917F3C	8	__savevmx_87	Global	undefined __savevmx_87()	unknown		IMPORTED	2	d923d19ffc7e72d0fda409a1ce07285ced19eed49d21aa2a407ad427c3e8fc03
+82917F44	8	__savevmx_88	Global	undefined __savevmx_88()	unknown		IMPORTED	2	2bd7bc18db011a34f44a00f8bb4279261201448d64a53a15dbbc964738c99bb1
+82917F4C	8	__savevmx_89	Global	undefined __savevmx_89()	unknown		IMPORTED	2	7bd749c158411258e1fc1417b57e8b3173633fd12fd6cf4bd7f2496de07482d5
+82917F54	8	__savevmx_90	Global	undefined __savevmx_90()	unknown		IMPORTED	2	68308ee4769e5ef6bd49f7ccf3a8d5273ad872689001428822ae3dc38038689f
+82917F5C	8	__savevmx_91	Global	undefined __savevmx_91()	unknown		IMPORTED	2	33c6b40af4b38f0921e4717651f7f5d5853450a94343fa4aefe8fcf336941903
+82917F64	8	__savevmx_92	Global	undefined __savevmx_92()	unknown		IMPORTED	2	d957fee400fa728ed58c693ec46bb3f03ba6e3d31abbf2b583bf61cdbcad5b64
+82917F6C	8	__savevmx_93	Global	undefined __savevmx_93()	unknown		IMPORTED	2	445b4324c77a5e8a074320d9fd53bcd5513c85879b99df1ed97879fdb5052d75
+82917F74	8	__savevmx_94	Global	undefined __savevmx_94()	unknown		IMPORTED	2	20b7ed77a52f651a1272d97e3ebd88e0e9263cff2745bf75818c29f232f52163
+82917F7C	8	__savevmx_95	Global	undefined __savevmx_95()	unknown		IMPORTED	2	a9f466d61e45e73c792c2ea5f9d76e151aa119d2d78a0fe3b558fa7a17911e31
+82917F84	8	__savevmx_96	Global	undefined __savevmx_96()	unknown		IMPORTED	2	9fbfc3755fe9a52e11f9465d0415285d7bc5fbd430792d80d83a449ea59c0049
+82917F8C	8	__savevmx_97	Global	undefined __savevmx_97()	unknown		IMPORTED	2	c0cd03595ecdc1f57db4114ce2f64ef59abf8378ce8f3dee024daa157b018bd5
+82917F94	8	__savevmx_98	Global	undefined __savevmx_98()	unknown		IMPORTED	2	bf7f92d800585cfcb339aed17d812940a391c956cc0a63452147a9a4adcc6f05
+82917F9C	8	__savevmx_99	Global	undefined __savevmx_99()	unknown		IMPORTED	2	f7434d87f243e87bbd93e7b9c6ec5c24241f48510ded78e0c7d0463dc2b0e4b4
+82917FA4	8	__savevmx_100	Global	undefined __savevmx_100()	unknown		IMPORTED	2	0f1c7ecfbbdb06e8e810f13b70e285e2d9c455becd1da1699e5878c8adde41bd
+82917FAC	8	__savevmx_101	Global	undefined __savevmx_101()	unknown		IMPORTED	2	8451e9b04206f20fab927662f9a25b08bb1cc74cc5540a8e04983048d118b429
+82917FB4	8	__savevmx_102	Global	undefined __savevmx_102()	unknown		IMPORTED	2	fc70248a2af4394857bedaa7a262a70eb6abd1df970faa40b4e86accff72a317
+82917FBC	8	__savevmx_103	Global	undefined __savevmx_103()	unknown		IMPORTED	2	8f487a39da93dcbbda5a91f0d0f403b3715773383c7d1d4cca8d5a9db865cea1
+82917FC4	8	__savevmx_104	Global	undefined __savevmx_104()	unknown		IMPORTED	2	ea0bae67b41d2fad02cbd5583e8c9f2f3f8a3c301e84b5ec559a145346299047
+82917FCC	8	__savevmx_105	Global	undefined __savevmx_105()	unknown		IMPORTED	2	eb7f06edde2811b753c797bb1f2b724ccbe29101dadd9cf8f13e468b367e0cc0
+82917FD4	8	__savevmx_106	Global	undefined __savevmx_106()	unknown		IMPORTED	2	bab0d4530d236ff03344c94985009713d0a0e2c9ef80a46bfadcd007f2e20176
+82917FDC	8	__savevmx_107	Global	undefined __savevmx_107()	unknown		IMPORTED	2	dcd99cb6bc0a3a8494baa84895b66c0fe6733a5b4d2a2786a32167d01d84a567
+82917FE4	8	__savevmx_108	Global	undefined __savevmx_108()	unknown		IMPORTED	2	33325ee8c42cb28946bcfc6c791530ef1f4fe509eb504bbf126ce1b7f6dc88b9
+82917FEC	8	__savevmx_109	Global	undefined __savevmx_109()	unknown		IMPORTED	2	d2b97d68b2a8436f39b9e056ea8fa2db3f33e1bff07058329abe37281b859355
+82917FF4	8	__savevmx_110	Global	undefined __savevmx_110()	unknown		IMPORTED	2	e24bdd7beef4057342e6e1d9c050680178dcb4b0eaf60f33d4ad6b55afe84d0b
+82917FFC	8	__savevmx_111	Global	undefined __savevmx_111()	unknown		IMPORTED	2	3ec845ed4df32a2e817f8a8a687f6401c5538d2274d7d4bca5d85e078a0616c1
+82918004	8	__savevmx_112	Global	undefined __savevmx_112()	unknown		IMPORTED	2	eec5a0d60e773a91c5a89a1b0e07dfb0be5a36345a496d0e82a04de9f29a1093
+8291800C	8	__savevmx_113	Global	undefined __savevmx_113()	unknown		IMPORTED	2	193f18618d11f3f4ccbb9da4fdcf7b090052880888f529d1f4eba03fd3f491ba
+82918014	8	__savevmx_114	Global	undefined __savevmx_114()	unknown		IMPORTED	2	de5eddac586f5d1727c7045fc4242f246e4a5f86e5be5dec5602e71a3ad99fb0
+8291801C	8	__savevmx_115	Global	undefined __savevmx_115()	unknown		IMPORTED	2	7c66dc8ed35fb243fba9380e11ddf021e00c789fc86b6def6ec5d5d97370dd8a
+82918024	8	__savevmx_116	Global	undefined __savevmx_116()	unknown		IMPORTED	2	6aedfd90ef83886826063d827d7450b6f7d83be373d6d475059203ecc2f6345a
+8291802C	8	__savevmx_117	Global	undefined __savevmx_117()	unknown		IMPORTED	2	d5fd4f2de35035daff21b6befe096cb1c4e8b366df4811dc09328d22a2a95895
+82918034	8	__savevmx_118	Global	undefined __savevmx_118()	unknown		IMPORTED	2	948c0dcdaaf60433098abfd496cbda18d00b937560e20902187dc6c2f27c9823
 8291803C	8	__savevmx_119	Global	undefined __savevmx_119()	unknown		IMPORTED	2	430a7467a605cb1b671e70e3a7f507f3d9b64f98546e1af437a302c167dced41
-82918044	16	__savevmx_120	Global	undefined __savevmx_120()	unknown		IMPORTED	4	8291fb48862f12e7aa7fe70c901f4962aec9419a1ac6c8efd54e09d454bdbfbd
+82918044	8	__savevmx_120	Global	undefined __savevmx_120()	unknown		IMPORTED	2	2c91bfa627801f4e148d4a14456f2f560fb0937763a023a6d1163815ee1d17a6
+8291804C	8	__savevmx_121	Global	undefined __savevmx_121()	unknown		IMPORTED	2	a1db0b416be76eca80f9207f3b516bffcfb9ed4b36855883b0cc29c4c8ae1bb2
 82918054	8	__savevmx_122	Global	undefined __savevmx_122()	unknown		IMPORTED	2	0c230c9c12eb91ed797d6ef3634a26ac94bf6fb7fe5aa6e5a9181248642cd42e
 8291805C	8	__savevmx_123	Global	undefined __savevmx_123()	unknown		IMPORTED	2	8d592dc9ae05fd6ef62542ce4c8c571c56df4339c63fa1580911efd429a5484c
-82918064	36	__savevmx_124	Global	undefined __savevmx_124()	unknown		IMPORTED	9	74f52637c4d594bcd5b904073ada4c296bf509ebcaac1cedcfcc40320a0aa405
-82918088	148	__restvmx	Global	void __restvmx(void)	unknown		IMPORTED	37	bc4c4b276f29fc79f6f139742b4e3228edd1474e0b73d67eb55019031d4e873c
+82918064	8	__savevmx_124	Global	undefined __savevmx_124()	unknown		IMPORTED	2	dd8d8c52d0980a160a655d56cbf55ad6b618ab0459ffad5691075473c6dc4ab5
+8291806C	8	__savevmx_125	Global	undefined __savevmx_125()	unknown		IMPORTED	2	bd668531654bf449a0e4710c2f034d007f908aff20c28a2c59593f4074811e9c
+82918074	8	__savevmx_126	Global	undefined __savevmx_126()	unknown		IMPORTED	2	083dfa5170c7458f2f1df0e383742f8bb0d8f668fc6f2020274c080441b2102f
+8291807C	12	__savevmx_127	Global	undefined __savevmx_127()	unknown		IMPORTED	3	8925d708455daa5df20327b07f2906508d7b3eb7c023d5c9a14e60d6399ca7b0
+82918088	8	__restvmx	Global	void __restvmx(void)	unknown		IMPORTED	2	c55d2756c815f6736fa6899b429fda92b6afb0602136910c4d8a6a4502e3aef2
+82918090	8	__restvmx_15	Global	undefined __restvmx_15()	unknown		IMPORTED	2	5cda6a1d1f4ba502874cef89ddf5b736595a0dbcd0aa75b4896125c4aeec75a6
+82918098	8	__restvmx_16	Global	undefined __restvmx_16()	unknown		IMPORTED	2	bca7ad8233fa132ae708ddf4bfd38268410bf347dc20037000767c02c69d1654
+829180A0	8	__restvmx_17	Global	undefined __restvmx_17()	unknown		IMPORTED	2	6defb77a54314cdcd125c39b20c98081c0730ab359bb8274bad8cabf2b423213
+829180A8	8	__restvmx_18	Global	undefined __restvmx_18()	unknown		IMPORTED	2	abb6ed9d81e9dfb1194fa0c45fd4ce51ca66b966ef60eee3777d9d2d4237d9d9
+829180B0	8	__restvmx_19	Global	undefined __restvmx_19()	unknown		IMPORTED	2	ed5bc0e730e0ed8097f67b8e04470e0b38a080f2e7bb28b51e866b36261a9406
+829180B8	8	__restvmx_20	Global	undefined __restvmx_20()	unknown		IMPORTED	2	fd66b94cd532e8c1f781da4c4d6d9ce359aa66f5527027572d4260d0489ceb9b
+829180C0	8	__restvmx_21	Global	undefined __restvmx_21()	unknown		IMPORTED	2	a45fad636f55a49292fb9245a45da40b2e1fbf175e3c9ad4dd07eafbcb03f51c
+829180C8	8	__restvmx_22	Global	undefined __restvmx_22()	unknown		IMPORTED	2	0a72558a77a72d06db21163c020db91d91620a787a6e693a26425448773352c2
+829180D0	8	__restvmx_23	Global	undefined __restvmx_23()	unknown		IMPORTED	2	f405f65bceade54fa06a507fd097ead2d5050c748953956d975ffd6dab0a4de0
+829180D8	8	__restvmx_24	Global	undefined __restvmx_24()	unknown		IMPORTED	2	0c5569df4dbf997750a459cf8205d478f50040e2936d4aee4e0bff9fc9783f18
+829180E0	8	__restvmx_25	Global	undefined __restvmx_25()	unknown		IMPORTED	2	e3c2df9c08dd829b4de86fa281d03adcc2dd6a87963509ee1c5a15af33aa976d
+829180E8	8	__restvmx_26	Global	undefined __restvmx_26()	unknown		IMPORTED	2	03981d36b9dd2101d8422f367a0b9f77c170955d7108ce2e49caabc19c97950f
+829180F0	8	__restvmx_27	Global	undefined __restvmx_27()	unknown		IMPORTED	2	51f593e3e628a78d488d5946eccba9cfa4e3afb8a874e7ab1ada7ebe6f6cb6dd
+829180F8	8	__restvmx_28	Global	undefined __restvmx_28()	unknown		IMPORTED	2	9773ee8dcd905d0e9a67b6b88b3961410d0d20f6e794f8643308e5810d9bfd85
+82918100	8	__restvmx_29	Global	undefined __restvmx_29()	unknown		IMPORTED	2	a7cdb684f008ed29ace7e2069ec278d91d0cbd7c26e8806e7caa2084b14c0226
+82918108	8	__restvmx_30	Global	undefined __restvmx_30()	unknown		IMPORTED	2	1df43cfb13fde07f219af433f5f100ac90939ef201e642bfc9c4050f478c5222
+82918110	12	__restvmx_31	Global	undefined __restvmx_31()	unknown		IMPORTED	3	cb5de221ed22e1c75e63690634e7781b20bd86a4c96f56ca525edf3ea3f857c1
+8291811C	8	__restvmx_64	Global	undefined __restvmx_64()	unknown		IMPORTED	2	ca110a66db14a7702d4e92cd60dd9d6ef17f9b9cf86e0ef3362f83c9fe81be0d
+82918124	8	__restvmx_65	Global	undefined __restvmx_65()	unknown		IMPORTED	2	ce4e1d7fff8853f2909f957c27c8ac2cc0037e7dd562a8b64ddd19be6d1e7f91
+8291812C	8	__restvmx_66	Global	undefined __restvmx_66()	unknown		IMPORTED	2	a06dd71bd5631f68612968f1a09665a2699142ae2438b7a83e4180fbf219ed1b
+82918134	8	__restvmx_67	Global	undefined __restvmx_67()	unknown		IMPORTED	2	07773dd3cf8678838c20cb7254be1efabd3dd08efb6da7cdf284258ad3bfd125
+8291813C	8	__restvmx_68	Global	undefined __restvmx_68()	unknown		IMPORTED	2	bb6823d2247476f7bad50586da718247b9ef32438d56e83b9368bb62fb903be8
+82918144	8	__restvmx_69	Global	undefined __restvmx_69()	unknown		IMPORTED	2	0052225af11fcd8328bcda5df079d43067765148a5d814cab2162e221d358348
+8291814C	8	__restvmx_70	Global	undefined __restvmx_70()	unknown		IMPORTED	2	56afe97ec070e316d248a213a4e0aa913b6732b72ca1f53d0e7b4b227c355a50
+82918154	8	__restvmx_71	Global	undefined __restvmx_71()	unknown		IMPORTED	2	eb7c23b769a0b2724764c096c97aa8adbf45d1b3b4a38f73e0f8a948dd65fa28
+8291815C	8	__restvmx_72	Global	undefined __restvmx_72()	unknown		IMPORTED	2	b6121ab6cf286ccd3a3624e4d1b19ba41e978b144733050a218be385b9639b0b
+82918164	8	__restvmx_73	Global	undefined __restvmx_73()	unknown		IMPORTED	2	ca9282c43d58ea1d4d3578490b22a73f3df0f2613087a0f7f68c508324c8aa8e
+8291816C	8	__restvmx_74	Global	undefined __restvmx_74()	unknown		IMPORTED	2	1b694b5e8cb0b74ef8be388ff5fec82112e5d1b85f83214a64c68332182f925c
+82918174	8	__restvmx_75	Global	undefined __restvmx_75()	unknown		IMPORTED	2	7589363588e7e97938d101ff33dbfbd03f5429136ef8d4b12d232fc03046b853
+8291817C	8	__restvmx_76	Global	undefined __restvmx_76()	unknown		IMPORTED	2	a203a0f8cd6fee42e030c26646afcdfa6f6e96ac5c2b94497e50bd7a586fe47a
+82918184	8	__restvmx_77	Global	undefined __restvmx_77()	unknown		IMPORTED	2	3947c3b3203d139d7533cdffa277ba77cc28a894f701a6461251e6fd4dcbf5e8
+8291818C	8	__restvmx_78	Global	undefined __restvmx_78()	unknown		IMPORTED	2	64edcd1580fcf28575a66db297990f69af2662b5ba8e36d3c383be67995508e8
+82918194	8	__restvmx_79	Global	undefined __restvmx_79()	unknown		IMPORTED	2	3a3c5baddd493c3d98eb218dd3608b5c2bab52a984077544de4fbf17ca754c5e
+8291819C	8	__restvmx_80	Global	undefined __restvmx_80()	unknown		IMPORTED	2	12990b48e7ec6903ddcfa648b46db13f3e83844b0d9b53af29e00a6d998cc232
+829181A4	8	__restvmx_81	Global	undefined __restvmx_81()	unknown		IMPORTED	2	38df002a2dec6b5bb636b364127e3784c483ef56c4b1717b33aeec931adbdd85
+829181AC	8	__restvmx_82	Global	undefined __restvmx_82()	unknown		IMPORTED	2	6388ebf3121fb9e59f4724e7a09c7652b2945938787fb001bc5c085c969f728e
+829181B4	8	__restvmx_83	Global	undefined __restvmx_83()	unknown		IMPORTED	2	dcf3c23f1ab2df1cf9b4c318fa10f468ebd01dcf8f0bbac7bfd0bb74a524db70
+829181BC	8	__restvmx_84	Global	undefined __restvmx_84()	unknown		IMPORTED	2	bb5ca90791ad4e7ee08d8091bcfd6db7e69e891c23c81456333782f32fefc3a0
+829181C4	8	__restvmx_85	Global	undefined __restvmx_85()	unknown		IMPORTED	2	4a10c9fcc1babb23d1b01a0a17ff7ac36cd95cafc58efaed81f06c6526e96d72
+829181CC	8	__restvmx_86	Global	undefined __restvmx_86()	unknown		IMPORTED	2	1a631f458347ea015be7c833c56fbf934d9c4aefa93cc7bfb605fcb8cd967b02
+829181D4	8	__restvmx_87	Global	undefined __restvmx_87()	unknown		IMPORTED	2	e047787d525c34fc2377037115fc37320d957a8235cb0a6981e3d70048bd0111
+829181DC	8	__restvmx_88	Global	undefined __restvmx_88()	unknown		IMPORTED	2	04990929a722d93fe2ccf937d2b5cfe3692a637cf563856b257f127a45ac38c3
+829181E4	8	__restvmx_89	Global	undefined __restvmx_89()	unknown		IMPORTED	2	cfc1fbd08c922c146e7e8eee20b7bb2e820d7386f23217ab7b588f4c8ba6ed4a
+829181EC	8	__restvmx_90	Global	undefined __restvmx_90()	unknown		IMPORTED	2	55ccb587ad46c0d582a8ecf272be700f56df7369c2744cbc932e8b9115ddad55
+829181F4	8	__restvmx_91	Global	undefined __restvmx_91()	unknown		IMPORTED	2	23f42ae93ab099e39174f4e7586b02a0efaf0fab3649a64d9adb5b9ed9807256
+829181FC	8	__restvmx_92	Global	undefined __restvmx_92()	unknown		IMPORTED	2	d45867876efc05c73287711bd7b65324e18318e0796bcceb1b58b153aec73ca2
+82918204	8	__restvmx_93	Global	undefined __restvmx_93()	unknown		IMPORTED	2	54dc1984f7023ad378703357a21e4f46d4fad5d8a63317f7b17c4aacede8dc03
+8291820C	8	__restvmx_94	Global	undefined __restvmx_94()	unknown		IMPORTED	2	a40d9b6f8231a955f0895ede3953538dde94fd9988d036c3c287fb088462b0de
+82918214	8	__restvmx_95	Global	undefined __restvmx_95()	unknown		IMPORTED	2	5ccd14fc7e8c8dc7796b298e66a6d1a0f6973c6b8dccba88ae190db838f6ef14
+8291821C	8	__restvmx_96	Global	undefined __restvmx_96()	unknown		IMPORTED	2	97ffaabaa2e0b3c5f44e1b2c8ea3ef9090da818f0a5e71cb803e173044205b03
+82918224	8	__restvmx_97	Global	undefined __restvmx_97()	unknown		IMPORTED	2	a2cc4521adb93d4a7fabe84196d8e4c225b034ce35f2b65396d895ff94b51dfb
+8291822C	8	__restvmx_98	Global	undefined __restvmx_98()	unknown		IMPORTED	2	08beecfe163e0f1a0b52230a7ed0a308438002775fe31749041546afedb1c557
+82918234	8	__restvmx_99	Global	undefined __restvmx_99()	unknown		IMPORTED	2	19735a257297dd405596ba2471de2ae9e3a8726f2853ea598b4833f4802d761a
+8291823C	8	__restvmx_100	Global	undefined __restvmx_100()	unknown		IMPORTED	2	edd9ffd9addd0bb9008e38214e01121d9115e0188a2cf27e4691a53696e89eb3
+82918244	8	__restvmx_101	Global	undefined __restvmx_101()	unknown		IMPORTED	2	9f2aa65a782202a32d1c6b04b3c1e452dced2378d340e77386370315fe9e8667
+8291824C	8	__restvmx_102	Global	undefined __restvmx_102()	unknown		IMPORTED	2	4b2057f03ef4f37190eee5d09d07ed193cac143ede860aa5d78ded8a77537512
+82918254	8	__restvmx_103	Global	undefined __restvmx_103()	unknown		IMPORTED	2	ae3a8838841480cc79f8a529130bd0d29c96c535073d8c28f3b17b5589f23401
+8291825C	8	__restvmx_104	Global	undefined __restvmx_104()	unknown		IMPORTED	2	ce2e44329b51b23c3c3a8c115220806df165116e45ff43730b474af2f3ff2b97
+82918264	8	__restvmx_105	Global	undefined __restvmx_105()	unknown		IMPORTED	2	7ff0d01eef6bbd7cd21cff4874095c9070d52eb9edf9e67c8975a42d493aaaf4
+8291826C	8	__restvmx_106	Global	undefined __restvmx_106()	unknown		IMPORTED	2	d5bc3d07f2b0ecd7157332c487a0fe29214cfeb1e1f1b6d745272a2b6900eaf4
+82918274	8	__restvmx_107	Global	undefined __restvmx_107()	unknown		IMPORTED	2	6b282b92a12355f8a89a69684220cc704d38b4ff69ec8dcec72185d278fef26e
+8291827C	8	__restvmx_108	Global	undefined __restvmx_108()	unknown		IMPORTED	2	5568c8926aad5e02037ba30c06757cce5e45a83ad7d2b0efbcdbead44e7a9f60
+82918284	8	__restvmx_109	Global	undefined __restvmx_109()	unknown		IMPORTED	2	cc66fa483eaa9de61709e2ee9fd5edb4c9b96c7e440eac887fbd7ff8cc8e56ea
+8291828C	8	__restvmx_110	Global	undefined __restvmx_110()	unknown		IMPORTED	2	53d8d0a0f9019f3fa8db1f8e823d42c7a2613b635c1128369ab7e3836fa64195
+82918294	8	__restvmx_111	Global	undefined __restvmx_111()	unknown		IMPORTED	2	f936398e3ac93f9a42a6b4359e35c122b25c99459f87eca01eebd7358bcfcc89
+8291829C	8	__restvmx_112	Global	undefined __restvmx_112()	unknown		IMPORTED	2	3ee767b7c3a4d840a34ae80fdce05d440e75fa3e09de22f2a11d6b6e66c58c71
+829182A4	8	__restvmx_113	Global	undefined __restvmx_113()	unknown		IMPORTED	2	d0eaeda843d3a7972a9e61c71afce6ce0a774748cd2dd3e33285a0846bc7bd33
+829182AC	8	__restvmx_114	Global	undefined __restvmx_114()	unknown		IMPORTED	2	6d041a3312f0f7253c7f0d6ade56a44108e41679e2e029574d19cd1a199ab6fa
+829182B4	8	__restvmx_115	Global	undefined __restvmx_115()	unknown		IMPORTED	2	b0ad02515fe114708c021547ba06ab5dffbba6a969c7125c718ba47dd66c5b1c
+829182BC	8	__restvmx_116	Global	undefined __restvmx_116()	unknown		IMPORTED	2	af54162e3571ecb45f690fb548a7b55de9a25d2a307e403ad625209ccde16a7d
+829182C4	8	__restvmx_117	Global	undefined __restvmx_117()	unknown		IMPORTED	2	1de3838d44f37cedaa3b1209b9203b840d2670a32a79e0057df7498a4752e88e
+829182CC	8	__restvmx_118	Global	undefined __restvmx_118()	unknown		IMPORTED	2	cb0c43dec7c0169a330fb031ccdc70474515fd82549ec168f7a3dbe81b61819e
 829182D4	8	__restvmx_119	Global	undefined __restvmx_119()	unknown		IMPORTED	2	f5ba5b63dd8f2ae6e81edd86309c276915ed342af942f519461bb311dfc0d5ca
-829182DC	16	__restvmx_120	Global	undefined __restvmx_120()	unknown		IMPORTED	4	bc8babcdff0fdad44b5462b18bc0b9ef1af68b4a223329fa95e265cb8a26fe12
+829182DC	8	__restvmx_120	Global	undefined __restvmx_120()	unknown		IMPORTED	2	93d79bc51b27b08ff32283db69321f6a1a1d9c88cdcd85450cbd7db8985e8ac9
+829182E4	8	__restvmx_121	Global	undefined __restvmx_121()	unknown		IMPORTED	2	436a8a8240916ed4a07ebca18d21796f6ce7892a3ea2b7c73e6bd81f70f96840
 829182EC	8	__restvmx_122	Global	undefined __restvmx_122()	unknown		IMPORTED	2	95fae243d752c9f4045e51d4e849ad71687b8e2741506578f2c953a54f26b128
 829182F4	8	__restvmx_123	Global	undefined __restvmx_123()	unknown		IMPORTED	2	509d1f8eefe039682c51bdac2ea5b69da8a8c11c10ed73cc8d0677cc107fa770
-829182FC	36	__restvmx_124	Global	undefined __restvmx_124()	unknown		IMPORTED	9	56012cddcda00f7af49ae63212c9d7122270015760632b502360411556665a74
+829182FC	8	__restvmx_124	Global	undefined __restvmx_124()	unknown		IMPORTED	2	faf23d4b045a2feaf6ed263ac04937250db94303d38586a6b71fe97c60a69e9d
+82918304	8	__restvmx_125	Global	undefined __restvmx_125()	unknown		IMPORTED	2	2fb9417410994dd6a62c56448a4b3e786c8a744c1c8ce29bb48627ae374e3de4
+8291830C	8	__restvmx_126	Global	undefined __restvmx_126()	unknown		IMPORTED	2	e16fe6b56bb65e63549a028e4984cce3dd4b014a95909197c609ba105ebe9d54
+82918314	12	__restvmx_127	Global	undefined __restvmx_127()	unknown		IMPORTED	3	62274b6115eda665e237d8c2e0d238349abfc4833779b694604d9940f8bf3782
 82918320	256	_snprintf	Global	int _snprintf(char * param_1, uint param_2, char * param_3)	__stdcall		IMPORTED	64	26df8421c4c5328dc19b5ead03c360a69d522abfd813fbb092c5fd7277ac9691
 82918420	48	srand	Global	void srand(uint param_1)	__stdcall		IMPORTED	12	0f04e5ef45dd41722f0e1aa9109d4b07e50f9ffce9a1859e431ab163d44c382e
 82918450	64	rand	Global	int rand(void)	unknown		IMPORTED	16	73c1f8e7a35d18f03321f9b5323157a23944e1a67a3a2695877581911e3a495f

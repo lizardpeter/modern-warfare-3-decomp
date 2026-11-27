@@ -96,8 +96,8 @@ DObj * CG_PreProcess_GetDObj_General(LocalClientNum_t param_1,centity_s *param_2
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_General(LocalClientNum_t param_1,centity_s *param_2)
 
@@ -207,8 +207,8 @@ void CG_AddEntityLoopSound(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_Player_PreControllers(LocalClientNum_t param_1,DObj *param_2,centity_s *param_3)
@@ -262,8 +262,8 @@ void CG_Player_PreControllers(LocalClientNum_t param_1,DObj *param_2,centity_s *
 /* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -395,8 +395,8 @@ void CG_Turret_PreControllers(LocalClientNum_t param_1,DObj *param_2,centity_s *
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_Turret(LocalClientNum_t param_1,centity_s *param_2)
@@ -773,8 +773,8 @@ void CG_Missile(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_UpdateBModelWorldBounds(LocalClientNum_t param_1,centity_s *param_2,int param_3)
 
@@ -955,8 +955,8 @@ bool AnyLocalPlayersIsWeaponLinkedToEnt(centity_s *param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_ScriptMover(LocalClientNum_t param_1,centity_s *param_2)
 
@@ -1448,8 +1448,8 @@ void CG_AddPacketFxEntity(LocalClientNum_t param_1,int param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int CG_ShouldDelayEntityPacketPostPS(LocalClientNum_t param_1,centity_s *param_2)
@@ -1682,8 +1682,8 @@ centity_s * CG_EntGetLinkToParent(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool EntPacketUpdateNeedsDelayed(LocalClientNum_t param_1,centity_s *param_2,bool param_3)
@@ -2396,8 +2396,8 @@ void CG_StartFx(LocalClientNum_t param_1,int param_2,centity_s *param_3,int para
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CG_Fx(LocalClientNum_t param_1,int param_2,centity_s *param_3)
 
@@ -2916,8 +2916,8 @@ bool CG_ExpiredLaunch(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CG_CalcEntityPhysicsPositions(LocalClientNum_t param_1,centity_s *param_2)
 
@@ -3022,8 +3022,8 @@ bool CG_AnyOtherLocalPlayersInKillCam(LocalClientNum_t param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_CreateRagdollObject(LocalClientNum_t param_1,centity_s *param_2)
@@ -3090,8 +3090,8 @@ void CG_UpdateRagdollPose(centity_s *param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_CalcEntityRagdollPositions(LocalClientNum_t param_1,centity_s *param_2)
 

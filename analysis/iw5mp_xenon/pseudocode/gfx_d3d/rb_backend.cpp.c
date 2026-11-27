@@ -295,13 +295,13 @@ void RB_DrawStretchPic(Material *param_1,float param_2,float param_3,float param
   GfxColor in_stack_0000005c;
   GfxPrimStatsTarget in_stack_00000064;
   
-  dVar8 = (double)param_6;
-  dVar9 = (double)param_7;
   dVar10 = (double)param_8;
   dVar11 = (double)param_9;
+  dVar8 = (double)param_6;
+  dVar9 = (double)param_7;
   dVar7 = (double)param_5;
-  dVar6 = (double)param_4;
   dVar5 = (double)param_3;
+  dVar6 = (double)param_4;
   dVar4 = (double)param_2;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x156,
@@ -406,9 +406,9 @@ void RB_DrawStretchPicFlipST
   dVar8 = (double)param_6;
   dVar9 = (double)param_7;
   dVar7 = (double)param_5;
+  dVar5 = (double)param_3;
   dVar6 = (double)param_4;
   dVar4 = (double)param_2;
-  dVar5 = (double)param_3;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x17a,
                     0,"%s");
@@ -505,16 +505,16 @@ void RB_DrawStretchPicRotate
   GfxColor in_stack_0000006c;
   GfxPrimStatsTarget in_stack_00000074;
   
-  dVar13 = (double)param_10;
   dVar14 = (double)param_11;
-  dVar8 = (double)param_5;
-  dVar9 = (double)param_6;
-  dVar10 = (double)param_7;
+  dVar13 = (double)param_10;
   dVar11 = (double)param_8;
   dVar12 = (double)param_9;
+  dVar9 = (double)param_6;
+  dVar10 = (double)param_7;
+  dVar8 = (double)param_5;
   dVar7 = (double)param_4;
-  dVar6 = (double)param_3;
   dVar5 = (double)param_2;
+  dVar6 = (double)param_3;
   if (gfxCmdBufSourceState.viewMode != VIEW_MODE_2D) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x19a,
                     0,"%s");
@@ -601,9 +601,9 @@ void RB_DrawFullScreenColoredQuad
   double dVar4;
   
   dVar4 = (double)param_5;
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   RB_EndSurfaceIfNeeded();
   R_Set2D(&gfxCmdBufSourceState);
   RB_DrawStretchPic(param_1,0.0,0.0,(float)(longlong)gfxCmdBufSourceState.renderTargetWidth,
@@ -655,11 +655,11 @@ void RB_SplitScreenTexCoords
   char in_stack_00000057;
   char in_stack_0000005f;
   
-  dVar8 = (double)param_4;
   dVar9 = (double)param_11;
+  dVar8 = (double)param_4;
   dVar7 = (double)param_3;
-  dVar6 = (double)param_2;
   dVar5 = (double)param_1;
+  dVar6 = (double)param_2;
   if (!param_9) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1d3,
                     0,"%s");
@@ -1071,9 +1071,9 @@ void R_ResolveAndClear_Xbox360
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
-/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ResolveAndClearFull_Xbox360
                (GfxCmdBufContext param_1,GfxImage *param_2,uchar param_3,_D3DFORMAT param_4,
@@ -1135,8 +1135,8 @@ void RB_DrawStretchPicForResolve
   
   dVar4 = (double)param_5;
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   R_SetFullViewport(&gfxCmdBufSourceState);
   R_Set2D(&gfxCmdBufSourceState);
   dVar6 = (double)(longlong)(int)(uint)param_1->height;
@@ -1342,9 +1342,9 @@ void R_ResolveSpecificDepthFull_Xbox360(GfxCmdBufContext param_1,GfxImage *param
 /* WARNING: Function: __savefpr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ResolveAndClearSection_Xbox360
                (GfxCmdBufContext param_1,GfxImage *param_2,uchar param_3,_D3DFORMAT param_4,
@@ -1363,8 +1363,8 @@ void R_ResolveAndClearSection_Xbox360
   GfxViewport in_stack_ffffff18;
   
   dVar5 = (double)param_10;
-  dVar4 = (double)param_9;
   dVar3 = (double)param_8;
+  dVar4 = (double)param_9;
   dVar2 = (double)param_6;
   _pGStack00000010 = param_1;
   if (param_2 == (GfxImage *)0x0) {
@@ -1408,9 +1408,9 @@ void R_ResolveAndClearSection_Xbox360
 
 // 8278D810  R_ResolveAndClearRenderTarget  (gfx_d3d/rb_backend.cpp:867)
 
-/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_ResolveAndClearRenderTarget
                (GfxCmdBufContext param_1,uchar param_2,_D3DFORMAT param_3,float *param_4,
@@ -1553,8 +1553,8 @@ void R_ResolveSection(GfxCmdBufContext param_1,GfxImage *param_2,float param_3,f
   
   dVar4 = (double)param_6;
   dVar3 = (double)param_5;
-  dVar2 = (double)param_4;
   dVar1 = (double)param_3;
+  dVar2 = (double)param_4;
   if (param_2 == (GfxImage *)0x0) {
     in_r7 = "image";
     in_r6 = "%s";
@@ -1701,8 +1701,8 @@ void RB_StretchPicCmdFlipST(GfxRenderCommandExecState *param_1)
 /* WARNING: Function: __savefpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_StretchPicRotateXYCmd(GfxRenderCommandExecState *param_1)
@@ -1819,8 +1819,8 @@ void RB_StretchPicRotateXYCmd(GfxRenderCommandExecState *param_1)
 /* WARNING: Function: __savefpr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_StretchPicRotateSTCmd(GfxRenderCommandExecState *param_1)
@@ -1958,8 +1958,8 @@ void RB_StretchPicRotateSTCmd(GfxRenderCommandExecState *param_1)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawQuadPicCmd(GfxRenderCommandExecState *param_1)
@@ -2054,8 +2054,8 @@ void RB_DrawQuadPicCmd(GfxRenderCommandExecState *param_1)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawQuadPicSTCmd(GfxRenderCommandExecState *param_1)
@@ -4424,8 +4424,8 @@ void R_DrawSurfs_SetupIteratorList_DrawGroupSortKey
 
 // 8279A058  R_DrawSurfs_SetupIteratorList_PrimarySortKey  (gfx_d3d/rb_backend.cpp:2187)
 
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_DrawSurfs_SetupIteratorList_PrimarySortKey(GfxDrawList *param_1,GfxSurfsIterGroup *param_2)
 
@@ -4457,8 +4457,8 @@ void R_DrawSurfs_SetupIteratorList_PrimarySortKey(GfxDrawList *param_1,GfxSurfsI
 
 // 8279A118  R_DrawSurfs_SetupIteratorList_PrimarySortKeyDepthPrepass  (gfx_d3d/rb_backend.cpp:2228)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_DrawSurfs_SetupIteratorList_PrimarySortKeyDepthPrepass
                (GfxDrawList *param_1,GfxSurfsIterGroup *param_2)
@@ -4820,8 +4820,8 @@ void R_DrawSurfs_Iterate_Sorted(GfxDrawListArgs *param_1,GfxSurfsIterGroup *para
 
 /* WARNING: Function: __savegprlr_15 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_15 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawSurfs_Iterate_SortedSpliceGroups(GfxDrawListArgs *param_1,GfxSpliceSurfs *param_2)
@@ -4916,8 +4916,8 @@ LAB_8278e930:
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawSurfs_Camera(GfxCmdBufContext param_1,GfxDrawList *param_2)
@@ -5331,8 +5331,8 @@ void R_DrawSurfs_LitTransAndDynLights_Old
 
 // 8279A458  R_DrawSurfs_SetupMerge  (gfx_d3d/rb_backend.cpp:3620)
 
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_DrawSurfs_SetupMerge(GfxBackEndData *param_1,GfxViewInfo *param_2,GfxDrawList *param_3)
 
@@ -5346,8 +5346,8 @@ void R_DrawSurfs_SetupMerge(GfxBackEndData *param_1,GfxViewInfo *param_2,GfxDraw
 
 // 8278EF58  R_DrawSurfs_LitTransAndDynLights  (gfx_d3d/rb_backend.cpp:3670)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void R_DrawSurfs_LitTransAndDynLights
                (GfxViewInfo *param_1,GfxCmdBufContext param_2,GfxDrawList *param_3)
@@ -5686,8 +5686,8 @@ void RB_BlendSavedScreenFlashedCmd(GfxRenderCommandExecState *param_1)
 
 /* WARNING: Function: __savegprlr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawPoints2D(GfxCmdDrawPoints *param_1)
@@ -5790,8 +5790,8 @@ void RB_DrawPoints2D(GfxCmdDrawPoints *param_1)
 /* WARNING: Function: __savefpr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_18 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_17 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawPoints3D(GfxCmdDrawPoints *param_1)
@@ -5948,8 +5948,8 @@ void RB_DrawPointsCmd(GfxRenderCommandExecState *param_1)
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawLines2D(int param_1,int param_2,GfxPointVertex *param_3)
@@ -6063,8 +6063,8 @@ void RB_DrawLines2D(int param_1,int param_2,GfxPointVertex *param_3)
 /* WARNING: Function: __savefpr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_18 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawLines3D(int param_1,int param_2,GfxPointVertex *param_3,bool param_4)
@@ -6657,9 +6657,9 @@ float RB_DrawHudIcon(char *param_1,float param_2,float param_3,float param_4,flo
   dVar10 = (double)param_5;
   dVar16 = (double)param_7;
   dVar11 = (double)param_8;
+  dVar14 = (double)param_3;
   dVar9 = (double)param_4;
   dVar8 = (double)param_2;
-  dVar14 = (double)param_3;
   if (param_1 == (char *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x11dc
                     ,0,"%s");
@@ -6786,12 +6786,12 @@ void RB_DrawChar(Material *param_1,float param_2,float param_3,float param_4,flo
   double dVar8;
   double dVar9;
   
+  dVar7 = (double)param_5;
   dVar8 = (double)param_6;
   dVar9 = (double)param_7;
-  dVar7 = (double)param_5;
   dVar6 = (double)param_4;
-  dVar5 = (double)param_3;
   dVar4 = (double)param_2;
+  dVar5 = (double)param_3;
   uVar3 = 9;
   bVar1 = Material_HasTechnique(param_1,TECHNIQUE_LIT);
   if (!bVar1) {
@@ -6841,8 +6841,8 @@ void RB_DrawCursor(Material *param_1,uchar param_2,float param_3,float param_4,f
   dVar8 = (double)param_9;
   dVar6 = (double)param_6;
   dVar3 = (double)param_3;
-  dVar4 = (double)param_4;
   dVar5 = (double)param_5;
+  dVar4 = (double)param_4;
   if (in_r9 == (Font_s *)0x0) {
     param_7 = (Font_s *)0x0;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp",0x1239
@@ -7269,9 +7269,9 @@ void DrawText2D(char *param_1,float param_2,float param_3,Font_s *param_4,float 
   dVar32 = (double)param_7;
   dVar33 = (double)param_8;
   dVar30 = (double)param_6;
+  dVar39 = (double)param_3;
   dVar29 = (double)param_5;
   dVar38 = (double)param_2;
-  dVar39 = (double)param_3;
   local_280 = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_backend.cpp";
   local_24c = "%s";
   fStack0000007c = param_14;
@@ -7780,8 +7780,8 @@ void RB_DrawText(char *param_1,Font_s *param_2,float param_3,float param_4,GfxCo
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
 void RB_DrawCharInSpace(Material *param_1,float *param_2,float *param_3,float *param_4,
                        Glyph *param_5,ulong param_6)

@@ -591,8 +591,8 @@ void G_GetEntityBoundsPoint
   float afStack_70 [28];
   
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game_mp\\g_utils_mp.cpp",0x183,
                     0,"%s");

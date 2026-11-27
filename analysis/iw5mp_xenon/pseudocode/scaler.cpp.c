@@ -601,8 +601,8 @@ void D3D::GenerateFilterCoefficients
   double dVar17;
   float fVar18;
   
-  dVar15 = (double)param_6;
   dVar10 = (double)param_5;
+  dVar15 = (double)param_6;
   lVar3 = (longlong)(int)param_2;
   uVar6 = (longlong)(int)param_2 * (longlong)(int)param_3;
   dVar12 = 0.0;

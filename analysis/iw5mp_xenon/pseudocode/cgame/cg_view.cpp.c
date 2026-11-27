@@ -840,9 +840,9 @@ LAB_8230b198:
 
 // 82312958  CG_CrosshairOffset  (cgame/cg_view.cpp:881)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_CrosshairOffset(LocalClientNum_t param_1,cg_s *param_2)
 
@@ -3089,9 +3089,9 @@ void CG_UpdateExplosiveKillCam
   float local_158;
   trace_t local_150 [6];
   
-  dVar28 = (double)param_3;
   dVar20 = (double)param_4;
   dVar29 = (double)param_5;
+  dVar28 = (double)param_3;
   fStack0000003c = param_6;
   pcVar9 = CG_GetLocalClientGlobals(param_1);
   if (pcVar9->inKillCam == 0) {
@@ -4713,9 +4713,9 @@ void DumpDObj(LocalClientNum_t param_1)
 
 // 82311490  ThermalScoped  (cgame/cg_view.cpp:4077)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool ThermalScoped(LocalClientNum_t param_1,cg_s *param_2)
 

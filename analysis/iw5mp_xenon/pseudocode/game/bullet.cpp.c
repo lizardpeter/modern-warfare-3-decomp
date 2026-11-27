@@ -55,8 +55,8 @@ void Bullet_Endpos(uint *param_1,float param_2,float *param_3,float *param_4,wea
   float local_70;
   float local_6c [27];
   
-  dVar6 = (double)param_6;
   dVar5 = (double)param_2;
+  dVar6 = (double)param_6;
   local_70 = param_2;
   if (((uint)param_2 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\bullet.cpp",0x43,0,"%s");
@@ -1455,9 +1455,9 @@ void Bullet_FirePenetrate
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 int Bullet_CheckSpreadFireAtPos
               (gentity_s *param_1,gentity_s *param_2,BulletFireParams *param_3,weaponParms *param_4,
@@ -1589,8 +1589,8 @@ void Bullet_SpreadFireTargets
   float local_80;
   float local_7c;
   
-  dVar6 = (double)param_3;
   dVar7 = (double)param_4;
+  dVar6 = (double)param_3;
   lVar4 = (longlong)(int)param_5;
   if (param_1 == (gentity_s *)0x0) {
     lVar4 = 0;
@@ -1823,9 +1823,9 @@ int Bullet_Fire_Internal
 
 // 824544A8  Bullet_Fire  (game/bullet.cpp:1737)
 
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 int Bullet_Fire(gentity_s *param_1,float param_2,weaponParms *param_3,gentity_s *param_4,
                PlayerHandIndex param_5,int param_6)

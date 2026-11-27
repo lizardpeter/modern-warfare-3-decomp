@@ -243,9 +243,9 @@ bool Melee_Trace(gentity_s *param_1,weaponParms *param_2,int param_3,float param
   int local_100 [8];
   trace_t local_e0 [4];
   
+  dVar9 = (double)param_5;
   dVar10 = (double)param_6;
   dVar8 = (double)param_4;
-  dVar9 = (double)param_5;
   if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_weapon.cpp",0x1de,0,
                     "%s");
@@ -403,8 +403,8 @@ Weapon_Melee_internal
   trace_t atStack_90 [2];
   
   dVar12 = (double)param_5;
-  dVar11 = (double)param_4;
   dVar10 = (double)param_3;
+  dVar11 = (double)param_4;
   if (param_1 == (gentity_s *)0x0) {
     in_r7 = "ent";
     in_r6 = (trace_t *)"%s";
@@ -488,9 +488,9 @@ Weapon_Melee_internal
 
 // 824B3788  Weapon_Melee  (game/g_weapon.cpp:708)
 
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 gentity_s *
 Weapon_Melee(gentity_s *param_1,weaponParms *param_2,float param_3,float param_4,float param_5,
@@ -505,8 +505,8 @@ Weapon_Melee(gentity_s *param_1,weaponParms *param_2,float param_3,float param_4
   AntilagClientStore AStack_200;
   
   dVar2 = (double)param_3;
-  dVar3 = (double)param_4;
   dVar4 = (double)param_5;
+  dVar3 = (double)param_4;
   G_AntiLagRewindClientPos(in_r8,&AStack_200);
   pgVar1 = Weapon_Melee_internal(param_1,param_2,(float)dVar2,(float)dVar3,(float)dVar4);
   G_AntiLag_RestoreClientPos(&AStack_200);
@@ -543,9 +543,9 @@ void gunrandom(float *param_1,float *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 gentity_s * Weapon_Throw_Grenade(gentity_s *param_1,weaponParms *param_2)
 
@@ -1435,11 +1435,11 @@ void G_FixupAttachmentOrdering(XAssetHeader *param_1,uint param_2)
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void G_SetupWeaponDef(void)
 
@@ -2244,8 +2244,8 @@ void G_AddShieldSplashDamageEvent(gentity_s *param_1,float param_2,float param_3
   double dVar2;
   uint uStack_3c;
   
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 == (gentity_s *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\game\\g_weapon.cpp",0x836,0,
                     "%s");
@@ -2266,8 +2266,8 @@ void G_AddShieldSplashDamageEvent(gentity_s *param_1,float param_2,float param_3
 
 // 824B6068  G_PlayerTurretWeapon  (game/g_weapon.cpp:2118)
 
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 Weapon G_PlayerTurretWeapon(playerState_s *param_1,LocalClientNum_t param_2)

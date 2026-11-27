@@ -233,8 +233,8 @@ void R_SetPixOrGpadPrimarySortKey(GfxCmdBufState *param_1,uint param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_SetPixOrGpadSceneLightIndex(GfxBackEndData *param_1,GfxCmdBufState *param_2,uint param_3)
@@ -394,8 +394,8 @@ void R_DrawTessTechnique(GfxCmdBufContext param_1,GfxDrawPrimArgs *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 
 void RB_SetTessTechnique(Material *param_1,MaterialTechniqueType param_2,GfxPrimStatsTarget param_3)
 

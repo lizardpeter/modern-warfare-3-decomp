@@ -217,8 +217,8 @@ void ScriptMover_SetupMove
   double dVar13;
   double dVar14;
   
-  dVar13 = (double)param_5;
   dVar14 = (double)param_4;
+  dVar13 = (double)param_5;
   dVar6 = (double)param_3;
   dVar12 = (double)(*param_2 - *in_r8);
   dVar11 = (double)(param_2[1] - in_r8[1]);
@@ -446,8 +446,8 @@ void ScriptMover_SetupMoveSpeed
   trajectory_t local_a0 [4];
   
   dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
   dVar7 = (double)param_3;
+  dVar5 = (double)param_4;
   if (param_1->trType != TR_STATIONARY) {
     BG_EvaluateTrajectory(param_1,level.time,in_r8);
   }

@@ -876,8 +876,8 @@ void UserGroups_HandleUserGroupsConfirmation
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 bool UserGroups_HandlePacket(char *param_1,LocalClientNum_t param_2,netadr_t param_3,msg_t *param_4)
 

@@ -1777,8 +1777,8 @@ void CG_DrawNetFieldString
   double dVar4;
   double dVar5;
   
-  dVar5 = (double)param_5;
   dVar4 = (double)param_4;
+  dVar5 = (double)param_5;
   dVar3 = (double)param_3;
   pSVar1 = ScrPlace_GetActivePlacement(param_1);
   pFVar2 = UI_GetFontHandle(pSVar1,0,(float)dVar5);

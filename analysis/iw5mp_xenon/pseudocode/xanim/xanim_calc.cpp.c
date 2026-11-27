@@ -1140,8 +1140,8 @@ void XAnimCalcParts<unsigned_char>
   undefined1 local_d0 [16];
   longlong local_c0;
   
-  dVar27 = (double)param_4;
   dVar29 = (double)param_3;
+  dVar27 = (double)param_4;
   uVar5 = ZEXT48(&stack0x00000000);
   pXStack00000014 = param_1;
   puStack0000001c = param_2;
@@ -2014,8 +2014,8 @@ void XAnimCalcParts<unsigned_short>
   undefined1 local_d0 [16];
   longlong local_c0;
   
-  dVar34 = (double)param_3;
   dVar32 = (double)param_4;
+  dVar34 = (double)param_3;
   uVar10 = ZEXT48(&stack0x00000000);
   local_19c = "c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xanim\\xanim_calc.cpp";
   local_1ac = "%s";

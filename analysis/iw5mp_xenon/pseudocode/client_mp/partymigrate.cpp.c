@@ -209,8 +209,8 @@ ulong64 GetOurNomineeXUID(PartyData *param_1)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_SendNomineeMsg
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4,
@@ -396,8 +396,8 @@ void PartyMigrate_TellNewHost(PartyData *param_1,PartyActiveClient *param_2,int 
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_TellNoNewHost(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -477,8 +477,8 @@ int PartyMigrate_IsGameServerHostMigration(PartyData *param_1)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_AnnounceOurNominee(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
@@ -1190,8 +1190,8 @@ void PartyMigrate_CheckNegotiationDisconnect(PartyData *param_1,PartyActiveClien
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyMigrate_SetupMigration(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -2541,8 +2541,8 @@ void PartyMigrate_CancelMigration(PartyData *param_1,PartyActiveClient *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_HandleNoMigrateMsg
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
@@ -2958,8 +2958,8 @@ void PartyMigrate_SwapHostAndClient(PartyData *param_1,uint param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_CheckBeforeContinuingToHost(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -3069,8 +3069,8 @@ void PartyMigrate_BuildSessionInfoMessage
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_BroadcastNewSessionInfo
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4,int param_5)
@@ -3174,8 +3174,8 @@ void PartyMigrate_Map(LocalClientNum_t param_1)
 
 /* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_RestartServer
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4,int param_5,
@@ -3449,8 +3449,8 @@ void PartyMigrate_To(PartyData *param_1,PartyActiveClient *param_2,int param_3,i
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_StartMigrationFromMessage
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,int param_4,int param_5)
@@ -3506,8 +3506,8 @@ void PartyMigrate_ClearExpectedNewHost(PartyData *param_1)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_SendMakeHostError(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
@@ -3756,8 +3756,8 @@ int PartyMigrate_UseLobbyHostForInactiveParty(PartyData *param_1,int *param_2)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_DetermineBestHost(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -3869,8 +3869,8 @@ void PartyMigrate_DetermineBestHost(PartyData *param_1,PartyActiveClient *param_
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyMigrate_NewHostDecided(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
@@ -3955,8 +3955,8 @@ int PartyMigrate_HostMigrationEnabled(PartyData *param_1)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyMigrate_Frame(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 

@@ -282,8 +282,8 @@ void CEMuzzleflashSet(centity_s *param_1,PlayerHandIndex param_2)
 
 // 823258D8  CEMuzzleflashIsSet  (cgame_mp/cg_local_mp.h:229)
 
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool CEMuzzleflashIsSet(centity_s *param_1,PlayerHandIndex param_2)
 
@@ -303,9 +303,9 @@ bool CEMuzzleflashIsSet(centity_s *param_1,PlayerHandIndex param_2)
 /* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void StartWeaponAnim(LocalClientNum_t param_1,Weapon param_2,PlayerHandIndex param_3,
@@ -926,8 +926,8 @@ LAB_82317bf8:
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
 
@@ -1146,8 +1146,8 @@ LAB_82318374:
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapAnimFiles_t": Some values do not have unique names */
 
 void ResetWeaponAnimTrees(LocalClientNum_t param_1,playerState_s *param_2)
@@ -1643,11 +1643,11 @@ void CheckForDefaultViewHands(Weapon param_1,WeaponDef *param_2)
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void CG_PrecacheWeaponAnimations(void)
 
@@ -2217,9 +2217,9 @@ void ChangeViewmodelDobj(LocalClientNum_t param_1,playerState_s *param_2,Weapon 
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 bool ViewmodelRocketShouldBeAttached
@@ -2294,8 +2294,8 @@ bool ViewmodelKnifeShouldBeAttached(LocalClientNum_t param_1,WeaponDef *param_2)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -2596,8 +2596,8 @@ void PlayNoteMappedSoundAliases(LocalClientNum_t param_1,char *param_2,Weapon pa
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PlayNoteMappedRumbleAliases(LocalClientNum_t param_1,char *param_2,WeaponDef *param_3)
 
@@ -3264,8 +3264,8 @@ void CG_UpdateViewModelPose(DObj *param_1,LocalClientNum_t param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CG_UpdateViewModelPoseForHand(DObj *param_1,LocalClientNum_t param_2,PlayerHandIndex param_3)
@@ -3520,9 +3520,9 @@ bool CG_BulletTrace(LocalClientNum_t param_1,BulletFireParams *param_2,WeaponDef
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool CG_SimulateBulletFire_FakeTrace
@@ -4338,8 +4338,8 @@ void CG_SimulateBulletFire_EndPos
   float local_80;
   float local_7c [31];
   
-  dVar5 = (double)param_2;
   dVar6 = (double)param_9;
+  dVar5 = (double)param_2;
   local_80 = param_2;
   if (((uint)param_2 & 0x7f800000) == 0x7f800000) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0xce3,0,
@@ -4433,8 +4433,8 @@ void CG_SimulateBulletFire_EndPos
 
 /* WARNING: Function: __savegprlr_16 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_16 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -4845,8 +4845,8 @@ LAB_82324da4:
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_AddMuzzleFlash(LocalClientNum_t param_1,centity_s *param_2,Weapon param_3,bool param_4,
@@ -4920,9 +4920,9 @@ LAB_8231c9b8:
 /* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void CG_AddPlayerWeapon(LocalClientNum_t param_1,GfxScaledPlacement *param_2,playerState_s *param_3,
@@ -6029,8 +6029,8 @@ void CG_EjectWeaponBrass(LocalClientNum_t param_1,entityState_s *param_2,int par
 
 // 82325488  TakeWeaponIfEmpty  (cgame/cg_weapons.cpp:4849)
 
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void TakeWeaponIfEmpty(LocalClientNum_t param_1,playerState_s *param_2)
@@ -6089,8 +6089,8 @@ bool CG_ClientViewLockedOnTurret(LocalClientNum_t param_1,int param_2)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_FireWeapon_AddNonPlayerWeaponFlash
@@ -6812,8 +6812,8 @@ void CG_CalcMuzzlePoint(LocalClientNum_t param_1,int param_2,uint param_3,float 
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 int CG_BulletTracer_ShouldSpawn_TrajectoryEffects
@@ -8108,8 +8108,8 @@ float CG_GetWeaponZoom(cg_s *param_1,Weapon param_2)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 Weapon CG_PlayerTurretWeapon(playerState_s *param_1,LocalClientNum_t param_2)
@@ -8329,8 +8329,8 @@ int CG_PlayerTurret_HeatOverheated(LocalClientNum_t param_1)
 /* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 bool GetIconDimsForPlayer
@@ -9378,9 +9378,9 @@ float NormalizeForMinMax(float param_1,float param_2,float param_3)
   double dVar2;
   double dVar3;
   
-  dVar1 = (double)param_1;
   dVar2 = (double)param_2;
   dVar3 = (double)param_3;
+  dVar1 = (double)param_1;
   if (dVar3 < dVar2) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_weapons.cpp",0x1e37,0
                     ,"%s");

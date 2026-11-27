@@ -539,8 +539,8 @@ void AimAssist_Setup(LocalClientNum_t param_1,playerState_s *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void AimAssist_BackupPlayerState(LocalClientNum_t param_1,playerState_s *param_2)
@@ -1143,8 +1143,8 @@ float AngleSubtract(float param_1,float param_2)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int AimAssist_GetTagPos(LocalClientNum_t param_1,centity_s *param_2,uint param_3,float *param_4)
 
@@ -1416,8 +1416,8 @@ AimAssist_GetBestTarget(AimAssistGlobals *param_1,float param_2,float param_3,fl
   double dVar6;
   double dVar7;
   
-  dVar6 = (double)param_4;
   dVar5 = (double)param_3;
+  dVar6 = (double)param_4;
   dVar7 = (double)param_2;
   if (param_1 == (AimAssistGlobals *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\aim_assist\\aim_assist.cpp",
@@ -1718,12 +1718,12 @@ void AimAssist_CalcSlowdown(AimInput *param_1,float *param_2,float *param_3)
                         aaGlobArray[LVar2].adsLerp);
     fVar13 = aaGlobArray[LVar2].tweakables.slowdownRegionHeight;
     fVar1 = aaGlobArray[LVar2].tweakables.slowdownRegionWidth;
-    dVar7 = (double)fVar1;
     dVar9 = (double)fVar13;
+    dVar7 = (double)fVar1;
     pAVar4 = AimAssist_GetBestTarget(pAVar6,fVar12,fVar1,fVar13);
     if (pAVar4 != (AimScreenTarget *)0x0) {
-      dVar8 = (double)(float)dVar7;
       dVar10 = (double)(float)dVar9;
+      dVar8 = (double)(float)dVar7;
       fVar13 = AimAssist_LerpConstDvars
                          (DAT_829b5204,aaGlobArray[LVar2].adsLerp,DAT_829b5214,(float)dVar7,
                           (float)dVar9);
@@ -2316,8 +2316,8 @@ void AimAssist_DrawCenterBox
   double dVar5;
   double dVar6;
   
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   dVar3 = (double)param_2;
   pAVar2 = param_1;
   if (param_1 == (AimAssistGlobals *)0x0) {

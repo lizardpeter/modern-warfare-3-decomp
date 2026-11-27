@@ -2052,9 +2052,9 @@ int PlaylistFeeder_GetSelectedIndex(LocalClientNum_t param_1)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PlaylistFeeder_ItemColor
                (LocalClientNum_t param_1,itemDef_t *param_2,uint param_3,float *param_4,bool param_5
@@ -2108,9 +2108,9 @@ void PlaylistFeeder_ItemColor
 
 // 825B6EA8  PlaylistFeeder_OverrideCursorPos  (ui/ui_playlists.cpp:1770)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PlaylistFeeder_OverrideCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 

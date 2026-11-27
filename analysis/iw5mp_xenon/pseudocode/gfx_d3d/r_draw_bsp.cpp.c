@@ -307,8 +307,8 @@ void R_DrawTriangles(GfxTrianglesDrawStream *param_1,GfxCmdBufPrimState *param_2
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawBspSurfsLit(GfxBspSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawListInfo *param_3,
@@ -357,8 +357,8 @@ void R_DrawBspSurfsLit(GfxBspSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawL
 
 // 82733A78  R_DrawBspSurfs  (gfx_d3d/r_draw_bsp.cpp:678)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawBspSurfs(GfxBspSurfIter *param_1,GfxCmdBufContext param_2,GfxDrawListInfo *param_3,

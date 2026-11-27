@@ -2,9 +2,9 @@
 
 // 825D15B8  Transition_RunTrigger  (ui/ui_transitions.cpp:29)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Transition_RunTrigger(UiContext *param_1,menuDef_t *param_2,int param_3)
 
@@ -121,9 +121,9 @@ float Menu_GetTransitionValue(LocalClientNum_t param_1,menuDef_t *param_2,menuTr
 
 // 825D1770  Menu_HasScaleTransition  (ui/ui_transitions.cpp:119)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Menu_HasScaleTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
@@ -138,9 +138,9 @@ bool Menu_HasScaleTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
 // 825D17F0  Menu_HasAlphaTransition  (ui/ui_transitions.cpp:126)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Menu_HasAlphaTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
@@ -155,9 +155,9 @@ bool Menu_HasAlphaTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
 // 825D1870  Menu_HasXTransition  (ui/ui_transitions.cpp:133)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Menu_HasXTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
@@ -263,9 +263,9 @@ int Transition_FindEndTime(menuTransition *param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 menuTransition * Transition_FindLongestTransition(LocalClientNum_t param_1,menuDef_t *param_2)
 
@@ -325,9 +325,9 @@ menuTransition * Transition_FindLongestTransition(LocalClientNum_t param_1,menuD
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Transition_ClearTransitions(LocalClientNum_t param_1,menuDef_t *param_2)
 
@@ -369,9 +369,9 @@ void Transition_ClearTransitions(LocalClientNum_t param_1,menuDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Transition_CloseWhenDone(LocalClientNum_t param_1,menuDef_t *param_2)
 

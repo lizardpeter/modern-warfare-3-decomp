@@ -3019,8 +3019,8 @@ bool CL_ConnectionLessPacketCmd
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool CL_ConnectionlessPacket(LocalClientNum_t param_1,netadr_t param_2,msg_t *param_3,int param_4)
 

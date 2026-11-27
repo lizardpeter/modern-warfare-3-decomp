@@ -1632,8 +1632,8 @@ void Com_ShutdownEvents(void)
 
 // 824F79A8  Com_PacketEventLoop  (qcommon/common.cpp:2636)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void Com_PacketEventLoop(LocalClientNum_t param_1,msg_t *param_2)
 

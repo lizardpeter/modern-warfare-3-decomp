@@ -121,8 +121,8 @@ void CG_StartShakeCamera(LocalClientNum_t param_1,float param_2,int param_3,floa
   undefined8 local_78;
   CameraShake local_70 [3];
   
-  dVar12 = (double)param_2;
   dVar10 = (double)param_5;
+  dVar12 = (double)param_2;
   dVar11 = 0.0;
   if (dVar12 <= 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\cgame\\cg_camerashake.cpp",0x68

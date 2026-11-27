@@ -121,8 +121,8 @@ void CG_DrawFrameOverlay(float param_1,float param_2,float param_3,float param_4
   longlong local_60;
   
   dVar6 = (double)param_4;
-  dVar5 = (double)param_3;
   dVar4 = (double)param_2;
+  dVar5 = (double)param_3;
   dVar3 = (double)param_1;
   pMVar2 = (Material *)local_70;
   pfVar1 = &local_6c;
@@ -697,8 +697,8 @@ bool CG_IsReticleTurnedOff(LocalClientNum_t param_1)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool AllowedToDrawCrosshair(LocalClientNum_t param_1,playerState_s *param_2)
 
@@ -766,8 +766,8 @@ void CG_DrawAdsAimIndicator
   int local_6c;
   longlong local_68;
   
-  dVar6 = (double)param_7;
   dVar7 = (double)param_6;
+  dVar6 = (double)param_7;
   dVar5 = (double)param_5;
   iVar2 = (int)param_3;
   if (cg_drawGun == (dvar_t *)0x0) {
@@ -908,9 +908,9 @@ void CG_DrawReticleCenter
   float local_5c;
   longlong local_58;
   
+  dVar11 = (double)param_5;
   dVar14 = (double)param_7;
   dVar12 = (double)param_6;
-  dVar11 = (double)param_5;
   iVar8 = (int)param_3;
   WVar3 = BG_GetAlternateWeapon(param_2,param_3);
   pfVar10 = &local_5c;
@@ -1106,8 +1106,8 @@ void CG_DrawReticleSides(LocalClientNum_t param_1,Weapon param_2,bool param_3,fl
   float local_84;
   
   dVar16 = (double)param_8;
-  dVar10 = (double)param_7;
   dVar9 = (double)param_6;
+  dVar10 = (double)param_7;
   dVar8 = (double)param_5;
   pfVar4 = (float *)(int)param_3;
   BG_GetSideReticle(param_2,param_3,&local_b0,&local_ac);

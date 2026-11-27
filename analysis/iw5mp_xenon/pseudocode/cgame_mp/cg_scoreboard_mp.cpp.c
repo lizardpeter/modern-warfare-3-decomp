@@ -385,9 +385,9 @@ float CG_DrawScoreboard_ListColumnHeaders
   longlong local_a8;
   longlong local_a0;
   
-  dVar10 = (double)param_3;
   dVar11 = (double)param_4;
   dVar12 = (double)param_5;
+  dVar10 = (double)param_3;
   pSVar1 = ScrPlace_GetActivePlacement(param_1);
   bVar5 = CL_IsRenderingSplitScreen();
   local_a8 = (longlong)bVar5;
@@ -747,9 +747,9 @@ void DrawListString(LocalClientNum_t param_1,char *param_2,float param_3,float p
   float fVar10;
   
   dVar9 = (double)param_8;
-  dVar5 = (double)param_3;
   dVar6 = (double)param_4;
   dVar8 = (double)param_5;
+  dVar5 = (double)param_3;
   if (param_2 != (char *)0x0) {
     pSVar2 = ScrPlace_GetActivePlacement(param_1);
     iVar3 = UI_TextWidth(param_2,0x7fffffff,in_r9,(float)dVar9);
@@ -830,8 +830,8 @@ void CG_DrawClientPing(LocalClientNum_t param_1,int param_2,float param_3,float 
   float local_64;
   
   dVar12 = (double)param_6;
-  dVar16 = (double)param_5;
   dVar13 = (double)param_4;
+  dVar16 = (double)param_5;
   dVar15 = (double)param_3;
   if (((onlinegame->current).enabled != false) || ((systemlink->current).enabled != false)) {
     pSVar4 = ScrPlace_GetActivePlacement(param_1);

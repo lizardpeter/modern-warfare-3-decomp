@@ -169,11 +169,11 @@ void CG_AddAudioPhysicsClass(PhysPreset *param_1,char (*param_2) [64],int *param
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void CG_RegisterPhysicsSounds_FastFile(void)
 

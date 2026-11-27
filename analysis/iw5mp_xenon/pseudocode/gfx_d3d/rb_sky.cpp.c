@@ -27,8 +27,8 @@ void RB_TessSunBillboard(float *param_1,float param_2,float param_3,GfxColor par
 // 827AB498  RB_DrawSunSprite  (gfx_d3d/rb_sky.cpp:42)
 
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawSunSprite(void)
@@ -60,8 +60,8 @@ void RB_DrawSunSprite(void)
 
 // 827AB598  RB_DrawSunFlareCore  (gfx_d3d/rb_sky.cpp:66)
 
-/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
+/* WARNING: Enum "GfxPrimStatsTarget": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RB_DrawSunFlareCore(float param_1,float param_2)
@@ -73,8 +73,8 @@ void RB_DrawSunFlareCore(float param_1,float param_2)
   double dVar4;
   GfxViewport aGStack_40 [2];
   
-  dVar3 = (double)param_2;
   dVar2 = (double)param_1;
+  dVar3 = (double)param_2;
   dVar4 = 0.0;
   if ((dVar2 < 0.0) || (1.0 < dVar2)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_sky.cpp",0x49,0,

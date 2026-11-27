@@ -334,8 +334,8 @@ int Party_CountTeamMembers(PartyData *param_1,int param_2)
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_SendDisconnectMessage
                (PartyActiveClient *param_1,PartyType param_2,netadr_t param_3,XNKID *param_4)
@@ -386,8 +386,8 @@ void PartyClient_SendDisconnectMessage
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_DisconnectFromHost_NoUI
                (PartyData *param_1,PartyActiveClient *param_2,char *param_3,int param_4)
@@ -455,8 +455,8 @@ void PartyClient_DisconnectFromHost_NoUI
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_DisconnectFromHost
                (PartyData *param_1,PartyActiveClient *param_2,char *param_3,int param_4,int param_5)
@@ -734,8 +734,8 @@ LAB_82365948:
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_LostConnectionToHost(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -792,8 +792,8 @@ LAB_82365a74:
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyClient_SendMessageToHost(PartyData *param_1,msg_t *param_2,PartyActiveClient *param_3)
 
@@ -883,8 +883,8 @@ int PartyClient_SendMessageToHost(PartyData *param_1,msg_t *param_2,PartyActiveC
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int PartyClient_UpdateVoiceBits(PartyActiveClient *param_1,PartyData *param_2,int param_3)
 
@@ -1893,8 +1893,8 @@ LAB_8236766c:
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_ParseMatchRulesFromPacket
                (PartyData *param_1,PartyActiveClient *param_2,int param_3,msg_t *param_4,
@@ -2001,8 +2001,8 @@ void PartyClient_ParseMatchRulesFromPacket
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_SendPartyStateAck(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -2041,8 +2041,8 @@ void PartyClient_SendPartyStateAck(PartyData *param_1,PartyActiveClient *param_2
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_DoneParsingPartyState
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3)
@@ -2368,8 +2368,8 @@ void PartyClient_MarkPacketReceived(PartyData *param_1,PartyHostDetails *param_2
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyClient_SendHeartbeatAck(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -2411,8 +2411,8 @@ int PartyClient_SendHeartbeatAck(PartyData *param_1,PartyActiveClient *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_HandleHeartbeat
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
@@ -3274,8 +3274,8 @@ void PartyAtomicClient_HandleActionResponse
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_RemoveHostPrivatePartyMembers(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -3353,8 +3353,8 @@ void PartyClient_RemoveHostPrivatePartyMembers(PartyData *param_1,PartyActiveCli
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_RemoveHostFromPrivateParty(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -3510,8 +3510,8 @@ void PartyClient_EndParty_Internal
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_HandleEndParty
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
@@ -3912,8 +3912,8 @@ int PartyClient_ProcessBackoutBits(PartyData *param_1)
 
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_VerifyPartyMemberList
                (PartyData *param_1,PartyActiveClient *param_2,ulong64 *param_3,uint param_4)
@@ -3999,8 +3999,8 @@ void PartyClient_VerifyPartyMemberList
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void PartyClient_ParsePartyStateMsg(PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3)
 
@@ -4098,8 +4098,8 @@ void PartyClient_ParsePartyStateMsg(PartyData *param_1,PartyActiveClient *param_
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyAtomicClient_CommitNewPartyState
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3)
@@ -4328,8 +4328,8 @@ void PartyClient_HandlePartyStateMsg
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int PartyClient_SendHostBackoutMessage(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -4601,8 +4601,8 @@ LAB_8236ba2c:
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_HandleDoQoS
                (PartyData *param_1,PartyActiveClient *param_2,netadr_t param_3,msg_t *param_4)
@@ -4941,8 +4941,8 @@ void PartyClient_UpdateQoSRequestHostAddr(PartyData *param_1,netadr_t param_2,ne
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_SendQoSResults(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -5275,8 +5275,8 @@ int PartyClient_ShouldKickPlayerOnBecomingHost(PartyData *param_1,uint param_2,u
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int PartyClient_BecomePartyHost(PartyData *param_1,PartyActiveClient *param_2)
 
@@ -5814,8 +5814,8 @@ int PartyClient_SendOurMemberInfo(PartyData *param_1,PartyActiveClient *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyClient_TimeOutHost(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
@@ -5869,8 +5869,8 @@ int PartyClient_TimeOutHost(PartyData *param_1,PartyActiveClient *param_2,int pa
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int PartyClient_FrameVoiceUpdateHost(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
@@ -5954,8 +5954,8 @@ void PartyClient_FrameVoiceTestPackets(PartyData *param_1,PartyActiveClient *par
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int PartyClient_ShouldShowTeams(PartyData *param_1,PartyActiveClient *param_2,int param_3)
 
@@ -6102,8 +6102,8 @@ int PartyClient_UpdateMemberInfo(PartyData *param_1,PartyActiveClient *param_2,i
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PartyClient_Frame(PartyData *param_1,PartyActiveClient *param_2)
 

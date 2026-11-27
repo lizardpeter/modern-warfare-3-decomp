@@ -165,8 +165,8 @@ void VehicleAudio_PlayBlendedSound
   double dVar8;
   double dVar9;
   
-  dVar8 = (double)param_6;
   dVar6 = (double)param_4;
+  dVar8 = (double)param_6;
   SVar4 = (SndEntHandle)param_3;
   pcVar5 = (char *)param_5;
   if (param_1 == (VehicleClient *)0x0) {
@@ -242,8 +242,8 @@ void VehicleAudio_StopSound(VehicleClient *param_1,snd_alias_list_t *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_EngineOff_Start(VehicleClient *param_1,VehicleDef *param_2)
 
@@ -272,8 +272,8 @@ void VehicleAudio_EngineOff_Start(VehicleClient *param_1,VehicleDef *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_EngineOff(VehicleClient *param_1,VehicleDef *param_2)
 
@@ -330,8 +330,8 @@ void VehicleAudio_EngineStartUp_Start(VehicleClient *param_1,VehicleDef *param_2
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleAudio_EngineStartUp(VehicleClient *param_1,VehicleDef *param_2)
 
@@ -561,8 +561,8 @@ void VehicleAudio_EngineRampUp(VehicleClient *param_1,VehicleDef *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_EngineSustain_Start(VehicleClient *param_1,VehicleDef *param_2)
 
@@ -593,8 +593,8 @@ void VehicleAudio_EngineSustain_Start(VehicleClient *param_1,VehicleDef *param_2
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_EngineSustain(VehicleClient *param_1,VehicleDef *param_2)
 
@@ -627,8 +627,8 @@ void VehicleAudio_EngineSustain(VehicleClient *param_1,VehicleDef *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_EngineRampDown_Start(VehicleClient *param_1,VehicleDef *param_2,float param_3)
 
@@ -672,8 +672,8 @@ void VehicleAudio_EngineRampDown_Start(VehicleClient *param_1,VehicleDef *param_
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_EngineRampDown(VehicleClient *param_1,VehicleDef *param_2)
 
@@ -714,8 +714,8 @@ void VehicleAudio_EngineRampDown(VehicleClient *param_1,VehicleDef *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleAudio_PlayEngineBlendSounds(VehicleClient *param_1,VehicleDef *param_2)
 
@@ -837,9 +837,9 @@ void VehicleAudio_PlaySpeedSounds(VehicleClient *param_1,VehicleDef *param_2)
 
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void VehicleAudio_PlaySurfaceSounds(centity_s *param_1,VehicleClient *param_2,VehicleDef *param_3)
 
@@ -960,9 +960,9 @@ void VehicleAudio_PlaySurfaceSounds(centity_s *param_1,VehicleClient *param_2,Ve
 /* WARNING: Function: __savefpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void VehicleAudio_PlayTurretSounds(centity_s *param_1,VehicleClient *param_2,VehicleDef *param_3)
 
@@ -1032,8 +1032,8 @@ void VehicleAudio_PlayTurretSounds(centity_s *param_1,VehicleClient *param_2,Veh
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_UpdateSounds(LocalClientNum_t param_1,centity_s *param_2,VehicleClient *param_3)
@@ -1202,8 +1202,8 @@ void VehicleAudio_CollisionEvent(LocalClientNum_t param_1,centity_s *param_2,flo
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void VehicleAudio_SuspensionEvent(LocalClientNum_t param_1,centity_s *param_2,int param_3)

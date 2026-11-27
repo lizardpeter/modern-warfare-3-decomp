@@ -136,8 +136,8 @@ void UI_DrawLoadBar(ScreenPlacement *param_1,float param_2,float param_3,float p
   
   dVar4 = (double)param_5;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
   fVar5 = DB_GetLoadedFraction();
   CL_DrawStretchPic(param_1,(float)dVar1,(float)dVar2,(float)((double)fVar5 * dVar3),(float)dVar4,
                     param_6,param_7,0.0,0.0,fVar5,1.0,param_8,in_stack_00000054);

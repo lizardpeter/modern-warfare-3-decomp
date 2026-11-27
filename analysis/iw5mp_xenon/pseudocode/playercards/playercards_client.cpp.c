@@ -90,8 +90,8 @@ void PlayerCards_BuildPlayerCardDataForUnknownPartyMember(PlayerCardData *param_
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PlayerCards_BuildPlayerCardDataFromPartyMember
                (PlayerCardData *param_1,LocalClientNum_t param_2,PartyMember *param_3)

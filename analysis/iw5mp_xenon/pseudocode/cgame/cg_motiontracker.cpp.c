@@ -1118,8 +1118,8 @@ void CG_MotionTrackerDrawSweep_InWorld
   float local_60 [24];
   
   dVar5 = (double)param_8;
-  dVar2 = (double)param_5;
   dVar4 = (double)param_4;
+  dVar2 = (double)param_5;
   dVar3 = (double)param_2;
   bVar1 = MotionTrackerGetBuffers(param_1,local_80,&local_7c);
   if ((bVar1) &&

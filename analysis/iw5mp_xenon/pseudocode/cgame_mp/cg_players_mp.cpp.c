@@ -147,8 +147,8 @@ void CG_AddPlayerSpriteDrawSurf
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_AddPlayerSpriteDrawSurfs(LocalClientNum_t param_1,centity_s *param_2)
@@ -279,8 +279,8 @@ void CG_AddAllPlayerSpriteDrawSurfs(LocalClientNum_t param_1)
 /* WARNING: Function: __savefpr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
@@ -887,8 +887,8 @@ void CG_Corpse(LocalClientNum_t param_1,centity_s *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void CG_UpdatePlayerDObj(LocalClientNum_t param_1,centity_s *param_2)
@@ -1293,8 +1293,8 @@ bool CG_IsPlayerDead(LocalClientNum_t param_1)
 
 // 822EE5A8  CG_GetPlayerClipAmmoCount  (cgame_mp/cg_players_mp.cpp:1032)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int CG_GetPlayerClipAmmoCount(LocalClientNum_t param_1,PlayerHandIndex param_2)

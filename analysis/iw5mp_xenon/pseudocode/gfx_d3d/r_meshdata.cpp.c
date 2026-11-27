@@ -90,14 +90,14 @@ void R_SetQuadMeshData(GfxMeshData *param_1,float param_2,float param_3,float pa
   double dVar11;
   ulong local_70;
   
-  dVar5 = (double)param_5;
-  dVar6 = (double)param_6;
-  dVar7 = (double)param_7;
   dVar8 = (double)param_8;
   dVar9 = (double)param_9;
+  dVar6 = (double)param_6;
+  dVar7 = (double)param_7;
+  dVar5 = (double)param_5;
   dVar11 = (double)param_4;
-  dVar4 = (double)param_3;
   dVar3 = (double)param_2;
+  dVar4 = (double)param_3;
   if (param_1 == (GfxMeshData *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x56,0
                     ,"%s");
@@ -153,14 +153,14 @@ void R_SetQuadMesh(GfxQuadMeshData *param_1,float param_2,float param_3,float pa
   double dVar7;
   double dVar8;
   
+  dVar7 = (double)param_8;
+  dVar8 = (double)param_9;
   dVar4 = (double)param_5;
   dVar5 = (double)param_6;
   dVar6 = (double)param_7;
-  dVar7 = (double)param_8;
-  dVar8 = (double)param_9;
+  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   if (param_1 == (GfxQuadMeshData *)0x0) {
     param_10 = 0x7f;
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_meshdata.cpp",0x7f,0

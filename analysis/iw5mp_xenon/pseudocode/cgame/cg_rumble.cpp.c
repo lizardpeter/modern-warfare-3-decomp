@@ -720,9 +720,9 @@ int GetRumbleInfoIndexFromName(LocalClientNum_t param_1,char *param_2)
 
 /* WARNING: Function: __savegprlr_23 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_23 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int FindClosestToDyingActiveRumble(cg_s *param_1,ActiveRumble *param_2)
 

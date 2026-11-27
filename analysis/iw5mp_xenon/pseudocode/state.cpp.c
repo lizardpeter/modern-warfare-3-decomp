@@ -227,8 +227,8 @@ void D3D::SetViewport(D3DDevice *param_1,float param_2,float param_3,float param
   
   dVar9 = (double)param_6;
   dVar10 = (double)param_7;
-  dVar8 = (double)param_3;
   dVar7 = (double)param_2;
+  dVar8 = (double)param_3;
   iVar2 = *(int *)((int)&param_1[1].m_Constants.field0_0x0 + 0x210);
   iVar4 = iVar2;
   if ((iVar2 != 0) ||

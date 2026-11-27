@@ -2234,8 +2234,8 @@ void Phys_ObjAddGeomCylinderDirection
   float local_bc;
   dMass local_a0 [2];
   
-  dVar3 = (double)param_5;
   dVar2 = (double)param_4;
+  dVar3 = (double)param_5;
   pGVar1 = (GeomState *)param_3;
   dMassSetZero(local_a0);
   if (param_2 == 0) {
@@ -2958,8 +2958,8 @@ void Phys_ObjBulletImpact
   dMass local_100;
   float afStack_b0 [44];
   
-  dVar3 = (double)param_5;
   dVar2 = (double)param_6;
+  dVar3 = (double)param_5;
   dMassSetZero(&local_100);
   if (((physInitedClient == false) && (-1 < (int)param_1)) && ((int)param_1 < 3)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x751,0,
@@ -6033,8 +6033,8 @@ void Phys_SetHingeParams(PhysWorld param_1,int param_2,float param_3,float param
   
   dVar4 = (double)param_6;
   dVar3 = (double)param_5;
-  dVar2 = (double)param_4;
   dVar1 = (double)param_3;
+  dVar2 = (double)param_4;
   if (param_2 == 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x1113,0
                     ,"%s");
@@ -6075,8 +6075,8 @@ int Phys_CreateHinge(PhysWorld param_1,int param_2,int param_3,float *param_4,fl
   
   dVar5 = (double)param_9;
   dVar4 = (double)param_8;
-  dVar3 = (double)param_7;
   dVar2 = (double)param_6;
+  dVar3 = (double)param_7;
   pdVar1 = PhysStaticArray<dxJointHinge,192>::allocate(&physGlob.hingeArray);
   if (pdVar1 == (dxJointHinge *)0x0) {
     Com_PrintWarning(0x14,"Physics: Out of hinge joints (%d max)\n");
@@ -6467,8 +6467,8 @@ void Phys_AddJitterRegion
   
   dVar8 = (double)param_6;
   dVar5 = (double)param_3;
-  dVar6 = (double)param_4;
   dVar7 = (double)param_5;
+  dVar6 = (double)param_4;
   if (PHYS_WORLD_LAST_SERVER_WORLD < param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\phys_ode.cpp",0x124e,0
                     ,"worldIndex doesn\'t index PHYS_WORLD_COUNT\n\t%i not in [0, %i)");

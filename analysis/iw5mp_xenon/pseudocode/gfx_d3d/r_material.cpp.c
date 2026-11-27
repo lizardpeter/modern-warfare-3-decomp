@@ -378,11 +378,11 @@ bool R_MaterialCompare(MaterialMemory *param_1,MaterialMemory *param_2)
 /* WARNING: Function: __savegprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_21 replaced with injection: xenon_save_restore */
 /* WARNING: Unknown calling convention -- yet parameter storage is locked */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void R_MaterialList_f(void)
 
@@ -584,11 +584,11 @@ void Material_CollateTechniqueSets(XAssetHeader param_1,void *param_2)
 
 // 82754920  Material_ForEachTechniqueSet_FastFile  (gfx_d3d/r_material.cpp:1819)
 
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void Material_ForEachTechniqueSet_FastFile(_func___cdecl_void_MaterialTechniqueSet_ptr *param_1)
 
@@ -608,11 +608,11 @@ void Material_ForEachTechniqueSet_FastFile(_func___cdecl_void_MaterialTechniqueS
 
 // 827549A0  Material_ForEachTechniqueSet  (gfx_d3d/r_material.cpp:1835)
 
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* void __cdecl Material_ForEachTechniqueSet(void (__cdecl*)(struct MaterialTechniqueSet *)) */
 
 void Material_ForEachTechniqueSet(_func_void_MaterialTechniqueSet_ptr *param_1)
@@ -653,11 +653,11 @@ void ValidMaterialCallback(XAssetHeader param_1,void *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 bool IsValidMaterialHandle(Material *param_1)
 

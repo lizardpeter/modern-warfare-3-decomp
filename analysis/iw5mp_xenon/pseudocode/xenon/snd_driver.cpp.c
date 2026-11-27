@@ -2167,9 +2167,9 @@ void XA_51_SpecificVolumeCoefficientAdjustments(float param_1,float param_2,floa
   double dVar13;
   XaVolumeCoefficients *local_a0 [40];
   
+  dVar6 = (double)param_2;
   dVar7 = (double)param_3;
   dVar5 = (double)param_1;
-  dVar6 = (double)param_2;
   dVar13 = 0.0;
   dVar11 = 1.0;
   if ((dVar5 < 0.0) || (1.0 < dVar5)) {
@@ -2538,8 +2538,8 @@ void SND_SetEqParams(int param_1,int param_2,int param_3,SND_EQTYPE param_4,floa
   double dVar3;
   double dVar4;
   
-  dVar3 = (double)param_7;
   dVar2 = (double)param_6;
+  dVar3 = (double)param_7;
   dVar1 = (double)param_5;
   if (0x3f < (uint)param_1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\xenon\\snd_driver.cpp",0x94b,0,

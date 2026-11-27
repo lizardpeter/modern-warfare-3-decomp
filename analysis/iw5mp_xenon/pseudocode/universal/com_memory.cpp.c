@@ -859,11 +859,11 @@ void Hunk_OrphanFile(void *param_1)
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 int DB_GetAllXAssetOfType(XAssetType param_1,XAssetHeader *param_2,int param_3)
 
@@ -909,11 +909,11 @@ int DB_GetAllXAssetOfType(XAssetType param_1,XAssetHeader *param_2,int param_3)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void DB_EnumXAssets(XAssetType param_1,_func___cdecl_void_XAssetHeader_void_ptr *param_2,
                    void *param_3,bool param_4)

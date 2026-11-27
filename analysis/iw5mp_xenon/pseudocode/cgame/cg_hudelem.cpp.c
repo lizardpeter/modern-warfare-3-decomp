@@ -511,8 +511,8 @@ void GetHudElemOrg(ScreenPlacement *param_1,int param_2,int param_3,float param_
   float *in_stack_00000054;
   
   dVar5 = (double)param_7;
-  dVar4 = (double)param_6;
   dVar3 = (double)param_5;
+  dVar4 = (double)param_6;
   dVar2 = (double)param_4;
   iVar1 = param_2;
   if (in_r10 == (float *)0x0) {

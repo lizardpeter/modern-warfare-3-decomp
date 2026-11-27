@@ -10,8 +10,8 @@ float MidEstPitch(float param_1,float param_2,float param_3,float param_4)
   if ((param_1 * 1.25 < param_2) || (param_2 < param_1 * 0.8)) {
     fVar1 = param_2;
     if (param_4 < param_3) {
-      param_4 = param_3;
       fVar1 = param_1;
+      param_4 = param_3;
     }
     if (((fVar1 < 30.0) && (param_4 * fVar1 * 0.5 < 1.0)) && (fVar1 = param_1, param_1 < param_2)) {
       fVar1 = param_2;

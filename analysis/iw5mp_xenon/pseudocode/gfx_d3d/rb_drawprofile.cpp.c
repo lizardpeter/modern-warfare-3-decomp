@@ -108,8 +108,8 @@ void RB_DrawProfileHistoryGraph
   double dVar19;
   double dVar20;
   
-  dVar16 = (double)param_4;
   dVar10 = (double)param_5;
+  dVar16 = (double)param_4;
   uVar2 = param_2;
   GVar3 = param_3;
   if (param_1 == (ProfileReadable *)0x0) {
@@ -212,8 +212,8 @@ void RB_DrawProfileHistoryLabel(int param_1,float param_2,float param_3)
   double dVar5;
   char acStack_a0 [160];
   
-  dVar5 = (double)param_3;
   dVar3 = (double)param_2;
+  dVar5 = (double)param_3;
   pcVar1 = *(char **)(&prof_enumNames + param_1 * 4);
   dVar4 = floor((double)(100.0 / drawProfGlob.fontWidth + 0.5));
   GVar2.packed = (int)dVar4 + 1;

@@ -41,8 +41,8 @@ void NellyAskToEnv(float *param_1,float param_2,float *param_3,float param_4,sho
   float local_180 [63];
   float local_84 [33];
   
-  dVar20 = (double)param_2;
   dVar19 = (double)param_4;
+  dVar20 = (double)param_2;
   pfVar4 = (float *)(int)param_5;
   pfVar15 = pfVar4 + 0x243;
   pfVar14 = pfVar4 + 0x202;

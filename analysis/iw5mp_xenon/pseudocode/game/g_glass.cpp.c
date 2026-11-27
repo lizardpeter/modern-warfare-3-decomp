@@ -416,8 +416,8 @@ void G_Glass_RadiusDamage
   float local_70;
   
   dVar7 = (double)param_6;
-  dVar5 = (double)param_3;
   dVar6 = (double)param_5;
+  dVar5 = (double)param_3;
   dVar9 = (double)param_2;
   if (256.0 < (double)param_2) {
     dVar9 = 256.0;

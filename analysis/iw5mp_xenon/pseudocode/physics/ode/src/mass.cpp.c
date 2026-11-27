@@ -102,14 +102,14 @@ void dMassSetParameters(dMass *param_1,float param_2,float param_3,float param_4
   
   dVar10 = (double)param_11;
   dVar9 = (double)param_10;
-  dVar5 = (double)param_6;
-  dVar6 = (double)param_7;
   dVar7 = (double)param_8;
   dVar8 = (double)param_9;
+  dVar5 = (double)param_6;
+  dVar6 = (double)param_7;
   dVar4 = (double)param_5;
   dVar1 = (double)param_2;
-  dVar2 = (double)param_3;
   dVar3 = (double)param_4;
+  dVar2 = (double)param_3;
   if (param_1 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
                     0x53,0,"%s");
@@ -180,8 +180,8 @@ void dMassSetSphereTotal(dMass *param_1,float param_2,float param_3)
   double dVar2;
   double dVar3;
   
-  dVar2 = (double)param_2;
   dVar3 = (double)param_3;
+  dVar2 = (double)param_2;
   if (param_1 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
                     0x85,0,"%s");
@@ -214,8 +214,8 @@ void dMassSetCappedCylinder(dMass *param_1,float param_2,int param_3,float param
   double dVar6;
   
   dVar5 = (double)param_5;
-  dVar4 = (double)param_4;
   dVar6 = (double)param_2;
+  dVar4 = (double)param_4;
   if (param_1 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
                     0x97,0,"%s");
@@ -297,9 +297,9 @@ void dMassSetCylinderTotal(dMass *param_1,float param_2,int param_3,float param_
   double dVar3;
   double dVar4;
   
+  dVar3 = (double)param_4;
   dVar4 = (double)param_5;
   dVar2 = (double)param_2;
-  dVar3 = (double)param_4;
   if (param_1 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
                     0xbe,0,"%s");
@@ -342,8 +342,8 @@ void dMassSetBoxTotal(dMass *param_1,float param_2,float param_3,float param_4,f
   
   dVar4 = (double)param_5;
   dVar3 = (double)param_4;
-  dVar2 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar2 = (double)param_3;
   if (param_1 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",
                     0xd8,0,"%s");
@@ -506,8 +506,8 @@ void dMassTranslate(dMass *param_1,float param_2,float param_3,float param_4)
   float local_50;
   float local_4c;
   
-  dVar6 = (double)param_4;
   dVar5 = (double)param_3;
+  dVar6 = (double)param_4;
   dVar4 = (double)param_2;
   if (param_1 == (dMass *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\mass.cpp",

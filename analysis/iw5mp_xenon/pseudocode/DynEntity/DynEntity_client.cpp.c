@@ -2844,8 +2844,8 @@ void DynEntCl_JitterEvent
   float fVar28;
   
   dVar25 = (double)param_6;
-  dVar24 = (double)param_5;
   dVar23 = (double)param_4;
+  dVar24 = (double)param_5;
   uVar10 = (ulonglong)(int)param_2;
   lVar12 = -0xa110;
   LVar5 = _RtlCheckStack12((double)param_3,param_1);
@@ -3039,27 +3039,27 @@ void DynEntCl_WakeUpAroundPlayer(LocalClientNum_t param_1)
   byte in_cr0;
   double dVar14;
   undefined1 *local_20f0 [20];
-  float fStack_20a0;
-  float fStack_209c;
-  float fStack_2098;
-  ushort auStack_2090 [4168];
+  float local_20a0;
+  float local_209c;
+  float local_2098;
+  ushort local_2090 [4168];
   
   dVar14 = (double)(phys_gravityChangeWakeupRadius->current).value;
   if (dVar14 != 0.0) {
     local_20f0[0] = (undefined1 *)register0x0000000c;
     pcVar4 = CG_GetLocalClientGlobals(param_1);
-    fStack_20a0 = (pcVar4->predictedPlayerState).origin[0];
-    fStack_209c = (pcVar4->predictedPlayerState).origin[1];
+    local_20a0 = (pcVar4->predictedPlayerState).origin[0];
+    local_209c = (pcVar4->predictedPlayerState).origin[1];
     DVar8 = DYNENT_DRAW_MODEL;
-    fStack_2098 = (pcVar4->predictedPlayerState).origin[2];
+    local_2098 = (pcVar4->predictedPlayerState).origin[2];
     puVar10 = cm.dynEntCount;
     do {
       uVar5 = DynEntCl_GetClosestEntities
-                        (DVar8,&fStack_20a0,(float)dVar14,(ushort *)in_r5,
+                        (DVar8,&local_20a0,(float)dVar14,(ushort *)in_r5,
                          (bool)((char)local_20f0 + '`'),0);
       lVar9 = (longlong)(int)uVar5;
       if (uVar5 != 0) {
-        puVar11 = auStack_2090;
+        puVar11 = local_2090;
         do {
           uVar1 = *puVar11;
           if ((uint)*puVar10 <= (uint)uVar1) {

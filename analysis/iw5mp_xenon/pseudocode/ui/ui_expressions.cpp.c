@@ -481,8 +481,8 @@ void GetStaticDvarIntVal(Statement_s *param_1,Operand *param_2,Operand *param_3)
 
 // 8258D460  GetStaticDvarFloatVal  (ui/ui_expressions.cpp:498)
 
-/* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
 
 void GetStaticDvarFloatVal(Statement_s *param_1,Operand *param_2,Operand *param_3)
 
@@ -875,9 +875,9 @@ void GetLocalVarBoolValue(LocalClientNum_t param_1,Operand *param_2,Operand *par
 
 // 8258DCB8  GetLocalVarIntValue  (ui/ui_expressions.cpp:770)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetLocalVarIntValue(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -990,9 +990,9 @@ void GetMilliseconds(Operand *param_1)
 
 // 8258DF08  GetLocalClientUIMilliseconds  (ui/ui_expressions.cpp:847)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetLocalClientUIMilliseconds(LocalClientNum_t param_1,Operand *param_2)
 
@@ -1099,9 +1099,9 @@ void GetPlayerPerk(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 
 void GetPlayerField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
@@ -1550,9 +1550,9 @@ void GetTeamMarinesField(LocalClientNum_t param_1,Operand *param_2,Operand *para
 
 // 8258EC18  GetTeamOpForField  (ui/ui_expressions.cpp:1264)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetTeamOpForField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -1564,9 +1564,9 @@ void GetTeamOpForField(LocalClientNum_t param_1,Operand *param_2,Operand *param_
 
 // 8258EC28  GetMapName  (ui/ui_expressions.cpp:1270)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetMapName(LocalClientNum_t param_1,Operand *param_2)
 
@@ -1617,9 +1617,9 @@ void GetMapVoteMapName(LocalClientNum_t param_1,Operand *param_2,Operand *param_
 
 // 8258ED40  GetMapImage  (ui/ui_expressions.cpp:1317)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetMapImage(LocalClientNum_t param_1,Operand *param_2)
 
@@ -1693,9 +1693,9 @@ void GetMapCustom(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 // 8258EEC0  GetPreviewMapCustom  (ui/ui_expressions.cpp:1378)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetPreviewMapCustom(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -1815,9 +1815,9 @@ void GetPlaylistField(LocalClientNum_t param_1,Operand *param_2,Operand *param_3
 
 // 8258F140  GetUIActive  (ui/ui_expressions.cpp:1471)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetUIActive(LocalClientNum_t param_1,Operand *param_2)
 
@@ -1860,9 +1860,9 @@ void GetFlashbanged(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258F200  GetUsingVehicle  (ui/ui_expressions.cpp:1493)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetUsingVehicle(LocalClientNum_t param_1,Operand *param_2)
 
@@ -1908,9 +1908,9 @@ void GetMissileCam(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258F2C0  GetScoped  (ui/ui_expressions.cpp:1515)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetScoped(LocalClientNum_t param_1,Operand *param_2)
 
@@ -1956,9 +1956,9 @@ void GetScopedThermal(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258F380  GetInKillcam  (ui/ui_expressions.cpp:1537)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -1981,9 +1981,9 @@ void GetInKillcam(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258F3E8  GetInKillcamNPC  (ui/ui_expressions.cpp:1551)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -2006,9 +2006,9 @@ void GetInKillcamNPC(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258F468  GetScoreboardVisible  (ui/ui_expressions.cpp:1573)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetScoreboardVisible(LocalClientNum_t param_1,Operand *param_2)
 
@@ -2048,9 +2048,9 @@ void GetIsIntermission(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258F528  GetSelectingLocation  (ui/ui_expressions.cpp:1603)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetSelectingLocation(LocalClientNum_t param_1,Operand *param_2)
 
@@ -2100,9 +2100,9 @@ void GetSelectingDirection(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258F628  GetPartyStatusString  (ui/ui_expressions.cpp:1629)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetPartyStatusString(LocalClientNum_t param_1,Operand *param_2)
@@ -2180,9 +2180,9 @@ LAB_8258f734:
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void AloneInPrivateParty(LocalClientNum_t param_1,Operand *param_2)
@@ -2302,9 +2302,9 @@ bool GetSplitScreenLocalClientNumForMenuScript
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool GetSplitScreenLocalClientNumForExpression
                (Operand *param_1,LocalClientNum_t *param_2,char *param_3)
@@ -2412,9 +2412,9 @@ void GameHost(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258FB48  IsCoopSearching  (ui/ui_expressions.cpp:1819)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsCoopSearching(LocalClientNum_t param_1,Operand *param_2)
 
@@ -2425,9 +2425,9 @@ void IsCoopSearching(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258FB50  InLobby  (ui/ui_expressions.cpp:1839)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void InLobby(LocalClientNum_t param_1,Operand *param_2)
 
@@ -2446,9 +2446,9 @@ void InLobby(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258FBB0  InGameLobby  (ui/ui_expressions.cpp:1854)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void InGameLobby(LocalClientNum_t param_1,Operand *param_2)
@@ -2490,9 +2490,9 @@ void InPrivateParty(LocalClientNum_t param_1,Operand *param_2)
 
 // 8258FC60  PrivatePartyHost  (ui/ui_expressions.cpp:1888)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void PrivatePartyHost(LocalClientNum_t param_1,Operand *param_2)
@@ -2818,9 +2818,9 @@ void GetUsingMatchRulesData(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetMatchRulesData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -3122,9 +3122,9 @@ void IsWeaponRestricted(LocalClientNum_t param_1,OperandList *param_2,Operand *p
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IncludedInMapRotation(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -3195,9 +3195,9 @@ void IncludedInMapRotation(LocalClientNum_t param_1,OperandList *param_2,Operand
 
 // 82590DA0  GetIsUsingCustomMapRotation  (ui/ui_expressions.cpp:2407)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsUsingCustomMapRotation(LocalClientNum_t param_1,Operand *param_2)
 
@@ -3522,9 +3522,9 @@ void GetSortedChallengeIndex(LocalClientNum_t param_1,OperandList *param_2,Opera
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetSortedChallengeName(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -3610,9 +3610,9 @@ void GetFilterChallengeCount(LocalClientNum_t param_1,OperandList *param_2,Opera
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetFilterChallengeLockedCount(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -3695,9 +3695,9 @@ void GetIsSortedChallengeTiered(LocalClientNum_t param_1,OperandList *param_2,Op
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetFilterChallengeCompleteCount(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -3767,9 +3767,9 @@ void GetChallengeFilterCacheCount(LocalClientNum_t param_1,Operand *param_2,Oper
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetChallengeFilterCacheCompleteCount
                (LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
@@ -3914,9 +3914,9 @@ void GetPlayerProfileDataSplitScreen(LocalClientNum_t param_1,OperandList *param
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetPlayerData(LocalClientNum_t param_1,OperandList *param_2,int param_3,Operand *param_4)
 
@@ -4012,9 +4012,9 @@ void GetPlayerData(LocalClientNum_t param_1,OperandList *param_2,int param_3,Ope
 
 // 82592220  GetPlayerDataSplitScreen  (ui/ui_expressions.cpp:3042)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetPlayerDataSplitScreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -4091,9 +4091,9 @@ void GetPlayerDataAnyBoolTrue(LocalClientNum_t param_1,OperandList *param_2,Oper
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetProfileAnyBoolTrue(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -4257,9 +4257,9 @@ void GetWeaponClassNew(LocalClientNum_t param_1,Operand *param_2,Operand *param_
 
 /* WARNING: Function: __savegprlr_26 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_26 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetUnlockedItemCount(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -4349,9 +4349,9 @@ void GetUnlockedItemCountSplitScreen(LocalClientNum_t param_1,OperandList *param
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetUnlockedItem(LocalClientNum_t param_1,OperandList *param_2,int param_3,Operand *param_4)
 
@@ -4479,9 +4479,9 @@ void GetUnlockedItem(LocalClientNum_t param_1,OperandList *param_2,int param_3,O
 
 // 82592C30  GetUnlockedItemSplitScreen  (ui/ui_expressions.cpp:3444)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetUnlockedItemSplitScreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -4527,9 +4527,9 @@ void GetLevelForExperienceMP(LocalClientNum_t param_1,Operand *param_2,Operand *
 
 // 82592D08  GetLevelForExperienceSO  (ui/ui_expressions.cpp:3478)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetLevelForExperienceSO(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -4630,9 +4630,9 @@ void GetIsItemUnlockedSplitScreen(LocalClientNum_t param_1,OperandList *param_2,
 
 // 82592EF0  GetIsItemUnlockedByClient  (ui/ui_expressions.cpp:3578)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsItemUnlockedByClient(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -4952,9 +4952,9 @@ void GetIsCardIconUnlockedSplitscreen
 
 // 825935D0  GetIsCardTitleUnlockedSplitscreen  (ui/ui_expressions.cpp:3926)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsCardTitleUnlockedSplitscreen
                (LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
@@ -5015,9 +5015,9 @@ void GetIsCardIconNewSplitscreen(LocalClientNum_t param_1,OperandList *param_2,O
 
 // 82593700  GetIsCardTitleNewSplitscreen  (ui/ui_expressions.cpp:3972)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsCardTitleNewSplitscreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -5173,9 +5173,9 @@ void GetIsProfileItemUnlockedSplitscreen
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsProfileItemNew(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,bool param_4)
 
@@ -5252,9 +5252,9 @@ void GetIsProfileItemNew(LocalClientNum_t param_1,Operand *param_2,Operand *para
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsProfileItemNewSplitscreen(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -5341,9 +5341,9 @@ void GetKeyBinding(LocalClientNum_t param_1,OperandList *param_2,Operand *param_
 
 // 82593E38  GetActionSlotUsable  (ui/ui_expressions.cpp:4267)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetActionSlotUsable(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -5510,9 +5510,9 @@ void GetMaxRecommendedPlayers(LocalClientNum_t param_1,Operand *param_2)
 
 // 825941E8  AreWeAcceptingInvite  (ui/ui_expressions.cpp:4386)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AreWeAcceptingInvite(LocalClientNum_t param_1,Operand *param_2)
 
@@ -5560,9 +5560,9 @@ void IsMenuOpen(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 // 825942D8  WritingData  (ui/ui_expressions.cpp:4415)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void WritingData(LocalClientNum_t param_1,Operand *param_2)
 
@@ -5586,9 +5586,9 @@ void WritingData(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void LogicalNot(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -5671,9 +5671,9 @@ void BitwiseNot(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void BitShiftLeft(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,Operand *param_4)
 
@@ -5696,9 +5696,9 @@ void BitShiftLeft(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,Ope
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void BitShiftRight(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,Operand *param_4)
 
@@ -5721,9 +5721,9 @@ void BitShiftRight(LocalClientNum_t param_1,Operand *param_2,Operand *param_3,Op
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetAdsJavelin(LocalClientNum_t param_1,Operand *param_2)
 
@@ -5757,9 +5757,9 @@ void GetAdsJavelin(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetWeapLockBlink(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -5797,9 +5797,9 @@ void GetWeapLockBlink(LocalClientNum_t param_1,Operand *param_2,Operand *param_3
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetWeapAttackTop(LocalClientNum_t param_1,Operand *param_2)
 
@@ -5833,9 +5833,9 @@ void GetWeapAttackTop(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetWeapAttackDirect(LocalClientNum_t param_1,Operand *param_2)
 
@@ -5905,9 +5905,9 @@ void GetWeapLocking(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetWeapLocked(LocalClientNum_t param_1,Operand *param_2)
 
@@ -5975,9 +5975,9 @@ void GetWeapLockTooClose(LocalClientNum_t param_1,Operand *param_2)
 
 // 82594AD0  GetWeapLockScreenPosX  (ui/ui_expressions.cpp:4623)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetWeapLockScreenPosX(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6017,9 +6017,9 @@ void GetWeapLockScreenPosY(LocalClientNum_t param_1,Operand *param_2)
 
 // 82594BA0  GetWeaponName  (ui/ui_expressions.cpp:4645)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetWeaponName(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6053,9 +6053,9 @@ void GetWeaponName(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsPlayerReloading(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6087,9 +6087,9 @@ void IsPlayerReloading(LocalClientNum_t param_1,Operand *param_2)
 
 // 82594D38  ExpSaveGameAvailable  (ui/ui_expressions.cpp:4675)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void ExpSaveGameAvailable(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6134,9 +6134,9 @@ void SecondsToTimeDisplay(LocalClientNum_t param_1,Operand *param_2,Operand *par
 
 // 82594EB8  SecondsToCountdownDisplay  (ui/ui_expressions.cpp:4708)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void SecondsToCountdownDisplay(LocalClientNum_t param_1,int param_2,Operand *param_3)
 
@@ -6236,9 +6236,9 @@ void GetTimeLeft(LocalClientNum_t param_1,Operand *param_2)
 
 // 825950E8  GetGameTime  (ui/ui_expressions.cpp:4772)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -6270,9 +6270,9 @@ void GetGameTime(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetGameTimeEnd(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6294,9 +6294,9 @@ void GetGameTimeEnd(LocalClientNum_t param_1,Operand *param_2)
 
 // 825951F8  GetGametypeObjective  (ui/ui_expressions.cpp:4790)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetGametypeObjective(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6527,9 +6527,9 @@ LAB_82595650:
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetMapVoteGametypeNameAbbreviated(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
@@ -6597,9 +6597,9 @@ LAB_825957c0:
 
 // 825957F0  GetGametypeInternal  (ui/ui_expressions.cpp:4994)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetGametypeInternal(LocalClientNum_t param_1,Operand *param_2)
@@ -6655,9 +6655,9 @@ LAB_825958e8:
 
 // 82595910  ConnectionInfoInternal  (ui/ui_expressions.cpp:5028)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void ConnectionInfoInternal(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6677,9 +6677,9 @@ void ConnectionInfoInternal(LocalClientNum_t param_1,Operand *param_2)
 
 // 82595970  OfflineProfileCanSave  (ui/ui_expressions.cpp:5046)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void OfflineProfileCanSave(LocalClientNum_t param_1,Operand *param_2)
 
@@ -6754,9 +6754,9 @@ void AllSplitscreenProfilesCanSave(Operand *param_1)
 
 // 82595AB0  GetScore  (ui/ui_expressions.cpp:5127)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetScore(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -6835,9 +6835,9 @@ void GetFollowing(LocalClientNum_t param_1,Operand *param_2)
 
 // 82595C30  GetSpectatingFree  (ui/ui_expressions.cpp:5187)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -6938,9 +6938,9 @@ bool OpPairsWithRightParen(operationEnum param_1)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void AddOperandToStack(LocalClientNum_t param_1,OperandStack *param_2,Operand *param_3)
 
@@ -7123,9 +7123,9 @@ void RunLogicOp(LocalClientNum_t param_1,operationEnum param_2,OperandStack *par
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void TableLookup(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -7213,9 +7213,9 @@ void TableLookupByRow(LocalClientNum_t param_1,OperandList *param_2,Operand *par
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void TableLookupRowNum(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -7884,9 +7884,9 @@ void GetPartyMissingMapPackError(Operand *param_1)
 
 // 825974F0  GetRadarIsJammed  (ui/ui_expressions.cpp:5897)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetRadarIsJammed(LocalClientNum_t param_1,Operand *param_2)
 
@@ -7934,9 +7934,9 @@ void GetRadarJamIntensity(LocalClientNum_t param_1,Operand *param_2)
 
 // 825975E8  GetRadarIsEnabled  (ui/ui_expressions.cpp:5919)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetRadarIsEnabled(LocalClientNum_t param_1,Operand *param_2)
 
@@ -7958,9 +7958,9 @@ void GetRadarIsEnabled(LocalClientNum_t param_1,Operand *param_2)
 
 // 82597648  GetIsEmpJammed  (ui/ui_expressions.cpp:5930)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsEmpJammed(LocalClientNum_t param_1,Operand *param_2)
 
@@ -7982,9 +7982,9 @@ void GetIsEmpJammed(LocalClientNum_t param_1,Operand *param_2)
 
 // 825976A8  GetPlayerADS  (ui/ui_expressions.cpp:5942)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetPlayerADS(LocalClientNum_t param_1,Operand *param_2)
 
@@ -8024,9 +8024,9 @@ void GetWeaponHeatActive(LocalClientNum_t param_1,Operand *param_2)
 
 // 82597770  GetWeaponHeatValue  (ui/ui_expressions.cpp:5970)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetWeaponHeatValue(LocalClientNum_t param_1,Operand *param_2)
 
@@ -8068,9 +8068,9 @@ void GetWeaponHeatOverheated(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -8283,9 +8283,9 @@ void GetHudSplashHasIcon(LocalClientNum_t param_1,Operand *param_2,Operand *para
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -8351,9 +8351,9 @@ itemDef_t * GetCurrentlyFocusedItem(LocalClientNum_t param_1)
 
 // 82597F30  GetFocusedItemName  (ui/ui_expressions.cpp:6222)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetFocusedItemName(LocalClientNum_t param_1,Operand *param_2)
 
@@ -8421,9 +8421,9 @@ void GetFocusedItemX(LocalClientNum_t param_1,Operand *param_2)
 
 // 82598080  GetFocusedItemY  (ui/ui_expressions.cpp:6257)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetFocusedItemY(LocalClientNum_t param_1,Operand *param_2)
 
@@ -8452,9 +8452,9 @@ void GetFocusedItemY(LocalClientNum_t param_1,Operand *param_2)
 
 // 82598118  GetFocusedItemWidth  (ui/ui_expressions.cpp:6273)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetFocusedItemWidth(LocalClientNum_t param_1,Operand *param_2)
 
@@ -8483,9 +8483,9 @@ void GetFocusedItemWidth(LocalClientNum_t param_1,Operand *param_2)
 
 // 825981B0  GetFocusedItemHeight  (ui/ui_expressions.cpp:6289)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetFocusedItemHeight(LocalClientNum_t param_1,Operand *param_2)
 
@@ -8514,9 +8514,9 @@ void GetFocusedItemHeight(LocalClientNum_t param_1,Operand *param_2)
 
 // 82598248  GetItemX  (ui/ui_expressions.cpp:6305)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetItemX(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -8568,9 +8568,9 @@ void GetItemY(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 // 82598338  GetItemWidth  (ui/ui_expressions.cpp:6337)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetItemWidth(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -8676,9 +8676,9 @@ void MenuHasFocus(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void MenuIsTopmost(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -8729,9 +8729,9 @@ void GetSaveScreenTitle(LocalClientNum_t param_1,Operand *param_2,Operand *param
 
 // 825985E8  GetSaveScreenDescription  (ui/ui_expressions.cpp:6424)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetSaveScreenDescription(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -8818,9 +8818,9 @@ void IsContentServerTaskInProgress(LocalClientNum_t param_1,Operand *param_2,Ope
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetContentServerTaskProgress(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -8870,9 +8870,9 @@ void GetContentServerTaskProgress(LocalClientNum_t param_1,Operand *param_2,Oper
 
 // 82598810  CanRenderClip  (ui/ui_expressions.cpp:6527)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CanRenderClip(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9281,9 +9281,9 @@ LAB_82599050:
 
 // 825991F0  GetIsOfflineProfileSelected  (ui/ui_expressions.cpp:6852)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsOfflineProfileSelected(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9450,9 +9450,9 @@ void VotePassed(Operand *param_1)
 
 // 82599400  IsFriendInvitable  (ui/ui_expressions.cpp:6970)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsFriendInvitable(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9470,9 +9470,9 @@ void IsFriendInvitable(LocalClientNum_t param_1,Operand *param_2)
 
 // 82599448  IsFriendJoinable  (ui/ui_expressions.cpp:6980)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsFriendJoinable(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9490,9 +9490,9 @@ void IsFriendJoinable(LocalClientNum_t param_1,Operand *param_2)
 
 // 82599490  FriendGetGamerTag  (ui/ui_expressions.cpp:6991)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FriendGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9538,9 +9538,9 @@ void RecentPlayerGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 // 82599560  LivePartyGetGamerTag  (ui/ui_expressions.cpp:7013)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void LivePartyGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9586,9 +9586,9 @@ void FacebookGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
 // 82599630  EliteClanGetGamerTag  (ui/ui_expressions.cpp:7035)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void EliteClanGetGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9633,9 +9633,9 @@ void LivePartyIsMe(LocalClientNum_t param_1,Operand *param_2)
 
 // 825996D8  LivePartyIsLocal  (ui/ui_expressions.cpp:7057)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void LivePartyIsLocal(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9688,9 +9688,9 @@ void GetIndexFromString(LocalClientNum_t param_1,Operand *param_2,Operand *param
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetStringWithoutIndex(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -9778,9 +9778,9 @@ void GetIsCoOp(LocalClientNum_t param_1,Operand *param_2)
 
 // 82599938  GetCoopShowPublicType  (ui/ui_expressions.cpp:7266)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetCoopShowPublicType(LocalClientNum_t param_1,Operand *param_2)
 
@@ -9889,9 +9889,9 @@ void GetTextWidthModCase(LocalClientNum_t param_1,OperandList *param_2,Operand *
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetTextHeight(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -9989,9 +9989,9 @@ void GetWrappedTextHeight(LocalClientNum_t param_1,OperandList *param_2,Operand 
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void TruncateTextWithEllipsis(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -10063,9 +10063,9 @@ void Select(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
 // 82599EF8  GetPrivateMatchLobbyStatus  (ui/ui_expressions.cpp:7492)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetPrivateMatchLobbyStatus(LocalClientNum_t param_1,Operand *param_2)
@@ -10120,9 +10120,9 @@ void GetPrivateMatchLobbyStatus(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetPartyStatus(LocalClientNum_t param_1,Operand *param_2)
@@ -10186,9 +10186,9 @@ void GetSearchParams(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259A178  GetIsSelectedPlayerFriend  (ui/ui_expressions.cpp:7658)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsSelectedPlayerFriend(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10230,9 +10230,9 @@ void GetIsSelectedPlayerGuest(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetIsPopupPlayerAway(LocalClientNum_t param_1,Operand *param_2)
@@ -10415,9 +10415,9 @@ LAB_8259a5a4:
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsWaitingForOnlineServices(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10478,9 +10478,9 @@ LAB_8259a718:
 
 // 8259A728  IsUserSignedInForCommerce  (ui/ui_expressions.cpp:7939)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsUserSignedInForCommerce(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10526,9 +10526,9 @@ void UserCanPlayOnline(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259A7B8  CanUserAccessOnlineVault  (ui/ui_expressions.cpp:7973)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CanUserAccessOnlineVault(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10570,9 +10570,9 @@ void CoopHasRequiredOnlineFiles(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259A850  GetNATType  (ui/ui_expressions.cpp:7993)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetNATType(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10588,9 +10588,9 @@ void GetNATType(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259A888  GetAdjustedSafeareaHorizontal  (ui/ui_expressions.cpp:8004)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetAdjustedSafeareaHorizontal(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10607,9 +10607,9 @@ void GetAdjustedSafeareaHorizontal(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259A8D0  GetAdjustedSafeareaVertical  (ui/ui_expressions.cpp:8021)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetAdjustedSafeareaVertical(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10679,9 +10679,9 @@ LAB_8259a9d8:
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
@@ -10751,9 +10751,9 @@ void GetAirburstMeters(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -10806,9 +10806,9 @@ void GetFacebookStatusText(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259AD00  IsFacebookLoggedIn  (ui/ui_expressions.cpp:8146)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsFacebookLoggedIn(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10831,9 +10831,9 @@ void IsFacebookLoggedIn(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259AD60  IsFacebookChecking  (ui/ui_expressions.cpp:8164)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsFacebookChecking(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10911,9 +10911,9 @@ void GetFacebookHelpText(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259AE90  GetFacebookMenuText  (ui/ui_expressions.cpp:8223)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetFacebookMenuText(LocalClientNum_t param_1,Operand *param_2)
 
@@ -10960,9 +10960,9 @@ void GetFacebookIsPosting(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259AF58  IsEliteClanAllowed  (ui/ui_expressions.cpp:8256)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsEliteClanAllowed(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11010,9 +11010,9 @@ void IsEntitlementsAllowed(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B018  IsUserGroupsAllowed  (ui/ui_expressions.cpp:8296)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsUserGroupsAllowed(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11035,9 +11035,9 @@ void IsUserGroupsAllowed(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B078  FacebookIsPlatformFriend  (ui/ui_expressions.cpp:8316)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FacebookIsPlatformFriend(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11060,9 +11060,9 @@ void FacebookIsPlatformFriend(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B0D8  EliteClanIsPlatformFriend  (ui/ui_expressions.cpp:8336)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void EliteClanIsPlatformFriend(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11110,9 +11110,9 @@ void MeetPlayerIsPlatformFriend(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B198  EliteClanSelectedIsMe  (ui/ui_expressions.cpp:8376)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void EliteClanSelectedIsMe(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11160,9 +11160,9 @@ void EliteClanIsMe(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B258  EliteClanIsLeader  (ui/ui_expressions.cpp:8416)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void EliteClanIsLeader(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11209,9 +11209,9 @@ void EliteClanGetName(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B320  EliteClanGetHelp  (ui/ui_expressions.cpp:8450)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void EliteClanGetHelp(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11233,9 +11233,9 @@ void EliteClanGetHelp(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B388  EliteClanGetMOTD  (ui/ui_expressions.cpp:8465)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void EliteClanGetMOTD(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11257,9 +11257,9 @@ void EliteClanGetMOTD(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B3F0  EliteClanIsMember  (ui/ui_expressions.cpp:8479)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void EliteClanIsMember(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11297,9 +11297,9 @@ void EliteClanGetIsEmblemOk(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B460  FacebookFriendsShowNext  (ui/ui_expressions.cpp:8506)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void FacebookFriendsShowNext(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11349,9 +11349,9 @@ void FacebookFriendsShowPrev(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void ShowFriendPlayerCard(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -11529,9 +11529,9 @@ void ShowSOCoopGroupIcon(LocalClientNum_t param_1,OperandList *param_2,Operand *
 
 // 8259B970  IsDemoPlaying  (ui/ui_expressions.cpp:8683)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsDemoPlaying(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11573,9 +11573,9 @@ void IsDemoFollowCamera(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259B9F0  IsDemoFreeCamera  (ui/ui_expressions.cpp:8705)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsDemoFreeCamera(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11614,9 +11614,9 @@ void IsDemoCapturingScreenshot(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259BA70  IsClipModified  (ui/ui_expressions.cpp:8727)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsClipModified(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11633,9 +11633,9 @@ void IsClipModified(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259BAB0  GetDemoSegmentCount  (ui/ui_expressions.cpp:8738)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetDemoSegmentCount(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11654,9 +11654,9 @@ void GetDemoSegmentCount(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetDemoSegmentInformation(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -11684,9 +11684,9 @@ void GetDemoSegmentInformation(LocalClientNum_t param_1,OperandList *param_2,Ope
 
 // 8259BB78  IsDemoClipRecording  (ui/ui_expressions.cpp:8775)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsDemoClipRecording(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11737,9 +11737,9 @@ void GetOnlineVaultFeederData(LocalClientNum_t param_1,OperandList *param_2,Oper
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetOnlineVaultGamerTag(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11791,9 +11791,9 @@ void GetUserGroupText(LocalClientNum_t param_1,Operand *param_2)
 
 // 8259BCB8  GetUserGroupCommonInterestTotal  (ui/ui_expressions.cpp:8844)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetUserGroupCommonInterestTotal(LocalClientNum_t param_1,Operand *param_2)
 
@@ -11811,9 +11811,9 @@ void GetUserGroupCommonInterestTotal(LocalClientNum_t param_1,Operand *param_2)
 
 /* WARNING: Function: __savegprlr_29 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_29 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void GetIsPartyHostWaitingForMembers(LocalClientNum_t param_1,Operand *param_2)
@@ -11864,9 +11864,9 @@ void UI_GetPastTitlePrestige(LocalClientNum_t param_1,Operand *param_2,Operand *
 
 // 8259BDC0  UI_GetPastTitleRank  (ui/ui_expressions.cpp:8901)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void UI_GetPastTitleRank(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -11990,9 +11990,9 @@ void PartyClientsUpToDate(int param_1,Operand *param_2)
 
 // 8259C050  GetObjectiveListHeight  (ui/ui_expressions.cpp:8992)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetObjectiveListHeight(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -12005,9 +12005,9 @@ void GetObjectiveListHeight(LocalClientNum_t param_1,OperandList *param_2,Operan
 
 // 8259C060  IsClientDemoEnabled  (ui/ui_expressions.cpp:9023)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsClientDemoEnabled(LocalClientNum_t param_1,Operand *param_2)
 
@@ -12077,9 +12077,9 @@ void EnoughStorageSpaceForClientDemo(LocalClientNum_t param_1,Operand *param_2,O
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsGuestSplitscreen(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -12152,9 +12152,9 @@ void GetSplitScreenControllerClientNum(LocalClientNum_t param_1,Operand *param_2
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void IsClientDemoEnabledSplitScreen(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -12190,9 +12190,9 @@ void IsClientDemoEnabledSplitScreen(LocalClientNum_t param_1,Operand *param_2,Op
 
 // 8259C388  GetGameInvitesCount  (ui/ui_expressions.cpp:9146)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetGameInvitesCount(LocalClientNum_t param_1,Operand *param_2)
 
@@ -12238,9 +12238,9 @@ void StripColorsFromString(LocalClientNum_t param_1,Operand *param_2,Operand *pa
 
 // 8259C448  GetIsSplitscreenGamerLiveEnabled  (ui/ui_expressions.cpp:9193)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetIsSplitscreenGamerLiveEnabled(LocalClientNum_t param_1,Operand *param_2,Operand *param_3)
 
@@ -12298,9 +12298,9 @@ void GetIsChallengePeriodic(LocalClientNum_t param_1,Operand *param_2,Operand *p
 
 /* WARNING: Function: __savegprlr_22 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_22 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void GetChallengeData(LocalClientNum_t param_1,OperandList *param_2,Operand *param_3)
 
@@ -12561,8 +12561,8 @@ void CanItemDefTakeFocus(LocalClientNum_t param_1,OperandList *param_2,Operand *
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
+/* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
@@ -14377,9 +14377,9 @@ int GetOperatorPrecedence(operationEnum param_1)
 
 /* WARNING: Function: __savegprlr_19 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_19 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void RunHigherPriorityOperators
                (LocalClientNum_t param_1,Statement_s *param_2,operationEnum param_3,
@@ -14624,9 +14624,9 @@ LAB_825a10e8:
 
 // 825A12F0  GetExpressionResultString  (ui/ui_expressions.cpp:11367)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 char * GetExpressionResultString(LocalClientNum_t param_1,Statement_s *param_2)
 
@@ -14695,9 +14695,9 @@ bool IsExpressionTrue(LocalClientNum_t param_1,Statement_s *param_2)
 
 // 825A1468  GetExpressionInt  (ui/ui_expressions.cpp:11419)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int GetExpressionInt(LocalClientNum_t param_1,Statement_s *param_2)
 
@@ -14716,9 +14716,9 @@ int GetExpressionInt(LocalClientNum_t param_1,Statement_s *param_2)
 
 // 825A14A8  GetExpressionFloat  (ui/ui_expressions.cpp:11431)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 float GetExpressionFloat(LocalClientNum_t param_1,Statement_s *param_2)
 
@@ -14737,9 +14737,9 @@ float GetExpressionFloat(LocalClientNum_t param_1,Statement_s *param_2)
 
 // 825A14F0  GetExpressionUInt64  (ui/ui_expressions.cpp:11443)
 
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 ulong64 GetExpressionUInt64(LocalClientNum_t param_1,Statement_s *param_2)
 

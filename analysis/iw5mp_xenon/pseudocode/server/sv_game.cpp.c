@@ -389,8 +389,8 @@ void * SV_Hunk_AllocAlign(int param_1,int param_2,char *param_3,int param_4)
 
 // 82571150  SV_LocateGameData  (server/sv_game.cpp:443)
 
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void SV_LocateGameData(gentity_s *param_1,int param_2,playerState_s *param_3,int param_4)
 

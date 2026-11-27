@@ -247,8 +247,8 @@ int CM_TraceSphere(TraceExtents *param_1,float *param_2,float param_3,float para
   double dVar13;
   double dVar14;
   
-  dVar4 = (double)param_3;
   dVar5 = (double)param_4;
+  dVar4 = (double)param_3;
   dVar14 = (double)(param_1->end[1] - param_1->start[1]);
   dVar13 = (double)(param_1->end[2] - param_1->start[2]);
   dVar12 = (double)(param_1->end[0] - param_1->start[0]);

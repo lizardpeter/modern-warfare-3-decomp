@@ -204,9 +204,9 @@ void RB_GetSceneDepthOfFieldEquation
   
   dVar5 = (double)param_6;
   dVar4 = (double)param_4;
+  dVar1 = (double)param_2;
   dVar3 = (double)param_3;
   dVar2 = (double)param_1;
-  dVar1 = (double)param_2;
   dVar7 = 0.0;
   if (dVar5 == 0.0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\rb_postfx.cpp",0xaa,0,
@@ -355,8 +355,8 @@ float RB_GetDepthOfFieldBlurFraction(GfxViewInfo *param_1,float param_2)
 /* WARNING: Function: __savefpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restfpr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 
 void R_SetupDepthOfFieldPostEffects(GfxCmdBufContext param_1,GfxViewInfo *param_2)
 

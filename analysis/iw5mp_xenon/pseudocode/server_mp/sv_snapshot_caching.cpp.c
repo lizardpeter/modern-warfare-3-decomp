@@ -146,8 +146,8 @@ LAB_82581438:
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 cachedSnapshot_t * SV_GetCachedSnapshotInternal(int param_1,int param_2,bool param_3)

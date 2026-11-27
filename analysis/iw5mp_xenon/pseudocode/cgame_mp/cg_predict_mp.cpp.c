@@ -42,9 +42,9 @@ void CG_ClearItemList(void)
 
 /* WARNING: Function: __savegprlr_20 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_20 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CG_BuildItemList(LocalClientNum_t param_1,snapshot_s *param_2)
 

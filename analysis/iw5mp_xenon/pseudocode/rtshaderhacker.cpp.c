@@ -2008,9 +2008,9 @@ D3D::CShaderHacker::AllocateFloatConstant
   ulong local_60 [24];
   
   dVar13 = (double)param_4;
+  dVar10 = (double)param_1;
   dVar12 = (double)param_3;
   dVar11 = (double)param_2;
-  dVar10 = (double)param_1;
   uVar6 = 0;
   lVar7 = in_r4 + 0x130;
   lVar3 = in_r4;

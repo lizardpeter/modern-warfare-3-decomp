@@ -40,8 +40,8 @@ void dRFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4
   float afStack_40 [12];
   
   dVar4 = (double)param_5;
-  dVar3 = (double)param_4;
   dVar2 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar1 = (double)param_2;
   if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
@@ -69,8 +69,8 @@ void dRFromEulerAngles(float *param_1,float param_2,float param_3,float param_4)
   double dVar6;
   double dVar7;
   
-  dVar3 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar3 = (double)param_4;
   dVar2 = (double)param_2;
   if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
@@ -129,9 +129,9 @@ void dRFrom2Axes(float *param_1,float param_2,float param_3,float param_4,float 
   dVar7 = (double)param_6;
   dVar9 = (double)param_7;
   dVar6 = (double)param_5;
+  dVar10 = (double)param_3;
   dVar11 = (double)param_4;
   dVar8 = (double)param_2;
-  dVar10 = (double)param_3;
   if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0x5f,0,"%s");
@@ -238,8 +238,8 @@ void dQFromAxisAndAngle(float *param_1,float param_2,float param_3,float param_4
   
   dVar2 = (double)param_5;
   dVar4 = (double)param_4;
-  dVar3 = (double)param_3;
   dVar1 = (double)param_2;
+  dVar3 = (double)param_3;
   if (param_1 == (float *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\physics\\ode\\src\\rotation.cpp"
                     ,0xa9,0,"%s");

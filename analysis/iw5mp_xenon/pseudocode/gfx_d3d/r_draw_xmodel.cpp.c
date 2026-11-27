@@ -592,8 +592,8 @@ void D3DTagCollection_Clear(_D3DTAGCOLLECTION *param_1,ulong param_2,ulong64 par
 /* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawXModelUnlitNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *param_2)
@@ -955,8 +955,8 @@ void R_DrawXModelUnlitNoPrepassNoGfxEnt(GfxXModelDrawStream *param_1,GfxCmdBufSt
 /* WARNING: Function: __savevmx_120 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restvmx_120 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "MaterialTechniqueType": Some values do not have unique names */
 /* WARNING: Enum "_D3DFORMAT": Some values do not have unique names */
 
 void R_DrawXModelLitNoPrepass(GfxXModelDrawStream *param_1,GfxCmdBufState *param_2)

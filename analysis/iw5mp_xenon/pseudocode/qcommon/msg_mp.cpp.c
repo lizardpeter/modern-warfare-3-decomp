@@ -1772,8 +1772,8 @@ LAB_82508340:
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 int MSG_ReadDeltaEntity(msg_t *param_1,int param_2,entityState_s *param_3,entityState_s *param_4,
                        int param_5)
@@ -1796,8 +1796,8 @@ int MSG_ReadDeltaEntity(msg_t *param_1,int param_2,entityState_s *param_3,entity
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 int MSG_ReadDeltaArchivedEntity
               (msg_t *param_1,int param_2,archivedEntity_s *param_3,archivedEntity_s *param_4,
@@ -1999,9 +1999,9 @@ void MSG_ReadDeltaHudElems
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void MSG_ReadDeltaPlayerstate

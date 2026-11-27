@@ -139,9 +139,9 @@ void Menu_SetCursorItem(LocalClientNum_t param_1,menuDef_t *param_2,int param_3)
 
 /* WARNING: Function: __savegprlr_25 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_25 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Menu_IsPrevCursorItemLeft(LocalClientNum_t param_1,menuDef_t *param_2)
 
@@ -194,9 +194,9 @@ bool Menu_IsPrevCursorItemLeft(LocalClientNum_t param_1,menuDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool Menu_IsNextCursorItemRight(LocalClientNum_t param_1,menuDef_t *param_2)
 
@@ -362,9 +362,9 @@ int Item_EnableShowViaDvar(itemDef_t *param_1,int param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_SetTextRect(LocalClientNum_t param_1,itemDef_t *param_2,rectDef_s *param_3)
 
@@ -409,9 +409,9 @@ void Item_SetTextRect(LocalClientNum_t param_1,itemDef_t *param_2,rectDef_s *par
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int Item_GetCursorPosOffset(LocalClientNum_t param_1,itemDef_t *param_2,char *param_3,int param_4)
 
@@ -467,9 +467,9 @@ int Item_GetCursorPosOffset(LocalClientNum_t param_1,itemDef_t *param_2,char *pa
 
 // 825D31A8  ListBox_HasValidCursorPos  (ui/ui_utils.cpp:309)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 bool ListBox_HasValidCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 
@@ -501,9 +501,9 @@ bool ListBox_HasValidCursorPos(LocalClientNum_t param_1,itemDef_t *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void Item_SetScreenCoords
                (LocalClientNum_t param_1,itemDef_t *param_2,float param_3,float param_4,int param_5,

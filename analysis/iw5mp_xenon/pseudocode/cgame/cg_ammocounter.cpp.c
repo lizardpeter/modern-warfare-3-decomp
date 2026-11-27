@@ -1484,8 +1484,8 @@ void CG_DrawPlayerWeaponLowAmmoWarning
   float local_d4;
   rectDef_s local_d0 [10];
   
-  dVar22 = (double)param_7;
   dVar21 = (double)param_6;
+  dVar22 = (double)param_7;
   dVar19 = (double)param_4;
   pcVar4 = CG_GetLocalClientGlobals(param_1);
   iVar6 = (pcVar4->predictedPlayerState).pm_type;

@@ -133,9 +133,9 @@ void FXIW_ProcessLooping(FxSystem *param_1,int param_2,FxEffect *param_3,ushort 
   int in_stack_fffffee8;
   int in_stack_fffffeec;
   
+  dVar7 = (double)param_13;
   dVar8 = (double)param_14;
   dVar6 = (double)param_12;
-  dVar7 = (double)param_13;
   if (param_3 == (FxEffect *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect.cpp"
                     ,0x69,0,"%s");
@@ -579,8 +579,8 @@ void FXW_SpawnTrailLoopingElems
   int in_stack_00000054;
   FxSpatialFrame local_f0 [8];
   
-  dVar15 = (double)param_12;
   dVar10 = (double)param_11;
+  dVar15 = (double)param_12;
   dVar6 = (double)param_10;
   if (param_2 == (FxEffect *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\EffectsCore\\fx_update_effect.cpp"
@@ -724,8 +724,8 @@ void FXW_UpdateEffectPartial
   int in_stack_fffffed0;
   
   dVar13 = (double)param_9;
-  dVar12 = (double)param_8;
   dVar11 = (double)param_7;
+  dVar12 = (double)param_8;
   uVar4 = (ulonglong)(int)param_10;
   param_1->numProf0PPU = param_1->numProf0PPU + 1;
   if (param_6 < param_3->msecLastUpdate) {

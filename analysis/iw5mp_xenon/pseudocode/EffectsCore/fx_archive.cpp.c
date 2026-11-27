@@ -177,11 +177,11 @@ FxElem * FX_ElemFromHandle(FxSystem *param_1,ushort param_2)
 
 // 82414570  FX_SaveEffectDefTable_FastFile  (EffectsCore/fx_archive.cpp:112)
 
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void FX_SaveEffectDefTable_FastFile(MemoryFile *param_1)
 
@@ -194,11 +194,11 @@ void FX_SaveEffectDefTable_FastFile(MemoryFile *param_1)
 // 82414588  FX_SaveEffectDefTable  (EffectsCore/fx_archive.cpp:127)
 
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void FX_SaveEffectDefTable(FxSystem *param_1,MemoryFile *param_2)
 
@@ -773,11 +773,11 @@ void FX_Restore(int param_1,MemoryFile *param_2)
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
-/* WARNING: Enum "XAssetType": Some values do not have unique names */
 /* WARNING: Enum "nodeType": Some values do not have unique names */
 /* WARNING: Enum "operationEnum": Some values do not have unique names */
 /* WARNING: Enum "expDataType": Some values do not have unique names */
 /* WARNING: Enum "weapFireType_t": Some values do not have unique names */
+/* WARNING: Enum "XAssetType": Some values do not have unique names */
 
 void FX_Save(int param_1,MemoryFile *param_2)
 

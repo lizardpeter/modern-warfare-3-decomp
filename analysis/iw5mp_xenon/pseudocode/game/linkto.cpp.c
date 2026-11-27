@@ -841,38 +841,38 @@ float CalcLerpFraction(float param_1,float param_2,float param_3,float param_4)
   
   if (0.001 < param_4) {
     fVar1 = 0.0;
-    fVar4 = (float)(longlong)level.time * 0.001 - param_1;
-    fVar5 = 2.0 / ((param_4 * 2.0 - param_2) - param_3);
-    fVar2 = fVar1;
-    fVar3 = fVar1;
-    if (param_2 <= fVar4) {
-      if (param_4 - param_3 <= fVar4) {
-        fVar2 = (param_4 - param_3) - param_2;
-        fVar3 = (fVar4 - param_2) - fVar2;
-        fVar4 = param_2;
-        if (param_3 - fVar3 < 0.0) {
-          fVar3 = param_3;
+    fVar2 = (float)(longlong)level.time * 0.001 - param_1;
+    fVar6 = 2.0 / ((param_4 * 2.0 - param_2) - param_3);
+    fVar4 = fVar1;
+    fVar5 = fVar1;
+    if (param_2 <= fVar2) {
+      if (param_4 - param_3 <= fVar2) {
+        fVar4 = (param_4 - param_3) - param_2;
+        fVar5 = (fVar2 - param_2) - fVar4;
+        fVar2 = param_2;
+        if (param_3 - fVar5 < 0.0) {
+          fVar5 = param_3;
         }
       }
       else {
-        fVar2 = fVar4 - param_2;
-        fVar4 = param_2;
+        fVar4 = fVar2 - param_2;
+        fVar2 = param_2;
       }
     }
-    fVar6 = fVar1;
+    fVar3 = fVar1;
     if (param_2 != 0.0) {
-      fVar6 = (fVar5 / param_2) * fVar4 * fVar4 * 0.5;
+      fVar3 = (fVar6 / param_2) * fVar2 * fVar2 * 0.5;
     }
-    fVar4 = fVar1;
+    fVar2 = fVar1;
     if (param_3 != 0.0) {
-      fVar4 = ((-1.0 / param_3) * fVar5 * fVar3 * 0.5 + fVar5) * fVar3;
+      fVar2 = ((-1.0 / param_3) * fVar6 * fVar5 * 0.5 + fVar6) * fVar5;
     }
-    fVar6 = fVar4 + fVar2 * fVar5 + fVar6;
+    fVar3 = fVar2 + fVar4 * fVar6 + fVar3;
     fVar2 = 1.0;
-    if (fVar6 - 1.0 < 0.0) {
-      fVar2 = fVar6;
+    if (fVar3 - 1.0 < 0.0) {
+      fVar2 = fVar3;
     }
-    if (-fVar6 < 0.0) {
+    if (-fVar3 < 0.0) {
       fVar1 = fVar2;
     }
     return fVar1;

@@ -1049,8 +1049,8 @@ int CL_Demo_ReadFooterInternalUI(void *param_1,clientDemoFooter_t *param_2,int p
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 int CL_Demo_ReadFooterInternalInGame
               (LocalClientNum_t param_1,clientConnection_t *param_2,int param_3)
@@ -1428,8 +1428,8 @@ void CL_Demo_AdjustTimeForPlayerState(int param_1,int param_2,playerState_s *par
 
 /* WARNING: Function: __savegprlr_24 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_24 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "trType_t": Some values do not have unique names */
 
 void CL_Demo_AdjustTimeForEntityState
                (LocalClientNum_t param_1,int param_2,int param_3,entityState_s *param_4)
@@ -3604,8 +3604,8 @@ int CL_Demo_GetKeyFrameTime(int param_1)
 
 /* WARNING: Function: __savegprlr replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -3914,8 +3914,8 @@ int CL_Demo_GetAdjustedTimeForConfigString(int param_1,int param_2)
 
 // 827D5118  CL_Demo_ReadConfigStrings  (client_demo/cl_demo_playback.cpp:3653)
 
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Demo_ReadConfigStrings(LocalClientNum_t param_1,msg_t *param_2)
 
@@ -3970,8 +3970,8 @@ void CL_Demo_UpdateConfigStrings(LocalClientNum_t param_1)
 
 // 827D5290  CL_Demo_WriteVisionsets  (client_demo/cl_demo_playback.cpp:3715)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -3992,8 +3992,8 @@ void CL_Demo_WriteVisionsets(LocalClientNum_t param_1,msg_t *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 
@@ -4055,8 +4055,8 @@ void CL_Demo_ReadVisionsets(LocalClientNum_t param_1,msg_t *param_2)
 
 // 827D5450  CL_Demo_WriteBlur  (client_demo/cl_demo_playback.cpp:3778)
 
-/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 /* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
+/* WARNING: Enum "netsrc_t": Some values do not have unique names */
 
 void CL_Demo_WriteBlur(LocalClientNum_t param_1,msg_t *param_2)
 
@@ -4148,8 +4148,8 @@ void CL_Demo_WriteScores(LocalClientNum_t param_1,msg_t *param_2)
 
 /* WARNING: Function: __savegprlr_27 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_27 replaced with injection: xenon_save_restore */
-/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 /* WARNING: Enum "netsrc_t": Some values do not have unique names */
+/* WARNING: Enum "LocalClientNum_t": Some values do not have unique names */
 
 void CL_Demo_ReadScores(LocalClientNum_t param_1,msg_t *param_2)
 

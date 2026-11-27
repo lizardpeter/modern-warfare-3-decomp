@@ -30,19 +30,29 @@ Function inventory pending.
 
 | status | functions | reached |
 |---|---:|---|
-| located | 110 | ████████████████████ 100.00% |
-| named | 1,312 | ████████████████████ 99.63% |
-| typed | 28,517 | ███████████████████░ 95.25% |
+| located | 242 | ████████████████████ 100.00% |
+| named | 1,312 | ████████████████████ 99.20% |
+| typed | 28,517 | ███████████████████░ 94.83% |
 | decompiled | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 | compiles | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 | matches | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 | integrated | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
 
-29,939 functions known. Reconstructed (decompiled or better): 0.
+30,071 functions known. Reconstructed (decompiled or better): 0.
 
 ## iw5mp_xenon_ship
 
-Function inventory pending.
+| status | functions | reached |
+|---|---:|---|
+| located | 241 | ████████████████████ 100.00% |
+| named | 1,263 | ████████████████████ 99.08% |
+| typed | 24,735 | ███████████████████░ 94.27% |
+| decompiled | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
+| compiles | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
+| matches | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
+| integrated | 0 | ░░░░░░░░░░░░░░░░░░░░ 0.00% |
+
+26,239 functions known. Reconstructed (decompiled or better): 0.
 
 ## iw5mp_xenon_fast_server
 

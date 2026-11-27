@@ -1480,8 +1480,8 @@ void FlashbangBlastEnt(gentity_s *param_1,float *param_2,float param_3,float par
   float local_5c;
   float local_58;
   
-  dVar3 = (double)param_4;
   dVar6 = (double)param_3;
+  dVar3 = (double)param_4;
   if ((param_1->client != (gclient_s *)0x0) && (param_1->takedamage != '\0')) {
     fVar7 = EntDistToPoint(param_2,param_1);
     dVar2 = (double)fVar7;
@@ -1669,8 +1669,8 @@ int G_RadiusDamage(float *param_1,gentity_s *param_2,gentity_s *param_3,float pa
   longlong local_2118;
   
   dVar15 = (double)param_7;
-  dVar13 = (double)param_4;
   dVar14 = (double)param_5;
+  dVar13 = (double)param_4;
   uVar3 = ZEXT48(&stack0x00000000);
   if (param_3 == (gentity_s *)0x0) {
     return 0;

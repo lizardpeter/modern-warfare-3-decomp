@@ -1735,14 +1735,14 @@ void R_AddCmdDrawStretchPic
   float *in_stack_00000054;
   Material *in_stack_0000005c;
   
-  dVar10 = (double)param_5;
-  dVar11 = (double)param_6;
   dVar12 = (double)param_7;
   dVar13 = (double)param_8;
+  dVar10 = (double)param_5;
+  dVar11 = (double)param_6;
   dVar9 = (double)param_4;
   dVar6 = (double)param_1;
-  dVar7 = (double)param_2;
   dVar8 = (double)param_3;
+  dVar7 = (double)param_2;
   pMVar1 = rgp.defaultMaterial;
   if (in_stack_0000005c != (Material *)0x0) {
     pMVar1 = Material_FromHandle(in_stack_0000005c);
@@ -1824,13 +1824,13 @@ void R_AddCmdDrawStretchPicFlipST
   float *in_stack_00000054;
   Material *in_stack_0000005c;
   
-  dVar10 = (double)param_5;
-  dVar11 = (double)param_6;
   dVar12 = (double)param_7;
   dVar13 = (double)param_8;
+  dVar10 = (double)param_5;
+  dVar11 = (double)param_6;
   dVar9 = (double)param_4;
-  dVar8 = (double)param_3;
   dVar7 = (double)param_2;
+  dVar8 = (double)param_3;
   dVar6 = (double)param_1;
   pMVar1 = rgp.defaultMaterial;
   if (in_stack_0000005c != (Material *)0x0) {
@@ -1915,9 +1915,9 @@ void R_AddCmdDrawStretchPicRotateXY
   dVar7 = (double)param_5;
   dVar8 = (double)param_6;
   dVar6 = (double)param_4;
+  dVar4 = (double)param_2;
   dVar5 = (double)param_3;
   dVar3 = (double)param_1;
-  dVar4 = (double)param_2;
   pvVar1 = R_GetCommandBuffer(RC_STRETCH_PIC_ROTATE_XY,0x30);
   if (pvVar1 != (void *)0x0) {
     pMVar2 = rgp.defaultMaterial;
@@ -1973,18 +1973,18 @@ void R_AddCmdDrawStretchPicRotateST
   Material *in_stack_00000084;
   
   dVar15 = (double)param_13;
-  dVar11 = (double)param_9;
-  dVar12 = (double)param_10;
-  dVar13 = (double)param_11;
   dVar14 = (double)param_12;
-  dVar6 = (double)param_4;
-  dVar7 = (double)param_5;
-  dVar8 = (double)param_6;
+  dVar13 = (double)param_11;
+  dVar12 = (double)param_10;
+  dVar11 = (double)param_9;
   dVar9 = (double)param_7;
   dVar10 = (double)param_8;
+  dVar7 = (double)param_5;
+  dVar8 = (double)param_6;
+  dVar6 = (double)param_4;
   dVar5 = (double)param_3;
-  dVar4 = (double)param_2;
   dVar3 = (double)param_1;
+  dVar4 = (double)param_2;
   pvVar1 = R_GetCommandBuffer(RC_STRETCH_PIC_ROTATE_ST,0x40);
   if (pvVar1 != (void *)0x0) {
     pMVar2 = rgp.defaultMaterial;
@@ -2070,11 +2070,11 @@ AddBaseDrawTextCmd(char *param_1,int param_2,Font_s *param_3,float param_4,float
   int in_stack_00000064;
   char in_stack_0000006f;
   
-  dVar9 = (double)param_8;
   dVar8 = (double)param_7;
+  dVar9 = (double)param_8;
   dVar7 = (double)param_6;
-  dVar6 = (double)param_5;
   dVar5 = (double)param_4;
+  dVar6 = (double)param_5;
   if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7f9,0,"%s");
@@ -2233,11 +2233,11 @@ void R_AddCmdDrawText(char *param_1,int param_2,Font_s *param_3,float param_4,fl
   float *in_stack_00000054;
   int in_stack_0000005c;
   
-  dVar8 = (double)param_7;
   dVar9 = (double)param_8;
+  dVar8 = (double)param_7;
   dVar7 = (double)param_6;
-  dVar6 = (double)param_5;
   dVar5 = (double)param_4;
+  dVar6 = (double)param_5;
   if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7f9,0,"%s");
@@ -2336,9 +2336,9 @@ void R_AddCmdDrawTextSubtitle
   
   dVar8 = (double)param_7;
   dVar9 = (double)param_8;
+  dVar6 = (double)param_5;
   dVar7 = (double)param_6;
   dVar5 = (double)param_4;
-  dVar6 = (double)param_5;
   if (param_2 < 1) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x7f9,0,"%s");
@@ -2450,11 +2450,11 @@ void R_AddCmdDrawTextWithEffects
   int in_stack_0000008c;
   int in_stack_00000094;
   
-  dVar12 = (double)param_8;
   dVar11 = (double)param_7;
+  dVar12 = (double)param_8;
   dVar10 = (double)param_6;
-  dVar9 = (double)param_5;
   dVar8 = (double)param_4;
+  dVar9 = (double)param_5;
   pMVar2 = rgp.defaultMaterial;
   if (in_stack_0000006c != (Material *)0x0) {
     pMVar2 = Material_FromHandle(in_stack_0000006c);
@@ -2667,9 +2667,9 @@ AddBaseDrawConsoleTextCmd
   int in_stack_00000064;
   
   dVar6 = (double)param_9;
+  dVar4 = (double)param_7;
   dVar5 = (double)param_8;
   dVar3 = (double)param_6;
-  dVar4 = (double)param_7;
   if (param_4 < 0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0x8d4,0,"%s");
@@ -2789,8 +2789,8 @@ void R_AddCmdDrawConsoleTextPulseFX
   
   dVar8 = (double)param_9;
   dVar7 = (double)param_8;
-  dVar6 = (double)param_7;
   dVar5 = (double)param_6;
+  dVar6 = (double)param_7;
   pMVar1 = rgp.defaultMaterial;
   if (in_stack_00000094 != (Material *)0x0) {
     pMVar1 = Material_FromHandle(in_stack_00000094);
@@ -2903,8 +2903,8 @@ void R_AddCmdDrawQuadPicST
   double dVar6;
   
   dVar6 = (double)param_5;
-  dVar5 = (double)param_4;
   dVar4 = (double)param_3;
+  dVar5 = (double)param_4;
   dVar3 = (double)param_2;
   pvVar1 = R_GetCommandBuffer(RC_DRAW_QUAD_PIC_ST,0x3c);
   if (pvVar1 != (void *)0x0) {
@@ -2954,9 +2954,9 @@ void R_AddCmdDrawFullScreenColoredQuad
   double dVar6;
   
   dVar6 = (double)param_4;
+  dVar4 = (double)param_2;
   dVar5 = (double)param_3;
   dVar3 = (double)param_1;
-  dVar4 = (double)param_2;
   pvVar1 = R_GetCommandBuffer(RC_DRAW_FULL_SCREEN_COLORED_QUAD,0x1c);
   if (pvVar1 != (void *)0x0) {
     pMVar2 = rgp.defaultMaterial;
@@ -3533,8 +3533,8 @@ void R_AddCmdSaveScreenSection(float param_1,float param_2,float param_3,float p
   
   dVar5 = (double)param_4;
   dVar2 = (double)param_1;
-  dVar3 = (double)param_2;
   dVar4 = (double)param_3;
+  dVar3 = (double)param_2;
   if ((in_r7 < 0) || (3 < in_r7)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
                     0xb8d,0,"screenTimerId not in [0, 3]\n\t%i not in [%i, %i]");
@@ -3571,8 +3571,8 @@ void R_AddCmdBlendSavedScreenShockBlurred
   double dVar5;
   
   dVar5 = (double)param_5;
-  dVar4 = (double)param_4;
   dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
   dVar2 = (double)param_2;
   if ((in_r8 < 0) || (3 < in_r8)) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\gfx_d3d\\r_rendercmds.cpp",
@@ -3612,9 +3612,9 @@ void R_AddCmdBlendSavedScreenShockFlashed
   dVar6 = (double)param_5;
   dVar7 = (double)param_6;
   dVar5 = (double)param_4;
+  dVar3 = (double)param_2;
   dVar4 = (double)param_3;
   dVar2 = (double)param_1;
-  dVar3 = (double)param_2;
   pvVar1 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_FLASHED,0x20);
   if (pvVar1 != (void *)0x0) {
     *(float *)((int)pvVar1 + 8) = (float)dVar2;
@@ -3646,8 +3646,8 @@ void R_AddCmdRestoreSavedScreen(float param_1,float param_2,float param_3,float 
   
   dVar5 = (double)param_4;
   dVar4 = (double)param_3;
-  dVar3 = (double)param_2;
   dVar2 = (double)param_1;
+  dVar3 = (double)param_2;
   pvVar1 = R_GetCommandBuffer(RC_BLEND_SAVED_SCREEN_FLASHED,0x20);
   if (pvVar1 != (void *)0x0) {
     *(float *)((int)pvVar1 + 0x10) = (float)dVar2;
@@ -3908,8 +3908,8 @@ void R_AddCmdSetCodeConstant(uint param_1,float param_2,float param_3,float para
   double dVar5;
   
   dVar5 = (double)param_5;
-  dVar4 = (double)param_4;
   dVar3 = (double)param_3;
+  dVar4 = (double)param_4;
   dVar2 = (double)param_2;
   pvVar1 = R_GetCommandBuffer(RC_SET_CODE_CONSTANT,0x18);
   if (pvVar1 != (void *)0x0) {

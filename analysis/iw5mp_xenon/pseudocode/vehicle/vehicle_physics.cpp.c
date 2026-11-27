@@ -100,8 +100,8 @@ void Vehicle_MoveToLookAhead
   
   dVar14 = (double)param_6;
   dVar16 = (double)param_3;
-  dVar12 = (double)param_4;
   dVar13 = (double)param_5;
+  dVar12 = (double)param_4;
   if (param_1 == (Vehicle *)0x0) {
     MyAssertHandler("c:\\trees\\iw5build4-iw\\iw5\\code_source\\src\\vehicle\\vehicle_physics.cpp",
                     0x3c,0,"%s");
@@ -349,9 +349,9 @@ void Vehicle_TankLerpSteering(Vehicle *param_1,VehicleDef *param_2,float param_3
 
 /* WARNING: Function: __savegprlr_28 replaced with injection: xenon_save_restore */
 /* WARNING: Function: __restgprlr_28 replaced with injection: xenon_save_restore */
+/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 /* WARNING: Enum "trType_t": Some values do not have unique names */
 /* WARNING: Enum "PlayerHandIndex": Some values do not have unique names */
-/* WARNING: Enum "weapFireType_t": Some values do not have unique names */
 
 void Vehicle_LerpSteering(Vehicle *param_1,VehicleDef *param_2,float param_3)
 
