@@ -46,6 +46,8 @@ typedef struct tagRECT
 #define MK_LBUTTON 0x0001
 
 WINUSERAPI BOOL WINAPI GetWindowRect(HWND hWnd, LPRECT lpRect);
+WINUSERAPI BOOL WINAPI GetClientRect(HWND hWnd, LPRECT lpRect);
+WINUSERAPI BOOL WINAPI ClipCursor(const RECT *lpRect);
 WINUSERAPI BOOL WINAPI GetCursorPos(LPPOINT lpPoint);
 WINUSERAPI BOOL WINAPI SetCursorPos(int X, int Y);
 WINUSERAPI HWND WINAPI GetForegroundWindow(void);

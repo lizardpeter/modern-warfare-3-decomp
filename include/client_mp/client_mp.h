@@ -93,16 +93,64 @@ inline clientActive_t *CL_GetLocalClientGlobals(LocalClientNum_t localClientNum)
 }
 
 // clientStatic_t at its Store offsets: the reference's without devGuiStarted (Com_Error tests uiStarted at +0x114).
+// vidConfig: IN_Frame scales the cursor's client position by displayWidth / displayHeight (+0x188/+0x18C, the
+// reference vidConfig_t's offsets +8/+0xC from +0x180) over two fields the reference's vidConfig_t doesn't have at
+// +0x1C/+0x20 (isFullscreen, aspectRatioWindow there): the PC layout differs, and their names are inferred.
 struct clientStatic_t
 {
 	char unknown0[0x114];
 	int uiStarted;
 	int frametime;
+	char unknown11C[0x188 - 0x11C];
+	int displayWidth;    // vidConfig.displayWidth (signed here: IN_Frame scales with imul / idiv)
+	int displayHeight;   // vidConfig.displayHeight
+	char unknown190[0x19C - 0x190];
+	int windowWidth;     // inferred: the window's client width the cursor position is given in
+	int windowHeight;    // inferred
 };
+static_assert(__builtin_offsetof(clientStatic_t, displayWidth) == 0x188, "clientStatic_t::vidConfig (Store layout)");
+static_assert(__builtin_offsetof(clientStatic_t, windowWidth) == 0x19C, "clientStatic_t::vidConfig (Store layout)");
 static_assert(__builtin_offsetof(clientStatic_t, frametime) == 0x118, "clientStatic_t::frametime (Store layout)");
 extern clientStatic_t cls;
 
 extern unsigned int frame_msec;  // client_mp/cl_main_mp.cpp
+
+// clientUIActive_t: the fields the mouse code reads, at the reference's offsets (no pointers before them).
+enum connstate_t
+{
+	CA_DISCONNECTED = 0,
+	CA_CINEMATIC = 1,
+	CA_LOADING = 8,
+	CA_PRIMED = 9,
+	CA_ACTIVE = 10,
+};
+struct clientUIActive_t
+{
+	char unknown0[0x54];
+	int keyCatchers;
+	bool displayHUDWithKeycatchUI;
+	connstate_t connectionState;
+};
+static_assert(__builtin_offsetof(clientUIActive_t, connectionState) == 0x5C, "clientUIActive_t::connectionState");
+extern clientUIActive_t clientUIActives[1];
+#define KEYCATCH_UI 0x10
+
+extern const dvar_t *cl_bypassMouseInput;
+
+// ui_mp/ui_main_mp.cpp
+enum uiMenuCommand_t
+{
+	UIMENU_NONE = 0,
+	UIMENU_SCOREBOARD = 6,
+};
+uiMenuCommand_t UI_GetActiveMenu(LocalClientNum_t localClientNum);
+void UI_MouseEvent(LocalClientNum_t localClientNum, int x, int y);
+
+// PC-only helpers without an original name (Store addresses)
+bool sub_1400C42A0(LocalClientNum_t localClientNum);  // a demo is playing and one of its menus is open
+void sub_1400C7DA0(int clip);                         // ClipCursor to the window's client area, or none
+
+bool CL_MouseEvent(int x, int y, int dx, int dy);
 
 extern const dvar_t *m_filter;
 extern const dvar_t *cl_mouseAccel;

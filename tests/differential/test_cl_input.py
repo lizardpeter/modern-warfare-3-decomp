@@ -127,3 +127,49 @@ CASES = [
                "CG_GetAirburstMarkDistance": airburst},
      "observe": {"CL_Demo_IsPlaying": "i", "CG_GetAirburstMarkDistance": "iqi"}},  # the 4th: a stack local
 ]
+
+
+# -- CL_MouseEvent (the PC layer) ---------------------------------------------------------------------------------
+
+from win32 import HWND, Desktop  # noqa: E402
+
+DESKTOP = Desktop()
+G_WV = 0x148A8D6D0
+CLIENT_UI = 0x140E1EB90
+BYPASS = 0x140E1A680
+
+
+def mouse_event_setup(catchers, state, bypass, menu, demo_menu, index, dx0, dy0, foreground):
+    # every random choice is made here, once: the setup runs before each side's call and must give both the same
+    cursor = (rng.randrange(-50, 2000), rng.randrange(-50, 1200))
+
+    def run(w):
+        DESKTOP.reset(foreground=foreground, cursor=cursor)
+        STATE.update(menu=menu, demo_menu=demo_menu)
+        w.ptr(G_WV + 0x10, HWND)
+        w.u32(CLIENT_UI + 0x54, catchers)
+        w.u32(CLIENT_UI + 0x5C, state)
+        w.ptr(BYPASS, w.alloc(dvar_bytes(bypass)))
+        w.write(CLIENTS + 0x3420, struct.pack("<2i2ii", dx0, -dx0, dy0, 3, index))
+    return run
+
+
+def mouse_event_inputs():
+    out = []
+    for catchers in (0, 0x10, 0x11, 0x01):
+        for state in (0, 1, 5, 8, 9, 10, 11, -1):
+            for menu, demo_menu in ((0, False), (6, False), (6, True), (2, False)):
+                for bypass in (False, True):
+                    dx, dy = rng.choice(((0, 0), (5, -3), (-2**31, 2**31 - 1), (1, 0)))
+                    out.append({"args": [rng.randrange(-100, 1400), rng.randrange(-100, 800), dx, dy],
+                                "setup": mouse_event_setup(catchers, state, bypass, menu, demo_menu, rng.randrange(2),
+                                                           rng.randrange(-5, 5), rng.randrange(-5, 5), HWND)})
+    return out
+
+
+CASES += [
+    {"name": "CL_MouseEvent", "ret": "bool", "inputs": mouse_event_inputs(), "imports": DESKTOP.models(),
+     "fakes": {"sub_1400C42A0": lambda mu: STATE["demo_menu"], "UI_GetActiveMenu": lambda mu: STATE["menu"],
+               "UI_MouseEvent": lambda mu: None},
+     "observe": {"sub_1400C42A0": "i", "UI_GetActiveMenu": "i", "UI_MouseEvent": "iii"}},
+]

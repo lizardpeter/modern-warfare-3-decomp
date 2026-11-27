@@ -59,6 +59,17 @@ clamp it. Written as `cap < mx ? cap : mx` and `-cap > capped ? -cap : capped`, 
 Pass stack addresses out of `observe` signatures: a callee's pointer to the caller's local differs between the two
 builds' frames.
 
+Fourth: the PC mouse layer, `src/win32/win_input.cpp` (`IN_Frame` with `IN_MouseMove` inlined,
+`IN_RecenterMouse`, `IN_ShowSystemCursor`) and `CL_MouseEvent`, on a model desktop (`tests/differential/win32.py`):
+one window, the cursor, the foreground window and ShowCursor's count; every user32 call is recorded with its
+arguments, so both sides must make the same calls in the same order. With this the Store's whole mouse path is
+reconstructed and matches (docs/store-build.md, Mouse input). Pitfalls met on the way, each a test bug, not a
+reconstruction bug:
+- make every random choice when the input is built, never in its setup: the setup runs before each side's call;
+- observe a string argument as `s` and a callee's pointer to the caller's local not at all: the two builds' literals
+  and frames are at different addresses;
+- models do 32-bit arithmetic where Windows does (a cursor at the int limits wraps).
+
 Reconstruct in the reference's original order: each function tagged `// <reference VA>  <file>:<line>` with the
 Store VA once identified. Control flow follows the reference; where the Store build differs (13 years of patches,
 the PC platform layer), the Store build is the truth.

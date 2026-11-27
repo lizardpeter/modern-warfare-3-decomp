@@ -6,6 +6,9 @@
 #include <iw5_assert.h>
 #include <math.h>
 #include <string.h>
+#include <windows.h>
+
+#include "win32/win_local.h"
 
 #include "client_mp/client_mp.h"
 
@@ -130,4 +133,52 @@ void CL_MouseMove(LocalClientNum_t localClientNum, usercmd_s *cmd, float frameti
 		cmd->buttons |= 0x8000000;
 		cmd->airburstMarkDistance = (unsigned short)markDistance;
 	}
+}
+
+// Store 1400C94E0 (the PC layer: not in the reference build)
+// Mouse motion: to a menu that has the keys (unless it's the scoreboard outside a demo menu, or cl_bypassMouseInput
+// is set), with the cursor free; otherwise, in game (from CA_PRIMED, or disconnected), the cursor is hidden and kept
+// in the window and the motion accumulated for CL_MouseMove. Returns whether the cursor should be recentred.
+bool CL_MouseEvent(int x, int y, int dx, int dy)
+{
+	bool demoMenuOpen;
+	bool inGame;
+	RECT clientRect;
+	POINT topLeft;
+	POINT bottomRight;
+	clientActive_t *cl;
+
+	demoMenuOpen = sub_1400C42A0(LOCAL_CLIENT_0);
+	if ((clientUIActives[0].keyCatchers & KEYCATCH_UI)
+	    && (UI_GetActiveMenu(LOCAL_CLIENT_0) != UIMENU_SCOREBOARD || demoMenuOpen)
+	    && !cl_bypassMouseInput->current.enabled)
+	{
+		UI_MouseEvent(LOCAL_CLIENT_0, x, y);
+		ClipCursor(0);
+		return false;
+	}
+
+	inGame = (unsigned)(clientUIActives[0].connectionState - CA_CINEMATIC) > CA_LOADING - CA_CINEMATIC;
+	IN_ShowSystemCursor(FALSE);
+	if (!inGame)
+	{
+		ClipCursor(0);
+		return false;
+	}
+	GetClientRect(g_wv.hWnd, &clientRect);
+	topLeft.x = clientRect.left;
+	topLeft.y = clientRect.top;
+	bottomRight.x = clientRect.right;
+	bottomRight.y = clientRect.bottom;
+	ClientToScreen(g_wv.hWnd, &topLeft);
+	ClientToScreen(g_wv.hWnd, &bottomRight);
+	clientRect.left = topLeft.x;
+	clientRect.top = topLeft.y;
+	clientRect.right = bottomRight.x;
+	clientRect.bottom = bottomRight.y;
+	ClipCursor(&clientRect);
+	cl = CL_GetLocalClientGlobals(LOCAL_CLIENT_0);
+	cl->mouseDx[cl->mouseIndex] += dx;
+	cl->mouseDy[cl->mouseIndex] += dy;
+	return true;
 }

@@ -235,7 +235,7 @@ def main():
             used += 1
             ww, gw = canon.writes(want[2]), canon.writes(got[2])
             if not (same(want[0], got[0]) and want[1] == got[1] and ww == gw and want[3] == got_calls):
-                diff = sorted(a for a in set(ww) | set(gw) if ww.get(a) != gw.get(a))[:6]
+                diff = sorted(a for a in set(ww) | set(gw) if ww.get(a) != gw.get(a))[:int(__import__("os").environ.get("IW5_DIFF", "6"))]
                 verdict = (f"FAIL input {index} args={args!r}\n       original={want[0]!r} recon={got[0]!r} "
                            f"buffers_equal={want[1] == got[1]} writes_equal={ww == gw} calls_equal={want[3] == got_calls}"
                            + (f"\n       writes differ at {[(hex(a), ww.get(a), gw.get(a)) for a in diff]} "
